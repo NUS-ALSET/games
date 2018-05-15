@@ -1,10 +1,10 @@
 import React from 'react';
 // All games inside games directory
-import GemCollector from './games/gemCollector/';
-import SquadGemCollector from './games/squadGemCollector/';
-import SinglePlayerTwoWindows from './games/singlePlayerTwoWindows/';
-import SquadGame from './games/squadGame/';
-import PassengerPickup from './games/passengerPickup/';
+import GemCollector from './gemCollector/src/gemCollector';
+import SquadGemCollector from './squadGemCollector/src/squadGemCollector';
+import SinglePlayerTwoWindows from './singlePlayerTwoWindows/src/singlePlayerTwoWindows';
+import SquadGame from './squadGame/src/squadGame';
+import PassengerPickup from './passengerPickup/src/passengerPickup';
 
 const AlsetReactGame = props => {
   switch (props.game) {
