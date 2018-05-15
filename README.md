@@ -1,7 +1,8 @@
 # Games
 Games based on React Game Kit
 
-# Game 1 -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/game1/)
-
-# Game 2 -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/game2/)
-
+# Gem Collector -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/MKoth/games/tree/master/src/gemCollector)
+# Squad gem collector -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/MKoth/games/tree/master/src/squadGemCollector)
+# Single player two windows -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/MKoth/games/tree/master/src/singlePlayerTwoWindows)
+# Squad game -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/MKoth/games/tree/master/src/squadGame)
+# Passenger Pickup -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/MKoth/games/tree/master/src/passengerPickup)
