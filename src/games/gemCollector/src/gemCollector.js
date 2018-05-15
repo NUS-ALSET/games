@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GemCollectorGame from './code/';
-import CustomFunctionCode from '../../customCode';
+import CustomFunctionCode from './code/customCode';
+import brace from 'brace';
 import AceEditor from 'react-ace';
+import 'brace/mode/javascript';
+import 'brace/theme/github';
 import config from './config';
 // stores
 import GameStore1 from './store/game-store1';

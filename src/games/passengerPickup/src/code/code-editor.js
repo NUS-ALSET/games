@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Store from './store/passengerPickup';
-import AceEditor from 'react-ace';
+import brace from "brace";
+import AceEditor from "react-ace";
+import "brace/mode/javascript";
+import "brace/theme/github";
 
 const CustomFunctionCode = `//continue calculating path if flag calculating is set to true
 if(world.calculatingPath){
