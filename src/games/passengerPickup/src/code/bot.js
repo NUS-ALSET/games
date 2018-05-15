@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { KeyListener } from 'react-game-kit';
-import Gnome1 from '../../../commonComponents/Characters/Gnome1';
-import Gnome2 from '../../../commonComponents/Characters/Gnome2';
-import Blonde from '../../../commonComponents/Characters/Blonde';
-import Brunette from '../../../commonComponents/Characters/Brunette';
-import Drone1 from '../../../commonComponents/Characters/Drone1';
-import Drone2 from '../../../commonComponents/Characters/Drone2';
-import Drone3 from '../../../commonComponents/Characters/Drone3';
-import BlackCar from '../../../commonComponents/Characters/CarBlack';
-import BlueCar from '../../../commonComponents/Characters/CarBlue';
-import OrangeCar from '../../../commonComponents/Characters/CarOrange';
-import WhiteCar from '../../../commonComponents/Characters/CarWhite';
+import Gnome1 from '../commonComponents/Characters/Gnome1';
+import Gnome2 from '../commonComponents/Characters/Gnome2';
+import Blonde from '../commonComponents/Characters/Blonde';
+import Brunette from '../commonComponents/Characters/Brunette';
+import Drone1 from '../commonComponents/Characters/Drone1';
+import Drone2 from '../commonComponents/Characters/Drone2';
+import Drone3 from '../commonComponents/Characters/Drone3';
+import BlackCar from '../commonComponents/Characters/CarBlack';
+import BlueCar from '../commonComponents/Characters/CarBlue';
+import OrangeCar from '../commonComponents/Characters/CarOrange';
+import WhiteCar from '../commonComponents/Characters/CarWhite';
 import Store from './store/passengerPickup';
-import Util from '../../../commonFuncs/index';
+import Util from '../commonFuncs/index';
 import { observer } from 'mobx-react';
 
 class Bot extends Component {

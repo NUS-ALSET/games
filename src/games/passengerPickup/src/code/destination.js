@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import img1 from '../../../commonGameAssets/characters/PickupGreen.png';
-import img2 from '../../../commonGameAssets/characters/PickupViolet.png';
+import img1 from '../commonGameAssets/characters/PickupGreen.png';
+import img2 from '../commonGameAssets/characters/PickupViolet.png';
 import Store from './store/passengerPickup';
-import Sprite from '../../../commonComponents/Characters/Sprite';
+import Sprite from '../commonComponents/Characters/Sprite';
 import { observer } from 'mobx-react';
 
 class Destination extends Component {

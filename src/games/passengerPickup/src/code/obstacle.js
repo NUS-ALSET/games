@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import Bush from '../../../commonComponents/Objects/Bush';
-import FirTree from '../../../commonComponents/Objects/FirTree';
-import PalmTree from '../../../commonComponents/Objects/PalmTree';
-import Stone1 from '../../../commonComponents/Objects/Stone1';
-import Stone2 from '../../../commonComponents/Objects/Stone2';
+import Bush from '../commonComponents/Objects/Bush';
+import FirTree from '../commonComponents/Objects/FirTree';
+import PalmTree from '../commonComponents/Objects/PalmTree';
+import Stone1 from '../commonComponents/Objects/Stone1';
+import Stone2 from '../commonComponents/Objects/Stone2';
 
 export default class Obstacle extends Component {
   constructor(props) {

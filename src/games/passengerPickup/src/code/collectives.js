@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Store from './store/passengerPickup';
-import Coin from '../../../commonComponents/Collectives/Coin';
-import Gem from '../../../commonComponents/Collectives/Gem';
-import Passenger from '../../../commonComponents/Collectives/Passenger';
-import Passengers from '../../../commonComponents/Collectives/Passengers';
-import Trash1 from '../../../commonComponents/Collectives/Trash1';
-import Trash2 from '../../../commonComponents/Collectives/Trash2';
+import Coin from '../commonComponents/Collectives/Coin';
+import Gem from '../commonComponents/Collectives/Gem';
+import Passenger from '../commonComponents/Collectives/Passenger';
+import Passengers from '../commonComponents/Collectives/Passengers';
+import Trash1 from '../commonComponents/Collectives/Trash1';
+import Trash2 from '../commonComponents/Collectives/Trash2';
 import { observer } from 'mobx-react';
 
 class Collectives extends Component {

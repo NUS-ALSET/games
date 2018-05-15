@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Util from '../../commonFuncs/index';
+import Util from './commonFuncs/index';
 import DefaultConfig from './code/defaultConfig/passengerPickup.json';
 import PassengerPickup from './code/';
 
-export default class ALSETReactGame extends Component{
+export default class PassengerPickupGame extends Component{
   constructor(props){
       super(props);
       this.getGameData = this.getGameData.bind(this);

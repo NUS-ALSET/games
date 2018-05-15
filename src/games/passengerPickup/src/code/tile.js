@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { TileMap } from 'react-game-kit';
 
-import Grass from '../../../commonComponents/Tiles/Grass';
-import Sand from '../../../commonComponents/Tiles/Sand';
-import Concrete from '../../../commonComponents/Tiles/Concrete';
-import Building from '../../../commonComponents/Tiles/Building';
-import RoadCross from '../../../commonComponents/Tiles/RoadCross';
-import RoadLeftRight from '../../../commonComponents/Tiles/RoadLeftRight';
-import RoadUpDown from '../../../commonComponents/Tiles/RoadUpDown';
-import Roof from '../../../commonComponents/Tiles/Roof';
-import Asphalt from '../../../commonComponents/Tiles/Asphalt';
+import Grass from '../commonComponents/Tiles/Grass';
+import Sand from '../commonComponents/Tiles/Sand';
+import Concrete from '../commonComponents/Tiles/Concrete';
+import Building from '../commonComponents/Tiles/Building';
+import RoadCross from '../commonComponents/Tiles/RoadCross';
+import RoadLeftRight from '../commonComponents/Tiles/RoadLeftRight';
+import RoadUpDown from '../commonComponents/Tiles/RoadUpDown';
+import Roof from '../commonComponents/Tiles/Roof';
+import Asphalt from '../commonComponents/Tiles/Asphalt';
 
 export default class Tile extends Component {
   render() {
