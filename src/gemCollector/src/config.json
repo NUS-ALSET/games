@@ -1,0 +1,20 @@
+{
+  "player1Keys": {
+    "left": 37,
+    "right": 39,
+    "up": 38,
+    "down": 40
+  },
+  "player2Keys": {
+    "left": 74,
+    "right": 76,
+    "up": 73,
+    "down": 75
+  },
+  "speed": 10,
+  "minGems": 20,
+  "maxGems": 30,
+  "gatherToWin": 30,
+  "mode": "player-vs-bot",
+  "showCodeEditor": false
+}
