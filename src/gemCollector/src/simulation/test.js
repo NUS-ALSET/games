@@ -9,13 +9,14 @@ function round(value, precision) {
 
 let simulate = async function(){
     let botFiles = ["bot1.js", "bot2.js", "bot3.js"];
-    let tableStart = "<table>";
+    let tableStart = "<table cellspacing='1' cellpadding='10' border='1' align='center'>";
     let tableCol = {};
+    let sum = [];
+    let order = [];
 
     const simulate = require("./index.js");
     var player1Index = 0;
     var player2Index = 0;
-    //var result = await simulate("gemCollector", "config.json", botFile1, botFile2);
     for (let botFile1 of botFiles){
         player1Index++;
         player2Index = 0;
@@ -24,26 +25,44 @@ let simulate = async function(){
             if(botFile1==botFile2)
                 continue;
             var result = await simulate("config.json", botFile1, botFile2);
+            var res1 = Math.floor(result.player1/(result.player1+result.player2)*100)/100;
+            var res2 = Math.floor(result.player2/(result.player1+result.player2)*100)/100;
             if(tableCol[botFile1+"_"+botFile2]){
-                tableCol[botFile1+"_"+botFile2][player1Index-1].push(result.player1);
-                tableCol[botFile1+"_"+botFile2][player2Index-1].push(result.player2);
+                tableCol[botFile1+"_"+botFile2][player1Index-1].push(res1.toFixed(2));
+                tableCol[botFile1+"_"+botFile2][player2Index-1].push(res2.toFixed(2));
             }
             else if(tableCol[botFile2+"_"+botFile1]){
-                tableCol[botFile2+"_"+botFile1][player1Index-1].push(result.player1);
-                tableCol[botFile2+"_"+botFile1][player2Index-1].push(result.player2);
+                tableCol[botFile2+"_"+botFile1][player1Index-1].push(res1.toFixed(2));
+                tableCol[botFile2+"_"+botFile1][player2Index-1].push(res2.toFixed(2));
             }
             else{
                 tableCol[botFile1+"_"+botFile2]=new Array(botFiles.length);
                 for(var i=0;i<tableCol[botFile1+"_"+botFile2].length;i++){
                     tableCol[botFile1+"_"+botFile2][i] = [];
                 }
-                tableCol[botFile1+"_"+botFile2][player1Index-1].push(result.player1);
-                tableCol[botFile1+"_"+botFile2][player2Index-1].push(result.player2);
+                tableCol[botFile1+"_"+botFile2][player1Index-1].push(res1.toFixed(2));
+                tableCol[botFile1+"_"+botFile2][player2Index-1].push(res2.toFixed(2));
             }
+            if(!sum[player1Index-1])
+                sum[player1Index-1] = 0;
+            sum[player1Index-1]+=res1;
+            if(!sum[player2Index-1])
+                sum[player2Index-1] = 0;
+            sum[player2Index-1]+=res2;
         }
     }
+    order = sum.slice();
+    order.sort(function(a, b){return b-a});
+    console.log(sum);
+    console.log(order);
+    tableStart += "<tr><td colspan='2' align='center'>Bot</td>";
+    for(var i=0; i<botFiles.length;i++){
+        tableStart += "<td colspan='2' align='center'>"+(i+1)+"</td>";
+    }
+    tableStart += "<td>Total</td><td>Rank</td>";
+    tableStart += "</tr>";
     botFiles.forEach((element,index) => {
-        tableStart += "<tr><td>"+element+"</td>";
+        tableStart += "<tr><td>"+(index+1)+"</td><td>"+element+"</td>";
         for (var el in tableCol){
             if (tableCol.hasOwnProperty(el)) {
                 if(tableCol[el][index][0]){
@@ -60,6 +79,8 @@ let simulate = async function(){
                 }
             }
         }
+        tableStart+="<td>"+sum[index].toFixed(2)+"</td>";
+        tableStart+="<td align='center'>"+(order.indexOf(sum[index])+1)+"</td>";
         tableStart += "</tr>";
     });
     tableStart += "</table>";
