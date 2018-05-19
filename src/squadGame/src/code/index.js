@@ -7,6 +7,7 @@ import Collectives from './collectives';
 import Obstacle from './obstacle';
 import Controls from './controls';
 import CodeEditor from './code-editor';
+import Tournament from './tournament';
 import Store from './store/squad';
 
 export default class SquadGame extends Component {
@@ -45,6 +46,7 @@ export default class SquadGame extends Component {
   render() {
     console.log(this.props);
     return <div><div style={this.getWrapperStyles()}>
+      <Tournament/>
       <Loop>
         <Controls
           onPlay={this.props.onPlay}
