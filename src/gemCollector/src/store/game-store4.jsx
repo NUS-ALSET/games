@@ -14,8 +14,11 @@ class GameStore {
       score: [0, 0],
       mode: 'play',
       config: { speed: 1, minGems: 4, maxGems: 8, gatherToWin: 10 },
+      tournamentResult: "",
+      showTournament: false
     });
   }
+  
   setcharacterPosition(position, index) {
     this.characterPosition[index] = position;
   }

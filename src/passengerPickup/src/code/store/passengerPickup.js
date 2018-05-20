@@ -25,7 +25,9 @@ class passengerStore {
       funcNeedUpdate: false,
       freePlaces:[[0,0],[0,0]],
       destinationPoint:[[null,null],[null,null]],
-      obstacleMap:[new Array(squadConfig.game1.obstacleMap.length), new Array(squadConfig.game1.obstacleMap.length)]
+      obstacleMap:[new Array(squadConfig.game1.obstacleMap.length), new Array(squadConfig.game1.obstacleMap.length)],
+      tournamentResult: "",
+      showTournament: false
     });
     this.generateMapFromArray(squadConfig.game1.obstacleMap, 0);
     this.generateMapFromArray(squadConfig.game2.obstacleMap, 1);

@@ -15,7 +15,9 @@ class singlePlayerTwoWindowsStore {
       score: [0, 0],
       mode: 'play',
       func: false,
-      funcNeedUpdate: false
+      funcNeedUpdate: false,
+      tournamentResult: "",
+      showTournament: false
     });
   }
 

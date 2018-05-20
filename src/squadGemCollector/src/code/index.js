@@ -7,6 +7,7 @@ import Collectives from './collectives';
 import Obstacle from './obstacle';
 import Controls from './controls';
 import CodeEditor from './code-editor';
+import Tournament from './tournament';
 import Store from './store/gemCollector';
 
 export default class GemCollector extends Component {
@@ -43,6 +44,7 @@ export default class GemCollector extends Component {
   }
   render() {
     return <div><div style={this.getWrapperStyles()}>
+      <Tournament/>
       <Loop>
         <Controls
           onPlay={this.props.onPlay}
