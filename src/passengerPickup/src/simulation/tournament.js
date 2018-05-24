@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-let tournamentSimulate = require('../simulation/test');
+let tournamentSimulate = require('./test');
 
 class Tournament extends Component {
     constructor(){
@@ -18,7 +18,7 @@ class Tournament extends Component {
                     });
                 }}>Run tournament</button>
                 <button onClick={()=>{
-                    this.setState({showTable : !this.state.showTable});
+                    this.setState({showTable: !this.state.showTable});
                 }}>{this.state.showTable?"Hide tournament":"Show tournament"}</button>
                 {
                     this.state.showTable&&<p dangerouslySetInnerHTML={{__html: this.state.presult}} />

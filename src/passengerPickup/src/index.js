@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PassengerPickup from './passengerPickup.js';
-import Simulation from './simulation/display';
+import Simulation from './simulation/tournament';
 
 const player1Keys={left:'a',right:'d', up:'w', down:'s', action:'r'};
 const player2Keys={left:'j',right:'l', up:'i', down:'k', action:'p'};

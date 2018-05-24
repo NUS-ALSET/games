@@ -13,7 +13,6 @@ import Score from './components/score';
 import Info from './components/info';
 import Controls from './components/controls';
 import WinLoseScreen from './components/winLoseScreen';
-import Tournament from './components/tournament';
 
 //import images
 import CharacterBlonde from './assets/character-blonde.png';
@@ -89,7 +88,6 @@ class Game extends Component {
 
     return (
       <div style={{ height: '60vh', width: '100%' }}>
-        <Tournament store={GameStore}/>
         <Loop>
           <Stage className="index-bg-color">
             <World

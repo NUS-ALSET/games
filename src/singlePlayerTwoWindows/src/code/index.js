@@ -7,7 +7,6 @@ import Collectives from './collectives';
 import Obstacle from './obstacle';
 import Controls from './controls';
 import CodeEditor from './code-editor';
-import Tournament from './tournament';
 import Store from './store/singlePlayerTwoWindows';
 
 export default class PassengerPickUp extends Component {
@@ -46,7 +45,6 @@ export default class PassengerPickUp extends Component {
   render() {
     console.log(this.props.gameData);
     return <div><div style={this.getWrapperStyles()}>
-      <Tournament/>
       <Loop>
         <Controls
           onPlay={this.props.onPlay}

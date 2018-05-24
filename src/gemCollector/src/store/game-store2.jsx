@@ -13,9 +13,7 @@ class GameStore {
       timeStampData: Date.now(),
       score: [0, 0],
       mode: 'play',
-      config: { speed: 1, minGems: 4, maxGems: 8, gatherToWin: 10 },
-      tournamentResult: "",
-      showTournament: false
+      config: { speed: 1, minGems: 4, maxGems: 8, gatherToWin: 10 }
     });
   }
   
