@@ -1,7 +1,5 @@
 {
-	"width":1000,
-	"height": 2000,
-	"minGems": 20,
-	"maxGems": 30,
+	"minPassengers": 20,
+	"maxPassengers": 30,
 	"time": 90
 }

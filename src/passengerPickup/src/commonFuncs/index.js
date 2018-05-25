@@ -146,7 +146,7 @@ class Utils {
     }
     //searching path function started here
     if(refObjs.openSet.length>0){
-      console.log('finding path iteration');
+      //console.log('finding path iteration');
       var winner = 0;
       for(var i=0; i < refObjs.openSet.length; i++){
         if(refObjs.openSet[i].f < refObjs.openSet[winner].f){
@@ -161,7 +161,7 @@ class Utils {
           refObjs.path.push(temp.previous[charId]);
           temp = temp.previous[charId];
         }
-        console.log('DONE finding path!', refObjs.path.length);
+        //console.log('DONE finding path!', refObjs.path.length);
         return refObjs.path;
       }
       removeFromArray(refObjs.openSet,current);
