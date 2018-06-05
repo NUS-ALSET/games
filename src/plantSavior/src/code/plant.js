@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Sprite } from 'react-game-kit';
 import { observer } from 'mobx-react';
+import waterSprite from '../commonGameAssets/Sprites/spilled-water-sprite.png';
+import pesticide from '../commonGameAssets/Sprites/spilled-pesticide-sprite.png';
 import img from '../commonGameAssets/Plants/plant-states.png';
 import Store from './store/plantSavior';
 import PropTypes from 'prop-types';

@@ -17,7 +17,9 @@ class Bot extends Component {
   constructor(props) {
     super(props);
     this.loop = this.loop.bind(this);
-    this.getCollectives = this.getCollectives.bind(this);
+    this.getPlant = this.getPlant.bind(this);
+    this.getWater = this.getWater.bind(this);
+    this.getPests = this.getPests.bind(this);
   }
   loop = () => {
     if (!document.getElementById('bt' + this.props.charId + '-' + this.props.gameId))
@@ -30,7 +32,24 @@ class Bot extends Component {
         Store.moveCharacter(this.props.gameId, this.props.charId);
       var world = {
         player: Store.position[this.props.gameId][this.props.charId],
-        collectives: Store.collectives[this.props.gameId]
+        isFilledWithWater: Store.filled[this.props.gameId][this.props.charId]==1,
+        isFilledWithPests: Store.filled[this.props.gameId][this.props.charId]==2,
+        driedPlants: Store.plants[this.props.gameId].filter(function(plant){
+          return plant.state==2;
+        }),
+        pestedPlants: Store.plants[this.props.gameId].filter(function(plant){
+          return plant.state==1;
+        }),
+        sickPlants: [
+          ...Store.plants[this.props.gameId].filter(function(plant){
+            return plant.state==2;
+          }),
+          ...Store.plants[this.props.gameId].filter(function(plant){
+            return plant.state==1;
+          })
+        ],
+        water: {x:0,y:0,width:100,height:150},
+        factory: {x:200,y:0,width:100,height:100},
       };
       if (this.props.showCodeEditor) {
         try {
@@ -59,22 +78,44 @@ class Bot extends Component {
           Store.changeDirection(this.props.gameId, this.props.charId, 'down');
       }
     }
-    this.getCollectives();
+    this.getPlant();
+    this.getWater();
+    this.getPests();
     if (Store.mode == 'restart') {
       Store.restartCharacter(this.props.gameId, this.props.charId);
     }
   }
-  getCollectives() {
+  getPlant() {
     var player = document.getElementById('bt' + this.props.charId + '-' + this.props.gameId);
     var parentEl = player.parentElement;
     player = player.childNodes[0];
-    var collectives = parentEl.getElementsByClassName('collective');
-    Array.from(collectives).forEach(collective => {
-      if (Util.rect2Rect(collective, player)) {
-        var collectiveId = collective.getAttribute('data-key');
-        Store.removeCollective(this.props.gameId, collectiveId);
+    var plants = parentEl.getElementsByClassName('deseased-plant');
+    Array.from(plants).forEach(plant => {
+      if (Util.rect2Rect(plant, player)) {
+        var plantId = plant.getAttribute('data-key');
+        Store.curePlant(this.props.gameId, plantId, this.props.charId);
       }
     });
+  }
+  getWater(){
+    var player = document.getElementById('bt' + this.props.charId + '-' + this.props.gameId);
+    var parentEl = player.parentElement;
+    player = player.childNodes[0];
+    var water = parentEl.getElementsByClassName('water');
+    if (Util.rect2Rect(water[0], player)&&Store.filled[this.props.gameId][this.props.charId] != 1) {
+      console.log('get water');
+      Store.filled[this.props.gameId][this.props.charId] = 1;
+    }
+  }
+  getPests(){
+    var player = document.getElementById('bt' + this.props.charId + '-' + this.props.gameId);
+    var parentEl = player.parentElement;
+    player = player.childNodes[0];
+    var water = parentEl.getElementsByClassName('factory');
+    if (Util.rect2Rect(water[0], player)&&Store.filled[this.props.gameId][this.props.charId] != 2) {
+      console.log('get pests');
+      Store.filled[this.props.gameId][this.props.charId] = 2;
+    }
   }
   componentDidMount() {
     this.loopID = this.context.loop.subscribe(this.loop);
@@ -85,6 +126,13 @@ class Bot extends Component {
   }
   render() {
     switch (this.props.type) {
+      case 'drone1':
+      return <div id={'bt' + this.props.charId + '-' + this.props.gameId}>
+        <Drone1
+          position={Store.position[this.props.gameId][this.props.charId]}
+          direction={Store.direction[this.props.gameId][this.props.charId]}
+        />
+      </div>;
       case 'drone2':
         return <div id={'bt' + this.props.charId + '-' + this.props.gameId}>
           <Drone2

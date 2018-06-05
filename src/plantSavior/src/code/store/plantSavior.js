@@ -20,7 +20,8 @@ class plantSaviorStore {
             currentControllable: [1, 1],
             plants: [[], []],
             timeStampData: Date.now(),
-            score: [0, 0],
+            healthyPlants: [0, 0],
+            alivePlants: [0, 0],
             mode: 'play',
             func: false,
             funcNeedUpdate: false
@@ -63,7 +64,14 @@ class plantSaviorStore {
         ].startingPoint;
         this.direction[gameId] = ['left', 'up'];
         this.time = plantSaviorConfig.time;
-        this.score = [0, 0];
+        this.plants[0].forEach(plant => {
+            plant.state = 0;
+            plant.life = 95;
+        });
+        this.plants[1].forEach(plant => {
+            plant.state = 0;
+            plant.life = 95;
+        });
     }
     changeDirection(gameId, characterId, direction) {
         this.direction[gameId][characterId] = direction;
@@ -80,38 +88,63 @@ class plantSaviorStore {
             var gameId = Math.floor(Math.random() * (1 - 0 + 1) + 0);
             var plantId = Math.floor(Math.random() * ((this.plants[gameId].length-1) - 0 + 1) + 0);
             var newState = Math.floor(Math.random() * (2 - 0 + 1) + 0);
-            if(this.plants[gameId][plantId].state == 0)
+            if(this.plants[gameId][plantId].state == 0){
                 this.plants[gameId][plantId].state = newState;
+            }
             else{
                 this.deseaseRandomPlant();
             }
-            if(gameId==0&&this.plants[1][plantId].state==0)
+            if(gameId==0&&this.plants[1][plantId].state==0){
                 this.plants[1][plantId].state=newState;
-            if(gameId==1&&this.plants[0][plantId].state==0)
+            }
+            if(gameId==1&&this.plants[0][plantId].state==0){
                 this.plants[0][plantId].state=newState;
+            }
         }
     }
     decreaseHealth(){
+        var healthy = [this.plants[0].length, this.plants[1].length];
+        var alive = [this.plants[0].length, this.plants[1].length];
         for(var i=0;i<this.plants[0].length;i++){
             if(this.plants[0][i].state==1||this.plants[0][i].state==2){
+                healthy[0]--;
                 this.plants[0][i].time--;
                 if(this.plants[0][i].time<=0){
                     this.plants[0][i].time=400;
                     this.plants[0][i].life-=20;
                 }
-                if(this.plants[0][i].life<=0)
+                if(this.plants[0][i].life<=0){
                     this.plants[0][i].state=3;
+                }
             }
             if(this.plants[1][i].state==1||this.plants[1][i].state==2){
+                healthy[1]--;
                 this.plants[1][i].time--;
                 if(this.plants[1][i].time<=0){
                     this.plants[1][i].time=400;
                     this.plants[1][i].life-=20;
                 }
-                if(this.plants[1][i].life<=0)
+                if(this.plants[1][i].life<=0){
                     this.plants[1][i].state=3;
+                }
+            }
+            if(this.plants[0][i].state==3){
+                healthy[0]--;
+                alive[0]--;
+            }
+            if(this.plants[1][i].state==3){
+                healthy[1]--;
+                alive[1]--;
             }
         }
+        if(this.healthyPlants[0]!==healthy[0])
+            this.healthyPlants[0]=healthy[0];
+        if(this.healthyPlants[1]!==healthy[1])
+            this.healthyPlants[1]=healthy[1];
+        if(this.alivePlants[0]!==alive[0])
+            this.alivePlants[0]=alive[0];
+        if(this.alivePlants[1]!==alive[1])
+            this.alivePlants[1]=alive[1];
     }
     generatePlants(gameId) {
         if(this.plants[gameId].length>0){
@@ -140,7 +173,10 @@ class plantSaviorStore {
                 this.plants[1].push(stoneObj);
             }
         }
-        console.log(this.plants[0].length);
+        this.healthyPlants[0] = this.plants[0].length;
+        this.healthyPlants[1] = this.plants[0].length;
+        this.alivePlants[0] = this.plants[0].length;
+        this.alivePlants[1] = this.plants[0].length;
     }
     findPlantWithSamePosition(plant){
         var isClone = false;
@@ -151,7 +187,13 @@ class plantSaviorStore {
         return isClone;
     }
     curePlant(gameId, colId, charId) {
-        this.plants[gameId][colId]={ x: this.plants[gameId][colId].x, y: this.plants[gameId][colId].y, state: 0, life: 95, time: 400 };
+        if(
+            this.filled[gameId][charId]==1&&this.plants[gameId][colId].state==2||
+            this.filled[gameId][charId]==2&&this.plants[gameId][colId].state==1
+        ){
+            this.plants[gameId][colId]={ x: this.plants[gameId][colId].x, y: this.plants[gameId][colId].y, state: 0, life: 95, time: 400 };
+            this.filled[gameId][charId]=0;
+        }
     }
     updateCustomCode(newText) {
         this.func = newText;

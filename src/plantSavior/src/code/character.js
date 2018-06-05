@@ -17,6 +17,8 @@ class Character extends Component {
     super(props);
     this.loop = this.loop.bind(this);
     this.getPlant = this.getPlant.bind(this);
+    this.getWater = this.getWater.bind(this);
+    this.getPests = this.getPests.bind(this);
     this.keyListener = new KeyListener();
     document.addEventListener('keydown', (e) => {
       if (Store.currentControllable[this.props.gameId] == this.props.charId && Store.mode == 'play') {
@@ -51,6 +53,8 @@ class Character extends Component {
     if (Util.rect2parent(player, parentEl, direction) && Store.mode == 'play')
       Store.moveCharacter(this.props.gameId, this.props.charId);
     this.getPlant();
+    this.getWater();
+    this.getPests();
     if (Store.mode == 'restart') {
       Store.restartCharacter(this.props.gameId, this.props.charId);
     }
@@ -66,6 +70,26 @@ class Character extends Component {
         Store.curePlant(this.props.gameId, plantId, this.props.charId);
       }
     });
+  }
+  getWater(){
+    var player = document.getElementById('pl' + this.props.charId + '-' + this.props.gameId);
+    var parentEl = player.parentElement;
+    player = player.childNodes[0];
+    var water = parentEl.getElementsByClassName('water');
+    if (Util.rect2Rect(water[0], player)&&Store.filled[this.props.gameId][this.props.charId] != 1) {
+      console.log('get water');
+      Store.filled[this.props.gameId][this.props.charId] = 1;
+    }
+  }
+  getPests(){
+    var player = document.getElementById('pl' + this.props.charId + '-' + this.props.gameId);
+    var parentEl = player.parentElement;
+    player = player.childNodes[0];
+    var water = parentEl.getElementsByClassName('factory');
+    if (Util.rect2Rect(water[0], player)&&Store.filled[this.props.gameId][this.props.charId] != 2) {
+      console.log('get pests');
+      Store.filled[this.props.gameId][this.props.charId] = 2;
+    }
   }
   componentDidMount() {
     this.loopID = this.context.loop.subscribe(this.loop);

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Store from './store/plantSavior';
 import { observer } from 'mobx-react';
+import waterIcon from '../commonGameAssets/Icons/water-icon.png';
+import pestIcon from '../commonGameAssets/Icons/pesticide.png';
 
 class Controls extends Component {
   static contextTypes = {
@@ -48,8 +50,9 @@ class Controls extends Component {
     Store.mode = 'restart';
     setTimeout(() => {
       Store.mode = 'play';
-      if (this.props.onPlay)
+      if (this.props.onPlay){
         this.props.onPlay();
+      }
     }, 1000);
   }
 
@@ -81,7 +84,7 @@ class Controls extends Component {
           marginTop: '30%',
           textAlign: 'center',
           color: '#fff'
-        }}>{Store.score[0] > Store.score[1] ? 'Player 1 Win!!!' : 'Player 2 Win!!!'}</h1>
+        }}>{Store.alivePlants[0] > Store.alivePlants[1] ? 'Player 1 Win!!!' : 'Player 2 Win!!!'}</h1>
         <button onClick={() => this.restartGame()}
           style={{
             width: '30%',
@@ -96,9 +99,27 @@ class Controls extends Component {
           }}
         >Restart</button>
       </div>}
-      <h3 style={{ position: 'fixed', left: 0, top: '12px', zIndex: 1 }}>Player 1 score: {Store.score[0]}</h3>
-      <h3 style={{ position: 'fixed', right: 0, top: '12px', zIndex: 1 }}>Player 2 score: {Store.score[1]}</h3>
-      <h3 style={{ position: 'fixed', left: '45%', top: 0 }}>Time left: {Store.time}</h3>
+      <h4 style={{ position: 'fixed', left: 0, top: '12px', zIndex: 1 }}>
+        Alive plants {Store.alivePlants[0]}
+        {Store.filled[0][0]==0&&<div style={{width:'25px', height:'25px', float:'right'}}></div>}
+        {Store.filled[0][0]==1&&<img style={{float:'right'}} width={25} src={waterIcon}/>}
+        {Store.filled[0][0]==2&&<img style={{float:'right'}} width={25} src={pestIcon}/>}
+
+        {Store.filled[0][1]==0&&<div style={{width:'25px', height:'25px', float:'right'}}></div>}
+        {Store.filled[0][1]==1&&<img style={{float:'right'}} width={25} src={waterIcon}/>}
+        {Store.filled[0][1]==2&&<img style={{float:'right'}} width={25} src={pestIcon}/>}
+      </h4>
+      <h4 style={{ position: 'fixed', right: 0, top: '12px', zdIndex: 1 }}>
+        {Store.filled[1][0]==0&&<div style={{width:'25px', height:'25px', float:'left'}}></div>}
+        {Store.filled[1][0]==1&&<img style={{float:'left'}} width={25} src={waterIcon}/>}
+        {Store.filled[1][0]==2&&<img style={{float:'left'}} width={25} src={pestIcon}/>}
+
+        {Store.filled[1][1]==0&&<div style={{width:'25px', height:'25px', float:'left'}}></div>}
+        {Store.filled[1][1]==1&&<img style={{float:'left'}} width={25} src={waterIcon}/>}
+        {Store.filled[1][1]==2&&<img style={{float:'left'}} width={25} src={pestIcon}/>}
+        Alive plants {Store.alivePlants[1]}
+      </h4>
+      <h4 style={{ position: 'fixed', left: '45%', top: 0 }}>Time left: {Store.time}</h4>
       <button style={{ position: 'fixed', left: 0, top: 0, zIndex: 1 }} onClick={() => this.restartGame()}>Restart</button>
       <button style={{ position: 'fixed', left: '70px', top: 0, zIndex: 1 }} onClick={() => this.pauseResumeGame()}>{Store.mode == 'play' ? 'Pause' : 'Resume'}</button>
     </div>;

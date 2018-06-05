@@ -20,7 +20,7 @@ export default class Bush extends Component {
 
   render() {
     return (
-      <div className={'obstacle'} style={this.getWrapperStyles()} >
+      <div className={'factory'} style={this.getWrapperStyles()} >
         <img
           style={{ 'width': '100%', 'height': '100%' }}
           src={img}

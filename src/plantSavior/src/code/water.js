@@ -17,18 +17,20 @@ export default class Water extends Component {
       position: 'absolute',
       transform: 'translate(0px, 0px) translateZ(0)',
       transformOrigin: 'top left',
+      width: '100px',
+      height: '150px'
     };
   }
 
   render() {
     const tileData = this.props.tileData;
     return (
-      <div style={this.getWrapperStyles()}>
+      <div className={'water'} style={this.getWrapperStyles()}>
         <TileMap
           style={{ top: 0, left: 0 }}
           src={img}
           rows={3}
-          columns={3}
+          columns={2}
           tileSize={50 / this.context.scale}
           layers={[[1]]}
         />
