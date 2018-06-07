@@ -125,7 +125,6 @@ let simulate = function(config, player1, player2){
                     score[1]++;
                 }
             }
-
             bot1_1Data = {player:bot[0][0], collectives:collectives[0]};
             bot1_2Data = {player:bot[0][1], collectives:collectives[0]};
             bot2_1Data = {player:bot[1][0], collectives:collectives[1]};
