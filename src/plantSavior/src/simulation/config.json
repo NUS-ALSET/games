@@ -1,0 +1,7 @@
+{
+	"width":1000,
+	"height": 2000,
+	"minPlants": 20,
+	"maxPlants": 30,
+	"time": 90
+}
