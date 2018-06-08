@@ -62,15 +62,17 @@ class Utils {
       return closestPlant;
     }
     var getDirection = function(player, destination){
-       if (destination.y - player.y > 64) {
+      if (destination.y - player.y > 0) {
         var direction = { left: false, right: false, up: false, down: true };
       } else if (destination.y - player.y < 0) {
         var direction = { left: false, right: false, up: true, down: false };
-      } else if (destination.x - player.x > 64) {
+      } else if (destination.x - player.x > 0) {
         var direction = { left: false, right: true, up: false, down: false };
       } else if (destination.x - player.x < 0) {
         var direction = { left: true, right: false, up: false, down: false };
-      }
+      } else {
+    var direction = { left: false, right: false, up: true, down: false };
+  }
       return direction;
     }
     var player = world.player;
@@ -111,7 +113,10 @@ class Utils {
         return getDirection(world.player, closestPestedPlants);
       }
       else{
-        return getDirection(world.player, world.water);
+          if(Math.random()>0.5)
+              return getDirection(world.player, world.water);
+          else
+              return getDirection(world.player, world.factory);
       }
     }
   }
