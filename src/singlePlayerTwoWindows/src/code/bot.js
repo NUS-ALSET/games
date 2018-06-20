@@ -9,6 +9,7 @@ import Drone1 from '../commonComponents/Characters/Drone1';
 import Drone2 from '../commonComponents/Characters/Drone2';
 import Drone3 from '../commonComponents/Characters/Drone3';
 import Store from './store/singlePlayerTwoWindows';
+import CommonFunc from '../commonFuncs/index';
 import Util from '../commonFuncs/index';
 import { observer } from 'mobx-react';
 
@@ -38,22 +39,33 @@ class Character extends Component {
         player: Store.position[this.props.gameId],
         collectives: Store.collectives[this.props.gameId]
       };
-      if (this.props.showCodeEditor) {
-        try {
-          var setDirection = eval('(function(world){' + Store.func + '}(world))');
+      //Choose where to get function for getting direction for bot
+      if(this.props.mode=='bot-vs-bot'&&this.props.gameId==1||this.props.mode=='player-vs-bot'){
+        if(Store.level==1)
+          var setDirection = CommonFunc.level1(world);
+        else if(Store.level==2)
+          var setDirection = CommonFunc.level2(world);
+        else if(Store.level==3)
+          var setDirection = CommonFunc.level3(world);
+      }else{
+        if (this.props.showCodeEditor) {
+          try {
+            var setDirection = eval('(function(world){' + Store.func + '}(world))');
+          }
+          catch (err) {
+            var setDirection = { down: true };
+            if (this.props.onError)
+              this.props.onError(err);
+          }
         }
-        catch (err) {
-          var setDirection = { down: true };
-          if (this.props.onError)
-            this.props.onError(err);
+        else if (this.props.player1Function)
+          var setDirection = this.props.player1Function(world);
+        else if (this.props.player2Function)
+          var setDirection = this.props.player2Function(world);
+        else{
+          var setDirection = this.props.getCommands(world);
         }
       }
-      else if (this.props.player1Function)
-        var setDirection = this.props.player1Function(world);
-      else if (this.props.player2Function)
-        var setDirection = this.props.player2Function(world);
-      else
-        var setDirection = this.props.getCommands(world);
       if (setDirection) {
         if (setDirection.left)
           Store.changeDirection(this.props.gameId, 'left');
