@@ -37,10 +37,15 @@ class Bot extends Component {
         collectives: Store.collectives[this.props.gameId]
       };
       if (this.props.showCodeEditor) {
+        let None = null;
         try {
-          var setDirection = eval('(function(world){' + Store.func + '}(world))');
+          var direction = {left : false, right : false, up : false, down : false};
+          eval (Store.func);
+          direction[(window.result || '').toLowerCase()]=true;
+          var setDirection=direction;
         }
         catch (err) {
+         console.log(err,Store.func);
           var setDirection = { down: true };
           if (this.props.onError)
             this.props.onError(err);

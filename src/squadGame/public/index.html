@@ -19,9 +19,12 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <script type="text/javascript" src="https://cdn.rawgit.com/walkwel/ALSET-python-editor/7b4367a5/assets/brython.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/walkwel/ALSET-python-editor/7b4367a5/assets/brython_stdlib.js"></script>
+    <link href="/style.css" rel="stylesheet">
     <title>React App</title>
   </head>
-  <body>
+  <body onload="brython({debug:1})">
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
@@ -36,5 +39,8 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+<script type="text/python3" id="tests_editor">
+import myEditor
+</script>
   </body>
 </html>
