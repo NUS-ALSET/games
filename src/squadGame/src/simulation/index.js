@@ -125,10 +125,10 @@ let simulate = function(config, player1, player2){
                     score[1]++;
                 }
             }
-            bot1_1Data = {player:bot[0][0], collectives:collectives[0]};
-            bot1_2Data = {player:bot[0][1], collectives:collectives[0]};
-            bot2_1Data = {player:bot[1][0], collectives:collectives[1]};
-            bot2_2Data = {player:bot[1][1], collectives:collectives[1]};
+            bot1_1Data = {player:bot[0][0], collectives:collectives[0], direction: direction[0][0]};
+            bot1_2Data = {player:bot[0][1], collectives:collectives[0], direction: direction[0][1]};
+            bot2_1Data = {player:bot[1][0], collectives:collectives[1], direction: direction[1][0]};
+            bot2_2Data = {player:bot[1][1], collectives:collectives[1], direction: direction[1][1]};
             if(collectives[1].length==0){
                 collectives[1] = createRandomCollectives(config.minGems,config.maxGems, config.width, config.height);
                 continue;

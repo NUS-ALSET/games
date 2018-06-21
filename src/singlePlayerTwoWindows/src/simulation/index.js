@@ -116,8 +116,8 @@ let simulate = function(config, player1, player2){
                 }
             }
 
-            bot1Data = {player:bot[0], collectives:collectives[0]};
-            bot2Data = {player:bot[1], collectives:collectives[1]};
+            bot1Data = {player:bot[0], collectives:collectives[0], direction:direction[0]};
+            bot2Data = {player:bot[1], collectives:collectives[1], direction:direction[1]};
             if(collectives[0].length==0){
                 collectives[0] = createRandomCollectives(config.minGems,config.maxGems, config.width, config.height);
                 continue;
