@@ -1,0 +1,84 @@
+{
+    "showCodeEditor": false,
+    "player": "player1",
+    "mode": "player-vs-bot",
+    "player1Keys": {
+      "left": "s",
+      "right": "f",
+      "up": "e",
+      "down": "d",
+      "action": "w"
+    },
+    "player2Keys": {
+      "left": "j",
+      "right": "l",
+      "up": "i",
+      "down": "k",
+      "action": "p"
+    },
+    "time": 90,
+    "game1": {
+      "character1": {
+        "type": "drone1",
+        "speed": 1,
+        "startingPoint": {
+          "x": 100,
+          "y": 0
+        }
+      },
+      "character2": {
+        "type": "drone3",
+        "speed": 1,
+        "startingPoint": {
+          "x": 100,
+          "y": 100
+        }
+      },
+      "tiles": [
+        {
+          "type": "grass",
+          "rows": 50,
+          "columns": 50,
+          "tileSize": 50,
+          "layers": [[1]]
+        }
+      ],
+      "plants": {
+        "size": 100,
+        "min": 10,
+        "max": 20
+      }
+    },
+    "game2": {
+      "character1": {
+        "type": "drone2",
+        "speed": 1,
+        "startingPoint": {
+          "x": 100,
+          "y": 0
+        }
+      },
+      "character2": {
+        "type": "drone1",
+        "speed": 1,
+        "startingPoint": {
+          "x": 100,
+          "y": 100
+        }
+      },
+      "tiles": [
+        {
+          "type": "sand",
+          "rows": 50,
+          "columns": 50,
+          "tileSize": 50,
+          "layers": [[1]]
+        }
+      ],
+      "plants": {
+        "size": 100,
+        "min": 10,
+        "max": 20
+      }
+    }
+}

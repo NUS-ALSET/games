@@ -13,7 +13,7 @@ class GameStore {
       timeStampData: Date.now(),
       score: [0, 0],
       mode: 'play',
-      config: { speed: 10, minGems: 5, maxGems: 8, gatherToWin: 10 },
+      config: { speed: 1, minGems: 4, maxGems: 8, gatherToWin: 10 }
     });
   }
 

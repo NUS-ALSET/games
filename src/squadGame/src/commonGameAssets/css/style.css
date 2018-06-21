@@ -148,4 +148,9 @@ body {
   cursor: pointer;
   border: none;
   height: 33px;
+  margin: 2px;
+}
+.center-align{
+  display: flex;
+  justify-content: center;
 }
