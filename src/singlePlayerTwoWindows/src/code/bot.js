@@ -9,7 +9,6 @@ import Drone1 from '../commonComponents/Characters/Drone1';
 import Drone2 from '../commonComponents/Characters/Drone2';
 import Drone3 from '../commonComponents/Characters/Drone3';
 import Store from './store/singlePlayerTwoWindows';
-import CommonFunc from '../commonFuncs/index';
 import Util from '../commonFuncs/index';
 import { observer } from 'mobx-react';
 
@@ -37,16 +36,17 @@ class Character extends Component {
 
       var world = {
         player: Store.position[this.props.gameId],
-        collectives: Store.collectives[this.props.gameId]
+        collectives: Store.collectives[this.props.gameId],
+        direction: direction
       };
       //Choose where to get function for getting direction for bot
       if(this.props.mode=='bot-vs-bot'&&this.props.gameId==1||this.props.mode=='player-vs-bot'){
         if(Store.level==1)
-          var setDirection = CommonFunc.level1(world);
+          var setDirection = Util.level1(world);
         else if(Store.level==2)
-          var setDirection = CommonFunc.level2(world);
+          var setDirection = Util.level2(world);
         else if(Store.level==3)
-          var setDirection = CommonFunc.level3(world);
+          var setDirection = Util.level3(world);
       }else{
         if (this.props.showCodeEditor) {
           try {

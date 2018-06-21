@@ -202,10 +202,10 @@ let simulate = function(config, player1, player2){
                     score[1]++;
                 }
             }
-            bot1_1Data = {player:bot[0][0], collectives:collectives[0], path:bot[0][0].path, passenger:bot[0][0].passenger};
-            bot1_2Data = {player:bot[0][1], collectives:collectives[0], path:bot[0][1].path, passenger:bot[0][1].passenger};
-            bot2_1Data = {player:bot[1][0], collectives:collectives[1], path:bot[1][0].path, passenger:bot[1][0].passenger};
-            bot2_2Data = {player:bot[1][1], collectives:collectives[1], path:bot[1][1].path, passenger:bot[1][1].passenger};
+            bot1_1Data = {player:bot[0][0], collectives:collectives[0], path:bot[0][0].path, passenger:bot[0][0].passenger, direction:direction[0][0]};
+            bot1_2Data = {player:bot[0][1], collectives:collectives[0], path:bot[0][1].path, passenger:bot[0][1].passenger, direction:direction[0][1]};
+            bot2_1Data = {player:bot[1][0], collectives:collectives[1], path:bot[1][0].path, passenger:bot[1][0].passenger, direction:direction[1][0]};
+            bot2_2Data = {player:bot[1][1], collectives:collectives[1], path:bot[1][1].path, passenger:bot[1][1].passenger, direction:direction[1][1]};
             direction[0][0]=bot1clb(bot1_1Data, 
                 (passenger, locationType)=>{
                     if(locationType == "passengerLocation")

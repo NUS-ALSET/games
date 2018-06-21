@@ -35,7 +35,8 @@ class Bot extends Component {
         Store.moveCharacter(this.props.gameId, this.props.charId);
       var world = {
         player: Store.position[this.props.gameId][this.props.charId],
-        collectives: Store.collectives[this.props.gameId]
+        collectives: Store.collectives[this.props.gameId],
+        direction: direction
       };
       //Choose where to get function for getting direction for bot
       if(this.props.mode=='bot-vs-bot'&&this.props.gameId==1||this.props.mode=='player-vs-bot'){

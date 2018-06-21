@@ -1,5 +1,5 @@
 var bot2 =function(world){
-    var getClosest = function(player, arrayOfPlants){
+      var getClosest = function(player, arrayOfPlants){
         var closestPlant = false;
         arrayOfPlants.forEach(plant => {
           if (closestPlant == false) closestPlant = plant;
@@ -27,8 +27,8 @@ var bot2 =function(world){
         } else if (destination.x - player.x < 0) {
           var direction = { left: true, right: false, up: false, down: false };
         } else {
-			var direction = { left: false, right: false, up: true, down: false };
-		}
+          var direction = { left: false, right: false, up: true, down: false };
+        }
         return direction;
       }
       var player = world.player;
