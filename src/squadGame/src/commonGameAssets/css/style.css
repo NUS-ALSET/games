@@ -121,3 +121,31 @@ body {
     display: none;
   }
 }
+
+.game-header{
+  position: fixed;
+  width: 100%;
+  left: 0px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+}
+.control {
+  top: 5px;
+  z-index: 20;
+}
+.score{
+  top: 20px;
+}
+.control-btn {
+  background-color: #7eca84;
+  color: white;
+  padding: 8px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  height: 33px;
+}
