@@ -1,0 +1,156 @@
+body {
+  font-family: sans-serif;
+  color: #262631;
+}
+
+.alset-main {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 40% 60%;
+}
+.alset-editor {
+  grid-row: 1;
+  grid-column: 1;
+}
+.alset-game {
+  grid-row: 1;
+  grid-column: 2;
+}
+.alset-main-reverse {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 60% 40%;
+}
+.alset-editor-reverse {
+  grid-row: 1;
+  grid-column: 2;
+}
+.alset-game-reverse {
+  grid-row: 1;
+  grid-column: 1;
+}
+.alset-main-gameonly {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 100%;
+}
+.toggle-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 999;
+}
+.toggle-btn button {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+  background-color: #7eca84;
+  border: none;
+  color: white;
+  padding-bottom: 15px;
+  box-shadow: 0px 0px 18px 7px rgba(0, 0, 0, 0.4);
+  cursor: pointer;  
+}
+
+.btn-wrapper {
+  width: 100%;
+  background-color: white;
+  height: 48px;
+}
+
+.btn {
+  background-color: #d8d8d8;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+}
+.active {
+  background-color: #7eca84;
+  color: white;
+}
+.active-text {
+  color: #7eca84;
+}
+.half {
+  width: 50%;
+}
+.feedback-wrapper {
+  width: 100%;
+  /* text-align: right; */
+  margin-bottom: 150px;
+}
+.feedback-section {
+  /* width: 60%;
+    float: right;
+    text-align: left; */
+}
+.feedback-input {
+  width: 100%;
+  height: 107px;
+}
+.feedback-section button {
+  float: right;
+  width: 200px;
+}
+
+@media only screen and (max-width: 800px) {
+  .alset-main,
+  .alset-main-reverse,
+  .alset-main-gameonly {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+  }
+  .alset-editor,
+  .alset-editor-reverse {
+    grid-row: 2;
+    grid-column: 1;
+  }
+  .alset-game,
+  .alset-game-reverse {
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .toggle-btn {
+    display: none;
+  }
+}
+
+.game-header{
+  position: fixed;
+  width: 100%;
+  left: 0px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+}
+.control {
+  top: 5px;
+  z-index: 20;
+}
+.score{
+  top: 20px;
+}
+.control-btn {
+  background-color: #7eca84;
+  color: white;
+  padding: 8px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  height: 33px;
+  margin: 2px;
+}
+.center-align{
+  display: flex;
+  justify-content: center;
+}

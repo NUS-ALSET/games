@@ -96,11 +96,18 @@ class Controls extends Component {
           }}
         >Restart</button>
       </div>}
-      <h3 style={{ position: 'fixed', left: 0, top: '12px', zIndex: 1 }}>Player 1 score: {Store.score[0]}</h3>
-      <h3 style={{ position: 'fixed', right: 0, top: '12px', zIndex: 1 }}>Player 2 score: {Store.score[1]}</h3>
-      <h3 style={{ position: 'fixed', left: '45%', top: 0 }}>Time left: {Store.time}</h3>
-      <button style={{ position: 'fixed', left: 0, top: 0, zIndex: 1 }} onClick={() => this.restartGame()}>Restart</button>
-      <button style={{ position: 'fixed', left: '70px', top: 0, zIndex: 1 }} onClick={() => this.pauseResumeGame()}>{Store.mode == 'play' ? 'Pause' : 'Resume'}</button>
+      <div className="game-header control">
+        <button  className="control-btn active"   onClick={() => this.restartGame()}>Restart</button>
+        <button  className="control-btn active"   onClick={() => this.pauseResumeGame()}>{Store.mode == 'play' ? 'Pause' : 'Resume'}</button>
+      </div>
+      <div className="game-header score">
+        <h3 >Player 1 score: {Store.score[0]}</h3>
+       
+        <h3>Time left: {Store.time}</h3>
+        
+        <h3 >Player 2 score: {Store.score[1]}</h3>
+      </div>
+     
     </div>;
   }
 }

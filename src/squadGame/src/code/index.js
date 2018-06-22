@@ -95,7 +95,7 @@ export default class SquadGame extends Component {
               
             />}
           {(this.props.gameData.player == 'player2' && this.props.gameData.mode == 'player-vs-bot'
-            || this.props.gameData.mode == 'bot-vs-bot') &&
+            || this.props.gameData.mode == 'bot-vs-bot') && 
             <Bot
               gameId={0}
               charId={1}
@@ -166,6 +166,7 @@ export default class SquadGame extends Component {
       </Loop>
 
     </div>
-      {this.props.gameData.showCodeEditor ? <CodeEditor /> : ''}</div>;
+      {/* {this.props.gameData.showCodeEditor ? <CodeEditor /> : ''} */}
+      </div>;
   }
 }
