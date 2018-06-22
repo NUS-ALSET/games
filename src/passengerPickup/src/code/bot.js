@@ -60,7 +60,7 @@ class Bot extends Component {
           var setDirection=direction;
         }
         catch (err) {
-         console.log(err);
+         console.log(err,Store.func);
           var setDirection = { down: true };
           if (this.props.onError)
             this.props.onError(err);

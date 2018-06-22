@@ -123,15 +123,15 @@ body {
   }
   
   .game-header{
-    position: fixed;
-    width: 100%;
+    /* position: fixed; */
+    /* width: 100%; */
     left: 0px;
     z-index: 1;
     display: flex;
     justify-content: space-between;
   }
   .control {
-    top: 5px;
+    top: -18px;
     z-index: 20;
   }
   .score{
@@ -153,4 +153,17 @@ body {
   .center-align{
     display: flex;
     justify-content: center;
+  }
+
+  .game-screen{
+    height: 100%;
+    display: grid;
+    width: 100%;
+    grid-template-rows: 80px 1fr;
+    /* grid-template-columns: 50px 200px 1fr; */
+    grid-template-columns: 50% 50%;
+  }
+  .game-controls{
+    grid-row: 1;
+    grid-column: 1/3;
   }
