@@ -176,6 +176,6 @@ export default class SquadGame extends Component {
       </Loop>
 
     </div>
-      {this.props.gameData.showCodeEditor ? <CodeEditor /> : ''}</div>;
+      {/* this.props.gameData.showCodeEditor ? <CodeEditor /> : '' */}</div>;
   }
 }
