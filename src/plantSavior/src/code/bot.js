@@ -52,14 +52,27 @@ class Bot extends Component {
         factory: {x:200,y:0,width:100,height:100},
       };
       if (this.props.showCodeEditor) {
+        let None = null;
         try {
-          var setDirection = eval('(function(world){' + Store.func + '}(world))');
+          var direction = {left : false, right : false, up : false, down : false};
+          eval (Store.func);
+          direction[(window.result || '').toLowerCase()]=true;
+          var setDirection=direction;
         }
         catch (err) {
+         console.log(err,Store.func);
           var setDirection = { down: true };
           if (this.props.onError)
             this.props.onError(err);
         }
+        // try {
+        //   var setDirection = eval('(function(world){' + Store.func + '}(world))');
+        // }
+        // catch (err) {
+        //   var setDirection = { down: true };
+        //   if (this.props.onError)
+        //     this.props.onError(err);
+        // }
       }
       else if (this.props.player1Function)
         var setDirection = this.props.player1Function(world);
