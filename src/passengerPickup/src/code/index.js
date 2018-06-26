@@ -96,7 +96,7 @@ export default class PassengerPickup extends Component {
                   showCodeEditor={this.props.gameData.showCodeEditor}
                   player1Function={this.props.player1Function}
                   mode={this.props.gameData.mode}
-                player={this.props.gameData.player}
+                  player={this.props.gameData.player}
                   onError={this.props.onError}
                 />}
               {(this.props.gameData.player == 'player2' && this.props.gameData.mode == 'player-vs-bot'
