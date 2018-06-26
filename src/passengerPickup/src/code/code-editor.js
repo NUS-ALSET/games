@@ -78,6 +78,7 @@ class CodeEditor extends Component {
       window.runPython(this.state.updatedCode);
       this.setState({ jsCode: window.newPySrc, updateJsCode: window.newPySrc });
       this.props.updateProps({ jsCode: window.newPySrc });
+      console.log(window.newPySrc);
       Store.func = `(function() {
         window.world = world;
         window.findPathCallback=calculateShortestPath;

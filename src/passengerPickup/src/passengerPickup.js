@@ -66,8 +66,7 @@ export default class PassengerPickupGame extends Component{
               </div>
             }
             </div>
-        )
-  ;
+        );
     }
     getGameData(gameType){
         var data = {};
