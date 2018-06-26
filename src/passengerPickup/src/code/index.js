@@ -158,6 +158,7 @@ export default class PassengerPickup extends Component {
         </Stage></div>
       </Loop>
     </div>
-      {this.props.gameData.showCodeEditor ? <CodeEditor /> : ''}</div>;
+      {/* {this.props.gameData.showCodeEditor ? <CodeEditor /> : ''} */}
+      </div>;
   }
 }
