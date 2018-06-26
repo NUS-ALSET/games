@@ -10,18 +10,7 @@ import { defaultJavascriptFunctionCode, defaultPythonCodeFunction } from '../com
 
 import '../commonGameAssets/css/editor.css';
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    padding: '0px 10px',
-  },
-  control: {
-    padding: theme.spacing.unit * 2,
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
-});
+
 class CodeEditor extends Component {
   constructor(props) {
     super(props);

@@ -61,11 +61,17 @@ class Bot extends Component {
           var setDirection = Util.level3(world, this.calculateShortestPath);
       }
       else{
-        if (this.props.showCodeEditor&&this.props.gameId===0) {
+        if (this.props.showCodeEditor && this.props.gameId===0) {
+          let None = null;
+          let calculateShortestPath = this.calculateShortestPath;
           try {
-            var setDirection = eval('(function(world, findPathCallback){' + Store.func + '}(world, this.calculateShortestPath))');
+            var direction = {left : false, right : false, up : false, down : false};
+            eval (Store.func);
+            direction[(window.result || '').toLowerCase()]=true;
+            var setDirection=direction;
           }
           catch (err) {
+           console.log(err,Store.func);
             var setDirection = { down: true };
             if (this.props.onError)
               this.props.onError(err);
