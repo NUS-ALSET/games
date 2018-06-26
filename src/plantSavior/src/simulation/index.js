@@ -270,7 +270,8 @@ let simulate = function(config, player1, player2){
                   })
                 ],
                 water: water,
-                factory: factory
+                factory: factory,
+                direction: direction[0][0]
             };
             var bot1_2Data = {
                 player: player[0][1],
@@ -291,7 +292,8 @@ let simulate = function(config, player1, player2){
                   })
                 ],
                 water: water,
-                factory: factory
+                factory: factory,
+                direction: direction[0][1]
             };
             var bot2_1Data = {
                 player: player[1][0],
@@ -312,7 +314,8 @@ let simulate = function(config, player1, player2){
                   })
                 ],
                 water: water,
-                factory: factory
+                factory: factory,
+                direction: direction[1][0]
             };
             var bot2_2Data = {
                 player: player[1][1],
@@ -333,7 +336,8 @@ let simulate = function(config, player1, player2){
                   })
                 ],
                 water: water,
-                factory: factory
+                factory: factory,
+                direction: direction[1][1]
             };
             direction[0][0]=bot1clb(bot1_1Data);
             direction[0][1]=bot1clb(bot1_2Data);

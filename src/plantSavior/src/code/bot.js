@@ -51,7 +51,15 @@ class Bot extends Component {
         water: {x:0,y:0,width:100,height:150},
         factory: {x:200,y:0,width:100,height:100},
       };
-      if (this.props.showCodeEditor) {
+      if(this.props.mode=='bot-vs-bot'&&this.props.gameId==1||this.props.mode=='player-vs-bot'){
+        if(Store.level==1)
+          var setDirection = Util.level1(world);
+        else if(Store.level==2)
+          var setDirection = Util.level2(world);
+        else if(Store.level==3)
+          var setDirection = Util.level3(world);
+      }else{
+        if (this.props.showCodeEditor) {
         let None = null;
         try {
           var direction = {left : false, right : false, up : false, down : false};
@@ -73,13 +81,9 @@ class Bot extends Component {
         //   if (this.props.onError)
         //     this.props.onError(err);
         // }
+      } 
       }
-      else if (this.props.player1Function)
-        var setDirection = this.props.player1Function(world);
-      else if (this.props.player2Function)
-        var setDirection = this.props.player2Function(world);
-      else
-        var setDirection = this.props.getCommands(world);
+
       if (setDirection) {
         if (setDirection.left)
           Store.changeDirection(this.props.gameId, this.props.charId, 'left');

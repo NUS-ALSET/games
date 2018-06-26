@@ -48,30 +48,36 @@ class Bot extends Component {
         passenger: Store.destinationPoint[this.props.gameId][this.props.charId],
         collectives: Store.collectives[this.props.gameId],
         calculatingPath: this.calculatingPath,
-        calculateShortestPath: this.calculateShortestPath
+        calculateShortestPath: this.calculateShortestPath,
+        direction: direction
       };
-      if (this.props.showCodeEditor && this.props.gameId===0) {
-        let None = null;
-        let calculateShortestPath = this.calculateShortestPath;
-        try {
-          var direction = {left : false, right : false, up : false, down : false};
-          eval (Store.func);
-          direction[(window.result || '').toLowerCase()]=true;
-          var setDirection=direction;
-        }
-        catch (err) {
-         console.log(err,Store.func);
-          var setDirection = { down: true };
-          if (this.props.onError)
-            this.props.onError(err);
-        }
+      //Choose where to get function for getting direction for bot
+      if(this.props.mode=='bot-vs-bot'&&this.props.gameId==1||this.props.mode=='player-vs-bot'){
+        if(Store.level==1)
+          var setDirection = Util.level1(world, this.calculateShortestPath);
+        else if(Store.level==2)
+          var setDirection = Util.level2(world, this.calculateShortestPath);
+        else if(Store.level==3)
+          var setDirection = Util.level3(world, this.calculateShortestPath);
       }
-      else if (this.props.player1Function)
-        var setDirection = this.props.player1Function(world, this.calculateShortestPath);
-      else if (this.props.player2Function)
-        var setDirection = this.props.player2Function(world, this.calculateShortestPath);
-      else
-        var setDirection = this.props.getCommands(world, this.calculateShortestPath);
+      else{
+        if (this.props.showCodeEditor&&this.props.gameId===0) {
+          try {
+            var setDirection = eval('(function(world, findPathCallback){' + Store.func + '}(world, this.calculateShortestPath))');
+          }
+          catch (err) {
+            var setDirection = { down: true };
+            if (this.props.onError)
+              this.props.onError(err);
+          }
+        }
+        else if (this.props.player1Function)
+          var setDirection = this.props.player1Function(world, this.calculateShortestPath);
+        else if (this.props.player2Function)
+          var setDirection = this.props.player2Function(world, this.calculateShortestPath);
+        else
+          var setDirection = this.props.getCommands(world, this.calculateShortestPath);
+      }
       if (setDirection) {
         if (setDirection.left)
           Store.changeDirection(this.props.gameId, this.props.charId, 'left');

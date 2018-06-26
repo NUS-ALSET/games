@@ -8,6 +8,7 @@ import Obstacle from './obstacle';
 import Destination from './destination';
 import Controls from './controls';
 import CodeEditor from './code-editor';
+import SelectLevel from './selectLevel';
 import Store from './store/passengerPickup';
 
 export default class PassengerPickup extends Component {
@@ -45,7 +46,9 @@ export default class PassengerPickup extends Component {
   }
   render() {
     console.log(this.props);
+
     return <Loop>
+        {(this.props.gameData.mode == 'player-vs-bot'||this.props.gameData.mode == 'bot-vs-bot')&&<SelectLevel/>}
         <div className="game-screen">
           <div className="game-controls">
           <Controls
@@ -93,6 +96,8 @@ export default class PassengerPickup extends Component {
                   getCommands={this.props.getCommands}
                   showCodeEditor={this.props.gameData.showCodeEditor}
                   player1Function={this.props.player1Function}
+                  mode={this.props.gameData.mode}
+                  player={this.props.gameData.player}
                   onError={this.props.onError}
                 />}
               {(this.props.gameData.player == 'player2' && this.props.gameData.mode == 'player-vs-bot'
@@ -104,6 +109,8 @@ export default class PassengerPickup extends Component {
                   getCommands={this.props.getCommands}
                   showCodeEditor={this.props.gameData.showCodeEditor}
                   player1Function={this.props.player1Function}
+                  mode={this.props.gameData.mode}
+                  player={this.props.gameData.player}
                   onError={this.props.onError}
             />}
             </Stage>
@@ -147,6 +154,8 @@ export default class PassengerPickup extends Component {
                   getCommands={this.props.getCommands}
                   showCodeEditor={this.props.gameData.showCodeEditor}
                   player2Function={this.props.player2Function}
+                  mode={this.props.gameData.mode}
+                  player={this.props.gameData.player}
                   onError={this.props.onError}
                 />}
               {(this.props.gameData.player == 'player1' && this.props.gameData.mode == 'player-vs-bot'
@@ -158,6 +167,8 @@ export default class PassengerPickup extends Component {
                   getCommands={this.props.getCommands}
                   showCodeEditor={this.props.gameData.showCodeEditor}
                   player2Function={this.props.player2Function}
+                  mode={this.props.gameData.mode}
+                  player={this.props.gameData.player}
                   onError={this.props.onError}
             />}
             </Stage>

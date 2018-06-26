@@ -24,7 +24,8 @@ class plantSaviorStore {
             alivePlants: [0, 0],
             mode: 'play',
             func: false,
-            funcNeedUpdate: false
+            funcNeedUpdate: false,
+            level: 1
         });
     }
     moveCharacter(gameId, characterId) {
