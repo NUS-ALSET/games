@@ -7,6 +7,7 @@ import Collectives from './collectives';
 import Obstacle from './obstacle';
 import Controls from './controls';
 import CodeEditor from './code-editor';
+import SelectLevel from './selectLevel';
 import Store from './store/squad';
 
 export default class SquadGame extends Component {
@@ -44,7 +45,8 @@ export default class SquadGame extends Component {
   }
   render() {
     console.log(this.props);
-    return <div><div style={this.getWrapperStyles()}>
+    return <div style={this.getWrapperStyles()}>
+      {(this.props.gameData.mode == 'player-vs-bot'||this.props.gameData.mode == 'bot-vs-bot')&&<SelectLevel/>}
       <Loop>
         <Controls
           onPlay={this.props.onPlay}
@@ -91,6 +93,8 @@ export default class SquadGame extends Component {
               getCommands={this.props.getCommands}
               showCodeEditor={this.props.gameData.showCodeEditor}
               player1Function={this.props.player1Function}
+              mode={this.props.gameData.mode}
+              player={this.props.gameData.player}
               onError={this.props.onError}
               
             />}
@@ -103,6 +107,8 @@ export default class SquadGame extends Component {
               getCommands={this.props.getCommands}
               showCodeEditor={this.props.gameData.showCodeEditor}
               player1Function={this.props.player1Function}
+              mode={this.props.gameData.mode}
+              player={this.props.gameData.player}
               onError={this.props.onError}
               
             />}
@@ -146,6 +152,8 @@ export default class SquadGame extends Component {
               getCommands={this.props.getCommands}
               showCodeEditor={this.props.gameData.showCodeEditor}
               player2Function={this.props.player2Function}
+              mode={this.props.gameData.mode}
+              player={this.props.gameData.player}
               onError={this.props.onError}
               
             />}
@@ -158,6 +166,8 @@ export default class SquadGame extends Component {
               getCommands={this.props.getCommands}
               showCodeEditor={this.props.gameData.showCodeEditor}
               player2Function={this.props.player2Function}
+              mode={this.props.gameData.mode}
+              player={this.props.gameData.player}
               onError={this.props.onError}
               
             />}
@@ -167,6 +177,5 @@ export default class SquadGame extends Component {
 
     </div>
       {/* {this.props.gameData.showCodeEditor ? <CodeEditor /> : ''} */}
-      </div>;
   }
 }
