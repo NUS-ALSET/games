@@ -12,16 +12,19 @@ class Tournament extends Component {
     render() {
         return (
             <div>
-                <button style={{marginLeft:"40%"}} onClick={()=>{
+            <div class="center-align">
+                <button class="control-btn active"  onClick={()=>{
                     tournamentSimulate.default().then((result)=>{
                         this.setState({presult : result, showTable: true});
                     });
-                }}>Run tournament</button>
-                <button onClick={()=>{
+                }}
+                >Run tournament</button>
+                <button class="control-btn active" onClick={()=>{
                     this.setState({showTable: !this.state.showTable});
-                }}>{this.state.showTable?"Hide tournament":"Show tournament"}</button>
+                }}>Hide tournament</button>
+                </div>
                 {
-                    this.state.showTable&&<p dangerouslySetInnerHTML={{__html: this.state.presult}} />
+                    this.state.showTable && <p dangerouslySetInnerHTML={{__html: this.state.presult}} />
                 }
             </div>
         );
