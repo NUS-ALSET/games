@@ -1,4 +1,4 @@
-var bot2 =function(world){
+var bot3 =function(world){
 	var player = world.player;
 	var closestGem = false;
 	/*world.collectives.forEach(stone => {
@@ -31,4 +31,4 @@ var bot2 =function(world){
 		return direction;
 	}
 }
-module.exports = bot2;
+module.exports = bot3;

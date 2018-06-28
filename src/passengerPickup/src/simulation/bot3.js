@@ -1,4 +1,4 @@
-var bot1 = function(world, findPathCallback) {
+var bot3 = function(world, findPathCallback) {
 	//continue calculating path if flag calculating is set to true
 	var player = world.player;
 	var closestPassenger = false;
@@ -28,4 +28,4 @@ var bot1 = function(world, findPathCallback) {
 		return direction;
 	}
 }
-module.exports = bot1;
+module.exports = bot3;
