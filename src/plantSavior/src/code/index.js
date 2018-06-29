@@ -8,6 +8,7 @@ import Water from './water';
 import Factory from './factory';
 import Controls from './controls';
 import CodeEditor from './code-editor';
+import SelectLevel from './selectLevel';
 import Store from './store/plantSavior';
 
 export default class PlantSavior extends Component {
@@ -46,6 +47,7 @@ export default class PlantSavior extends Component {
   render() {
     console.log(this.props);
     return <div><div style={this.getWrapperStyles()}>
+      {(this.props.gameData.mode == 'player-vs-bot'||this.props.gameData.mode == 'bot-vs-bot')&&<SelectLevel/>}
       <Loop>
         <Controls
             onPlay={this.props.onPlay}
@@ -82,6 +84,8 @@ export default class PlantSavior extends Component {
               getCommands={this.props.getCommands}
               showCodeEditor={this.props.gameData.showCodeEditor}
               player1Function={this.props.player1Function}
+              mode={this.props.gameData.mode}
+              player={this.props.gameData.player}
               onError={this.props.onError}
             />}
           {(this.props.gameData.player == 'player2' && this.props.gameData.mode == 'player-vs-bot'
@@ -93,6 +97,8 @@ export default class PlantSavior extends Component {
               getCommands={this.props.getCommands}
               showCodeEditor={this.props.gameData.showCodeEditor}
               player1Function={this.props.player1Function}
+              mode={this.props.gameData.mode}
+              player={this.props.gameData.player}
               onError={this.props.onError}
             />}
         </Stage></div>
@@ -126,6 +132,8 @@ export default class PlantSavior extends Component {
               getCommands={this.props.getCommands}
               showCodeEditor={this.props.gameData.showCodeEditor}
               player2Function={this.props.player2Function}
+              mode={this.props.gameData.mode}
+              player={this.props.gameData.player}
               onError={this.props.onError}
             />}
           {(this.props.gameData.player == 'player1' && this.props.gameData.mode == 'player-vs-bot'
@@ -137,6 +145,8 @@ export default class PlantSavior extends Component {
               getCommands={this.props.getCommands}
               showCodeEditor={this.props.gameData.showCodeEditor}
               player2Function={this.props.player2Function}
+              mode={this.props.gameData.mode}
+              player={this.props.gameData.player}
               onError={this.props.onError}
             />}
         </Stage></div>

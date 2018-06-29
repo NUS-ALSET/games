@@ -14,28 +14,26 @@ function createRandomCollectives(min,max,gameWidth,gameHeight){
     return collectives;
 }
 function moveCharacter(direction, charId, width, height, bot){
-    if(direction.up)
-        bot[charId].y -= 1;
-    else if(direction.down)
-        bot[charId].y += 1;
-    else if(direction.left)
-        bot[charId].x -= 1;
-    else if(direction.right)
-        bot[charId].x += 1;
-    if(bot[charId].y<0)
-        bot[charId].y=0;
-    if(bot[charId].y>height)
-        bot[charId].y=height;
-    if(bot[charId].x<0)
-        bot[charId].x=0;
-    if(bot[charId].x>width)
-        bot[charId].x=width;
-    return bot[charId];
+        if(direction.up)
+            bot[charId].y -= 1;
+        else if(direction.down)
+            bot[charId].y += 1;
+        else if(direction.left)
+            bot[charId].x -= 1;
+        else if(direction.right)
+            bot[charId].x += 1;
+        if(bot[charId].y<0)
+            bot[charId].y=0;
+        if(bot[charId].y>height)
+            bot[charId].y=height;
+        if(bot[charId].x<0)
+            bot[charId].x=0;
+        if(bot[charId].x>width)
+            bot[charId].x=width;
+        return bot[charId];
 }
-let simulate = function(config, player1, player2){
+let simulate = function(config, bot1clb, bot2clb){
     config =  require('./'+config);
-    let bot1clb =  require('./'+player1);
-    let bot2clb =  require('./'+player2);
     
     return new Promise(resolve=>{
         var collectives = [];
@@ -44,6 +42,7 @@ let simulate = function(config, player1, player2){
         var bot1Data = {player:bot[0], collectives:collectives[0]};
         var bot2Data = {position:bot[1], collectives:collectives[1]};
         var direction = [{}, {}];
+        var time = config.time*40;
         var errors = 0;
         var setStartingPosition = false;
         if(!setStartingPosition){
@@ -82,12 +81,12 @@ let simulate = function(config, player1, player2){
             console.error("\x1b[31m","'maxGems' parameter in config should be number", "\x1b[37m");
             errors++;
         }
-        if(!config.gatherToWin){
-            console.error("\x1b[31m","Set 'gatherToWin' parameter in config json", "\x1b[37m");
+        if(!config.time){
+            console.error("\x1b[31m","Set 'time' parameter in config json", "\x1b[37m");
             errors++;
         }
-        if(typeof config.gatherToWin!="number"){
-            console.error("\x1b[31m","'gatherToWin' parameter in config should be number", "\x1b[37m");
+        if(typeof config.time!="number"){
+            console.error("\x1b[31m","'time' parameter in config should be number", "\x1b[37m");
             errors++;
         }
         if(typeof bot1clb!="function"){
@@ -101,7 +100,7 @@ let simulate = function(config, player1, player2){
         if(errors>0)
             return;
         
-        while(score[0]<config.gatherToWin&&score[1]<config.gatherToWin){
+        while(time){
             for(var i=collectives.length-1;i>=0;i--){
                 if(collectives[i].x==bot[0].x&&collectives[i].y==bot[0].y){
                     collectives.splice(i, 1);
@@ -123,6 +122,7 @@ let simulate = function(config, player1, player2){
             direction[1]=bot2clb(bot2Data);
             bot[0] = moveCharacter(direction[0], 0, config.width, config.height, bot);
             bot[1] = moveCharacter(direction[1], 1, config.width, config.height, bot);
+            time--;
         }
         resolve({player1:score[0],player2:score[1]});
     });

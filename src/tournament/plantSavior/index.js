@@ -190,10 +190,8 @@ function getPests() {
         //console.log("Player 2-2 got pests");
     }
 }
-let simulate = function(config, player1, player2){
+let simulate = function(config, bot1clb, bot2clb){
     config =  require('./'+config);
-    let bot1clb =  require('./'+player1);
-    let bot2clb =  require('./'+player2);
     return new Promise(resolve=>{
         var errors = 0;
         if(!config.width){

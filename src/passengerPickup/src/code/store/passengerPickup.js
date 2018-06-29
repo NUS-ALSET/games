@@ -23,6 +23,7 @@ class passengerStore {
       mode: 'play',
       func: false,
       funcNeedUpdate: false,
+      level: 1,
       freePlaces:[[0,0],[0,0]],
       destinationPoint:[[null,null],[null,null]],
       obstacleMap:[new Array(squadConfig.game1.obstacleMap.length), new Array(squadConfig.game1.obstacleMap.length)]
