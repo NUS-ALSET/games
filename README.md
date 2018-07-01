@@ -7,3 +7,16 @@ Games based on React Game Kit
 # Squad game -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/squadGame)
 # Passenger Pickup -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/passengerPickup)
 # Plants Savior -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/plantSavior)
+
+
+In src there is tournament folder,
+in tournament folder run command 'node index.js game=gemCollector'
+
+the other games are:
+
+gemCollector
+passengerPickup
+plantSavior
+squadGemCollector
+singlePlayerTwoWindows
+squadGame
