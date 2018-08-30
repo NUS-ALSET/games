@@ -82,11 +82,11 @@ ALSET Games based on React Game Kit
 <p><b>Game status:</b> using OLD API</p>
 <p align="center">
   <a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/oldGames/plantSavior" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/car-game-screen.png">
+    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/plant-savior-game-screen.png">
   </a>
 </p>
 <h3>
-	<a href="https://codesandbox.io/s/github/MKoth/simulation-game/tree/master/src/oldGames/plantSavior" target="_blank">
+	<a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/oldGames/plantSavior" target="_blank">
 		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
 	</a>
 </h3>
