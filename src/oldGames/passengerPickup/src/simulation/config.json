@@ -1,0 +1,5 @@
+{
+	"minPassengers": 20,
+	"maxPassengers": 30,
+	"time": 90
+}

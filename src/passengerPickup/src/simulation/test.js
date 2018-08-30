@@ -1,101 +1,110 @@
-function round(value, precision) {
-    var multiplier = Math.pow(10, precision || 0);
-    return Math.round(value * multiplier) / multiplier;
+function getPlayersCommands(world) {
+	var findShortestPath = function(arr, pointA, pointB, charId){
+		var heuristic = function (a,b){
+			var x = a.x - b.x;
+			var y = a.y - b.y;
+			var d = Math.sqrt( x*x + y*y );
+			return d;
+		};
+		var removeFromArray = function(array,elt){
+			for(var i = array.length-1; i>=0; i--){
+				if(array[i] == elt){
+					array.splice(i,1);
+				}
+			}
+		};
+		//getting point on the map provided
+		var cellPointA = arr[pointA.y][pointA.x];
+		var cellPointB = arr[pointB.y][pointB.x];
+		//initializing variables we'll gonna use for searching path
+		var openSet = [];
+		var closeSet = [];
+		var path = [];
+		var current = cellPointA;
+		openSet.push(cellPointA);
+		//searching path function started here
+		while(openSet.length>0){
+			var winner = 0;
+			for(var i=0; i < openSet.length; i++){
+				if(openSet[i].f < openSet[winner].f){
+					winner = i;
+				}
+			}
+			var current = openSet[winner];
+			if(current === cellPointB){
+				var temp = current;
+				path.push(temp);
+				while(temp.previous[charId]){
+					path.push(temp.previous[charId]);
+					temp = temp.previous[charId];
+				}
+				for(var i=0;i<arr.length;i++){
+					for(var j=0;j<arr[0].length;j++){
+						if(arr[i][j]){
+							arr[i][j].previous[charId]=undefined;
+						}
+					}
+				}
+				return path;
+			}
+			removeFromArray(openSet,current);
+			closeSet.push(current);
+			var neighbors = current.neighbors;
+			for(var i=0; i < neighbors.length; i++){
+				var neighbor = neighbors[i];
+				if(!closeSet.includes(neighbor) && !neighbor.wall){
+					var tempG = current.g+1;
+					var newPath = false;
+					if(openSet.includes(neighbor)){
+						if(tempG<neighbor.g){
+							neighbor.g = tempG;
+							newPath = true;
+						}
+					}
+					else{
+						neighbor.g = tempG;
+						newPath = true;
+						openSet.push(neighbor);
+					}
+					if(newPath){
+						neighbor.h = heuristic(neighbor, cellPointB);
+						neighbor.f = neighbor.g + neighbor.h;
+						neighbor.previous[charId] = current;
+					}
+				}
+			}
+		}
+	}
+	//continue calculating path if flag calculating is set to true
+    var player = world.player;
+	var closestPassenger = false;
+	if(player.path.length == 0&&!world.player.passenger){
+		closestPassenger = world.collectives[0];
+		if(closestPassenger){
+			//finding path to the closest passenger
+			var pointA = {x:Math.floor( player.x/world.config.roadWidth), y:Math.floor( player.y/world.config.roadWidth )};
+			var pointB = {x:Math.floor(closestPassenger.x/world.config.roadWidth), y:Math.floor(closestPassenger.y/world.config.roadWidth)};
+			player.path = findShortestPath(world.map, pointA, pointB, world.index);
+		}
+	}
+	else if(player.path.length == 0&&world.player.passenger){
+		//finding path to passenger takeof destination if passenger is picked up
+		var pointA = {x:Math.floor( player.x/world.config.roadWidth), y:Math.floor( player.y/world.config.roadWidth )};
+		var pointB = {x:Math.floor(player.passenger.takeofX/world.config.roadWidth), y:Math.floor(player.passenger.takeofY/world.config.roadWidth)};
+		player.path = findShortestPath(world.map, pointA, pointB, world.index);
+	}
+	else if(player.path.length>0){
+		//going to the next cell of current path (once bot reaches this point it will be deleted automaticly)
+		var point = player.path[player.path.length-1];
+		if (point.x*world.config.roadWidth - player.x > 0) {
+			var direction = { left: false, right: true, up: false, down: false };
+		} else if (point.x*world.config.roadWidth - player.x < 0) {
+			var direction = { left: true, right: false, up: false, down: false };
+		} else if (point.y*world.config.roadWidth - player.y > 0) {
+			var direction = { left: false, right: false, up: false, down: true };
+		} else if (point.y*world.config.roadWidth - player.y < 0) {
+			var direction = { left: false, right: false, up: true, down: false };
+		}
+		return direction;
+	}
 }
-
-
-//let tableEnd = "</table>";
-
-
-let simulate = async function(){
-    let botFiles = ["bot1.js", "bot2.js", "bot3.js"];
-    let tableStart = "<table cellspacing='1' cellpadding='10' border='1' align='center'>";
-    let tableCol = {};
-    let sum = [];
-    let order = [];
-
-    const simulate = require("./index.js");
-    var player1Index = 0;
-    var player2Index = 0;
-    for (let botFile1 of botFiles){
-        player1Index++;
-        player2Index = 0;
-        for (let botFile2 of botFiles){
-            player2Index++;
-            if(botFile1==botFile2)
-                continue;
-            var result = await simulate("config.json", botFile1, botFile2);
-            //var res1 = Math.floor(result.player1/(result.player1+result.player2)*100)/100;
-            //var res2 = Math.floor(result.player2/(result.player1+result.player2)*100)/100;
-            if(result.player1>result.player2){
-                var res1=1;
-                var res2=0;
-            }
-            else if(result.player1<result.player2){
-                var res1=0;
-                var res2=1;
-            }
-            else{
-                var res1=0.5;
-                var res2=0.5;
-            }
-            if(tableCol[botFile1+"_"+botFile2]){
-                tableCol[botFile1+"_"+botFile2][player1Index-1].push(res1.toFixed(1));
-                tableCol[botFile1+"_"+botFile2][player2Index-1].push(res2.toFixed(1));
-            }
-            else if(tableCol[botFile2+"_"+botFile1]){
-                tableCol[botFile2+"_"+botFile1][player1Index-1].push(res1.toFixed(1));
-                tableCol[botFile2+"_"+botFile1][player2Index-1].push(res2.toFixed(1));
-            }
-            else{
-                tableCol[botFile1+"_"+botFile2]=new Array(botFiles.length);
-                for(var i=0;i<tableCol[botFile1+"_"+botFile2].length;i++){
-                    tableCol[botFile1+"_"+botFile2][i] = [];
-                }
-                tableCol[botFile1+"_"+botFile2][player1Index-1].push(res1.toFixed(1));
-                tableCol[botFile1+"_"+botFile2][player2Index-1].push(res2.toFixed(1));
-            }
-            if(!sum[player1Index-1])
-                sum[player1Index-1] = 0;
-            sum[player1Index-1]+=res1;
-            if(!sum[player2Index-1])
-                sum[player2Index-1] = 0;
-            sum[player2Index-1]+=res2;
-        }
-    }
-    order = sum.slice();
-    order.sort(function(a, b){return b-a});
-    //console.log(sum);
-    //console.log(order);
-    tableStart += "<tr><td colspan='2' align='center'>Bot</td>";
-    for(var i=0; i<botFiles.length;i++){
-        tableStart += "<td colspan='2' align='center'>"+(i+1)+"</td>";
-    }
-    tableStart += "<td>Total</td><td>Rank</td>";
-    tableStart += "</tr>";
-    botFiles.forEach((element,index) => {
-        tableStart += "<tr><td>"+(index+1)+"</td><td>"+element+"</td>";
-        for (var el in tableCol){
-            if (tableCol.hasOwnProperty(el)) {
-                if(tableCol[el][index][0]){
-                    tableStart += "<td>"+tableCol[el][index][0]+"</td>";
-                }
-                else{
-                    tableStart += "<td></td>";
-                }
-                if(tableCol[el][index][1]){
-                    tableStart += "<td>"+tableCol[el][index][1]+"</td>";
-                }
-                else{
-                    tableStart += "<td></td>";
-                }
-            }
-        }
-        tableStart+="<td>"+sum[index].toFixed(1)+"</td>";
-        tableStart+="<td align='center'>"+(order.indexOf(sum[index])+1)+"</td>";
-        tableStart += "</tr>";
-    });
-    tableStart += "</table>";
-    return tableStart;
-};
-export default simulate;

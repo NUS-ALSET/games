@@ -1,14 +1,74 @@
 # Games
 ALSET Games based on React Game Kit
 
-<h1>Passenger pickup game</h1>
+<h1>Gem collector game</h1>
+<p><b>Game status:</b> using OLD API</p>
 <p align="center">
-  <a href="https://codesandbox.io/s/github/MKoth/simulation-game/tree/master/src/passengerPickup" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/achievements/master/wiki_images/GamesScreens/car-game-screen.png">
+  <a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/oldGames/gemCollector" target="_blank" rel="noopener noreferrer">
+    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/gem-collector-screen.png">
   </a>
 </p>
 <h3>
-	<a href="https://codesandbox.io/s/github/MKoth/simulation-game/tree/master/src/passengerPickup" target="_blank">Code sandbox link</a>
+	<a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/oldGames/gemCollector" target="_blank">
+		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
+	</a>
+</h3>
+<ol>
+	<li>Two character on one screen</li>
+	<li>Gems scattered all over the map</li>
+	<li>Score incrementing when character collect gem by approaching it</li>
+	<li>Challenge is to pickup more gems possible</li>
+</ol>
+
+<h1>One window one player game</h1>
+<p><b>Game status:</b> done, using NEW API</p>
+<p align="center">
+  <a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/squadSinglePlayerGame" target="_blank" rel="noopener noreferrer">
+    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/single-player-squad-game-screen.jpg">
+  </a>
+</p>
+<h3>
+	<a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/squadSinglePlayerGame" target="_blank">
+		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
+	</a>
+</h3>
+<ol>
+	<li>One drones on each of two screens</li>
+	<li>Trash scattered all over the map</li>
+	<li>Score incrementing when drone collect trash by approaching it</li>
+	<li>Challenge is to pickup more trash possible</li>
+</ol>
+
+<h1>Squad game</h1>
+<p><b>Game status:</b> done, using NEW API</p>
+<p align="center">
+  <a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/squadGame" target="_blank" rel="noopener noreferrer">
+    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/squad-game-screen.jpg">
+  </a>
+</p>
+<h3>
+	<a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/squadGame" target="_blank">
+		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
+	</a>
+</h3>
+<ol>
+	<li>Two drones on each of two screens</li>
+	<li>Trash scattered all over the map</li>
+	<li>Score incrementing when drone collect trash by approaching it</li>
+	<li>Challenge is to pickup more trash possible using teamwork</li>
+</ol>
+
+<h1>Passenger pickup game</h1>
+<p><b>Game status:</b> done, using NEW API</p>
+<p align="center">
+  <a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/passengerPickup" target="_blank" rel="noopener noreferrer">
+    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/car-game-screen.png">
+  </a>
+</p>
+<h3>
+	<a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/passengerPickup" target="_blank">
+		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
+	</a>
 </h3>
 <ol>
 	<li>Two cars for each screen</li>
@@ -18,10 +78,35 @@ ALSET Games based on React Game Kit
 	<li>Challenge is to find path, since road is only field on the map where it is allowed to move</li>
 </ol>
 
+<h1>Plant savior</h1>
+<p><b>Game status:</b> using OLD API</p>
+<p align="center">
+  <a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/oldGames/plantSavior" target="_blank" rel="noopener noreferrer">
+    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/car-game-screen.png">
+  </a>
+</p>
+<h3>
+	<a href="https://codesandbox.io/s/github/MKoth/simulation-game/tree/master/src/oldGames/plantSavior" target="_blank">
+		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
+	</a>
+</h3>
+<ol>
+	<li>Two drones for each screen</li>
+	<li>Plants scattered all over the map</li>
+	<li>Over time random plants getting dry or infected with pest</li>
+	<li>There are pest factory and lake with water on the map</li>
+	<li>In order to get pest drone need to approach factory or lake to get water</li>
+	<li>When loaded drone need to approach dried plant to save it, the same with pested, but need to be loaded with pests</li>
+	<li>If plant is not saved over some time it dies</li>
+	<li>The score is started equal to amount of plants, each dead plant is decrementing score</li>
+	<li>Challenge is to save most plants possible</li>
+</ol>
+
 <h1>Pizza delivery game</h1>
+<p><b>Game status:</b> not yet done</p>
 <p align="center">
   <a href="#" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/achievements/master/wiki_images/GamesScreens/pizza-game-screen.png">
+    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/pizza-game-screen.png">
   </a>
 </p>
 <ol>
@@ -33,9 +118,10 @@ ALSET Games based on React Game Kit
 </ol>
 
 <h1>Protect the borders</h1>
+<p><b>Game status:</b> not yet done</p>
 <p align="center">
   <a href="#" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/achievements/master/wiki_images/GamesScreens/borders-game-screen.png">
+    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/borders-game-screen.png">
   </a>
 </p>
 <ol>
@@ -49,9 +135,10 @@ ALSET Games based on React Game Kit
 </ol>
 
 <h1>Protect the skies</h1>
+<p><b>Game status:</b> not yet done</p>
 <p align="center">
   <a href="#" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/achievements/master/wiki_images/GamesScreens/sky-borders-game-screen.png">
+    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/sky-borders-game-screen.png">
   </a>
 </p>
 <ol>
@@ -67,9 +154,10 @@ ALSET Games based on React Game Kit
 </ol>
 
 <h1>Repair the kiosks</h1>
+<p><b>Game status:</b> not yet done</p>
 <p align="center">
   <a href="#" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/achievements/master/wiki_images/GamesScreens/kiosk-game-screen.png">
+    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/kiosk-game-screen.png">
   </a>
 </p>
 <ol>
@@ -83,23 +171,3 @@ ALSET Games based on React Game Kit
 	<li>The score increasing when item sold to clients, the more items are sold, the more score is collected</li>
 	<li>Challenge is to distribute clients evenly and repair kiosks in time, choosing those first, where the line is longer</li>
 </ol>
-
-# Gem Collector -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/gemCollector)
-# Squad gem collector -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/squadGemCollector)
-# Single player two windows -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/singlePlayerTwoWindows)
-# Squad game -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/squadGame)
-# Passenger Pickup -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/passengerPickup)
-# Plants Savior -> [![Edit new](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/plantSavior)
-
-
-In src there is tournament folder,
-in tournament folder run command 'node index.js game=gemCollector'
-
-the other games are:
-
-gemCollector
-passengerPickup
-plantSavior
-squadGemCollector
-singlePlayerTwoWindows
-squadGame
