@@ -219,7 +219,7 @@ ALSET Games based on React Game Kit
 	For example:<br>
 	<img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/gnome1.png">
 	Example with just 1 frame (horizontal line) for each state:
-	<img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/drone1.png">
+	<img width="130" src="https://raw.githubusercontent.com/MKoth/games/master/screens/drone1.png">
 </p>
 <h2 align="center">Steps to insert new sprite into game</h2>
 <ol>
