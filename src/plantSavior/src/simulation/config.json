@@ -1,0 +1,21 @@
+{
+	"width":500,
+	"height": 500,
+	"minPlants": 20,
+	"maxPlants": 30,
+    "time": 90,
+    "speed":1,
+    "playerSize":50,
+    "plantSize":20,
+    "plantsStartingPoint":200,
+    "factoryPosition":{"x":150, "y":0},
+    "factorySize":100,
+    "lakePosition":{"x":0, "y":0},
+    "lakeSize":100,
+    "player1StartingPoint":{"x":20, "y":20},
+    "player2StartingPoint":{"x":120, "y":20},
+    "player1StartingDirection":"right",
+    "player2StartingDirection":"down",
+    "player1Keys":{"up":"w", "down":"s", "left":"a", "right":"d", "switch":"e"},
+    "player2Keys":{"up":"i", "down":"k", "left":"j", "right":"l", "switch":"o"}
+}
