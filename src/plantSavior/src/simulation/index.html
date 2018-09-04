@@ -1,0 +1,98 @@
+<canvas style="background: green" id="game1" width=500 height=500></canvas>
+<canvas style="background: yellowgreen" id="game2" width=500 height=500></canvas>
+<script src="./level1.js"></script>
+<script src="./level2.js"></script>
+<script src="./level3.js"></script>
+<script src="./simulation.js"></script>
+<script>
+    var config = {
+        "width":500,
+        "height": 500,
+        "minPlants": 3,
+        "maxPlants": 6,
+        "time": 90,
+        "speed":1,
+        "playerSize":30,
+        "plantSize":50,
+        "plantsStartingPoint":200,
+        "factoryPosition":{"x":150, "y":0},
+        "factorySize":100,
+        "lakePosition":{"x":0, "y":0},
+        "lakeSize":100,
+        "player1StartingPoint":{"x":20, "y":20},
+        "player2StartingPoint":{"x":120, "y":20},
+        "player1StartingDirection":"right",
+        "player2StartingDirection":"down",
+        "player1Keys":{"up":"w", "down":"s", "left":"a", "right":"d", "switch":"e"},
+        "player2Keys":{"up":"i", "down":"k", "left":"j", "right":"l", "switch":"o"}
+    }
+    var game = new Simulation(config, level1, level3)
+    var canvas1 = document.getElementById("game1");
+    var canvas2 = document.getElementById("game2");
+    const ctx1 = canvas1.getContext('2d');
+    const ctx2 = canvas2.getContext('2d');
+    var info;
+    setInterval(()=>{
+        info = game.simulate();
+        ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+        ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+        var botSize = config.playerSize;
+        var plantSize = config.plantSize;
+        var bot1_1 = info.bots[0][0];
+        var bot1_2 = info.bots[0][1];
+
+        var bot2_1 = info.bots[1][0];
+        var bot2_2 = info.bots[1][1];
+        //draw lake
+        ctx1.fillStyle="rgba(0, 163, 160)";
+        ctx1.fillRect(config.lakePosition.x,config.lakePosition.y,config.lakeSize,config.lakeSize);
+
+        ctx2.fillStyle="rgba(0, 163, 160)";
+        ctx2.fillRect(config.lakePosition.x,config.lakePosition.y,config.lakeSize,config.lakeSize);
+
+        //draw factory
+        ctx1.fillStyle="rgba(150, 150, 150)";
+        ctx1.fillRect(config.factoryPosition.x,config.factoryPosition.y,config.factorySize,config.factorySize);
+
+        ctx2.fillStyle="rgba(150, 150, 150)";
+        ctx2.fillRect(config.factoryPosition.x,config.factoryPosition.y,config.factorySize,config.factorySize);
+
+        info.collectives[0].forEach(collective => {
+            if(collective.state == 0)
+                ctx1.fillStyle="rgba(0, 255, 0)";
+            else if(collective.state == 1)
+                ctx1.fillStyle="rgba(164, 186, 52)";
+            else if(collective.state == 2)
+                ctx1.fillStyle="rgba(132, 47, 36)";
+            else if(collective.state == 3)
+                ctx1.fillStyle="rgba(0, 0, 0)";
+            ctx1.fillRect(collective.x,collective.y,plantSize,plantSize);
+        });
+
+        info.collectives[1].forEach(collective => {
+            if(collective.state == 0)
+                ctx2.fillStyle="rgba(0, 255, 0)";
+            else if(collective.state == 1)
+                ctx2.fillStyle="rgba(164, 186, 52)";
+            else if(collective.state == 2)
+                ctx2.fillStyle="rgba(132, 47, 36)";
+            else if(collective.state == 3)
+                ctx2.fillStyle="rgba(0, 0, 0)";
+            ctx2.fillRect(collective.x,collective.y,plantSize,plantSize);
+        });
+
+        ctx1.fillStyle="#FF0000";
+        ctx1.fillRect(bot1_1.x,bot1_1.y,botSize,botSize);
+
+        ctx1.fillStyle="#00FF00";
+        ctx1.fillRect(bot1_2.x,bot1_2.y,botSize,botSize);
+
+        ctx2.fillStyle="#0000FF";
+        ctx2.fillRect(bot2_1.x,bot2_1.y,botSize,botSize);
+
+        ctx2.fillStyle="#000000";
+        ctx2.fillRect(bot2_2.x,bot2_2.y,botSize,botSize);
+    },10);
+
+</script>

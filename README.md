@@ -171,3 +171,96 @@ ALSET Games based on React Game Kit
 	<li>The score increasing when item sold to clients, the more items are sold, the more score is collected</li>
 	<li>Challenge is to distribute clients evenly and repair kiosks in time, choosing those first, where the line is longer</li>
 </ol>
+
+
+<h1 align="center">Explanation of how to work with API 2.0 when writing your function</h1>
+<p>Each function is running each iteration of game, receiving world object that contain following information:</p>
+<pre>
+{
+	player:{x:10, y:15}, 
+	collectives:[], 
+	direction: "left"||{left:true}, 
+	index:0, 
+	config: config, 
+	gameId: 0, 
+	controlInfo: {keyPressed:["up", "down"], current:[0,1]}
+}
+</pre>
+<p>From this object we can get following information:</p>
+<ol>
+	<li>
+		player - containing information about bot's position, for some games, like in passengerPickup game, it can contain some additional information, like 'path', to determine is path already calculated for this car or it nned to be calculated(you, of course can calculate path each iteration, but it will consume addittional resources) and 'passenger' to find if car is already loaded with passenger or is empty and need to get some
+	</li>
+	<li>
+		collectives - is an array containing objects, each object containing information about position and some additional information if needed (like health and state parameter for plants). Depending on game collectives can be called differently, for example in passengerPickup game it can be called passengers
+	</li>
+	<li>
+		direction - is information about direction bot is moving now, there are two formats: {left:true}, "left"
+	</li>
+	<li>
+		index - is number of character can be 0 or 1 for 1st and 2nd character accordingly
+	</li>
+	<li>
+		config - is game's config.json you can find it in game's root folder ./simulation folder, it will help you to find width, height of collectives and player etc.
+	</li>
+	<li>
+		gameId identifies which game is bot controlled for, left screen has 0 gameId, right - 1.
+	</li>
+	<li>
+		control info is used if you want to control bot with keys it contain of 1st array "keyPressed" that has two elements: first is for left screen controlled bot, second is for right screen, and second array that also, consists of two elements, each element can be 0 or 1, depending on which bot out of two is controllde now, since there can be two bots on each screen. This parameter is changing when user clicks switch button. Left, right, up, down and switch keys names can be found and changed in config.json file for each game
+	</li>
+</ol>
+
+<h1 align="center">Explanation of how to change graphic if needed</h1>
+<h2 align="center">What sprite should look like</h2>
+<p>
+	Sprite shape should be following:<br> from top to bottom (vertically) there is a state (left, right, up,down moving, running, idle, etc.)<br>
+	From left to right (horizontally) should be frames for those states<br>
+	For example:<br>
+	<img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/gnome1.png">
+	Example with just 1 frame (horizontal line) for each state:
+	<img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/drone1.png">
+</p>
+<h2 align="center">Steps to insert new sprite into game</h2>
+<ol>
+	<li>
+		Save sprite to ./src/assets/sprites folder in the root of chosen game
+	</li>
+	<li>
+		In ./view/Components/Characters/ copy any of files present there and rename it to name like, for example<br>
+		import img from '../../../assets/sprites/gnome1.png';<br>
+		would be changed to:<br>
+		import img from '../../../assets/sprites/your_custom_name.png';<br>
+		this file should be already present in assets folder
+	</li>
+	<li>
+		In getAnimationState() switch case should be changed to yours, here are direction present and which direction which state is correspondant to(remember - state is horisontal line of frames, for ex. if up movement is 3rd horisontal line, then<br>
+		case 'up': this.animState = 2;)
+	</li>
+	<li>
+		In render you can see Sprite componenet, most important parameters are:<br>
+		tileWidth, tileHeight, those indicating original size of each frame, in scale parameter you can see this.props.scale, it's used there to adapt size of sprite depending on scale of the game window in the browser.<br>
+		Last important parameter is steps, elements in array are coresponding to the states(horizontal lines) in the sprite. For example, in gnome sprite that was given as an example, 1st horizontal line consists of 8 elements, as well as 2nd, 3rd and 4th, 5th and 6th lines or states consists from 1 frame, so steps parameter would look like [7, 7, 7, 7, 0, 0], since counting starts from 0.
+	</li>
+	<li>
+		In './src/view/character.js' you need to import your sprite here and add new case for your custom sprite
+	</li>
+	<li>
+		In './src/view/App.js' just need to replace type of any Character component to the one you've added to cases
+	</li>
+</ol>
+<h2 align="center">What tile should look like</h2>
+<p>
+	Tile is any square image that can be repeated all over map, for example:<br>
+	<img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/city-tile.png">
+	<img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/grass.jpg">
+</p>
+<p>
+	To change tile image you just need to save it into ./src/assets/tiles and in ./src/view/tile.js change import img from '../assets/tiles/your_custom_image.png'
+</p>
+<p>
+	Same steps can be applied to collective creating, save collective image to ./src/assets/collective and replace import in collectives.js
+</p>
+<p>
+	Some folder and file naming can differ depending on game, for example, collective folder and file in plantSavior game calling plant.js
+</p>
