@@ -178,12 +178,16 @@ ALSET Games based on React Game Kit
 <pre>
 {
 	player:{x:10, y:15}, 
-	collectives:[], 
+	collectives||passengers:[], 
 	direction: "left"||{left:true}, 
 	index:0, 
 	config: config, 
 	gameId: 0, 
-	controlInfo: {keyPressed:["up", "down"], current:[0,1]}
+	controlInfo: {keyPressed:["up", "down"], current:[0,1]},
+	players:[
+				{position:{x:10, y:15}, direction:"left"},
+				{position:{x:100, y:105}, direction:"down"}
+			]
 }
 </pre>
 <p>From this object we can get following information:</p>
@@ -192,7 +196,7 @@ ALSET Games based on React Game Kit
 		player - containing information about bot's position, for some games, like in passengerPickup game, it can contain some additional information, like 'path', to determine is path already calculated for this car or it nned to be calculated(you, of course can calculate path each iteration, but it will consume addittional resources) and 'passenger' to find if car is already loaded with passenger or is empty and need to get some
 	</li>
 	<li>
-		collectives - is an array containing objects, each object containing information about position and some additional information if needed (like health and state parameter for plants). Depending on game collectives can be called differently, for example in passengerPickup game it can be called passengers
+		collectives - is an array containing goal objects(passengers, gems, trash, etc.), each object containing information about position and some additional information if needed (like health and state parameter for plants). Depending on game collectives can be called differently, for example in passengerPickup game it can be called passengers
 	</li>
 	<li>
 		direction - is information about direction bot is moving now, there are two formats: {left:true}, "left"
@@ -209,7 +213,25 @@ ALSET Games based on React Game Kit
 	<li>
 		control info is used if you want to control bot with keys it contain of 1st array "keyPressed" that has two elements: first is for left screen controlled bot, second is for right screen, and second array that also, consists of two elements, each element can be 0 or 1, depending on which bot out of two is controllde now, since there can be two bots on each screen. This parameter is changing when user clicks switch button. Left, right, up, down and switch keys names can be found and changed in config.json file for each game
 	</li>
+	<li>
+		control info is used if you want to control bot with keys it contain of 1st array "keyPressed" that has two elements: first is for left screen controlled bot, second is for right screen, and second array that also, consists of two elements, each element can be 0 or 1, depending on which bot out of two is controllde now, since there can be two bots on each screen. This parameter is changing when user clicks switch button. Left, right, up, down and switch keys names can be found and changed in config.json file for each game
+	</li>
+	<li>
+		players object holding information about all character of current game, including controllable player and its opponent
+	</li>
 </ol>
+<h2>Examples:</h2>
+<p>
+	Simplest example of how to make first bot moving always left and second one down:<br>
+	<pre>
+		function(world){
+			if(world.index==0)
+				return "left";
+			else if(world.index==1)
+				return "down";
+		}
+	</pre>
+</p>
 
 <h1 align="center">Explanation of how to change graphic if needed</h1>
 <h2 align="center">What sprite should look like</h2>

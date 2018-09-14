@@ -25,7 +25,8 @@ class Updater extends Component {
         this.restartGame = this.restartGame.bind(this);
         this.changePlayer1Func = this.changePlayer1Func.bind(this);
         this.changePlayer2Func = this.changePlayer2Func.bind(this);
-        console.log(level3)
+        this.botsQuantity = config.botsQuantityPerGame;
+        this.changeBotsQuantity = this.changeBotsQuantity.bind(this);
         Store.player1Func = level3;
         Store.player2Func = control;
         if(this.getURLParameters('player1')){
@@ -82,7 +83,7 @@ class Updater extends Component {
                     break;
             }
         }
-        this.simulation = new Simulation(config,Store.player1Func,Store.player2Func);
+        this.simulation = new Simulation(config,Store.player1Func,Store.player2Func, config.botsQuantityPerGame);
     }
     loop = () => {
         if(Store.mode == 'play'){
@@ -95,13 +96,14 @@ class Updater extends Component {
             }
             var data = this.simulation.simulate();
             var gamesQount = 2;
-            var charQount = 2;
+            var charQount = data.bots[0].length;
             for(var i=0;i<gamesQount;i++){
-                Store.updateCollectives(i, data.collectives[i]);
+                Store.updatePlants(i, data.collectives[i]);
                 Store.updateScore(i, data.score[i]);
                 for(var j=0;j<charQount;j++){
-                    Store.updatePosition(i, j, data.bots[i][j], 1);
+                    Store.updatePosition(i, j, data.bots[i][j], 3);
                     Store.updateDirection(i, j, data.direction[i][j]);
+                    Store.updateFilling(i,j, data.bots[i][j].loaded)
                 }
             }
         }
@@ -191,7 +193,14 @@ class Updater extends Component {
             return false;
         }
     }
-
+    changeBotsQuantity(e){
+        console.log("stop loop");
+        Store.mode = 'pause';
+        if(e.target.value!==this.botsQuantity){
+            Store.botsQuantity = e.target.value;
+            this.restartGame();
+        }
+    }
     changePlayer1Func(e){
         /*if(e.target.value!=="Custom code")
             Store.player1Func = eval("("+e.target.value+")");
@@ -264,7 +273,7 @@ class Updater extends Component {
     }
     restartGame(){
         Store.time = config.time;
-        this.simulation = new Simulation(config,Store.player1Func,Store.player2Func);
+        this.simulation = new Simulation(config,Store.player1Func,Store.player2Func,Store.botsQuantity);
         Store.mode = 'play';
     }
     componentDidMount() {
@@ -325,8 +334,18 @@ class Updater extends Component {
                 <p style={{margin:0, textAlign:'center'}}>Time left:{Store.time}</p>
                 <button onClick={() => this.restartGame()}>Restart</button>
                 <button onClick={() => this.pauseResumeGame()}>{Store.mode == 'play' ? 'Pause' : 'Resume'}</button>
+                <select id={"botsQuantity"} value={Store.botsQuantity} onChange={this.changeBotsQuantity}>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
+                    <option value={8}>8</option>
+                </select>
             </p>
-        </div>)
+        </div>);
     }
 }
 

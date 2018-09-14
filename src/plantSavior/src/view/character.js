@@ -33,6 +33,8 @@ class Bot extends Component {
             direction={Store.direction[this.props.gameId][this.props.charId]}
             scale={this.context.scale}
             size={config.playerSize}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
           />
         </div>;
       case 'gnome2':
@@ -69,6 +71,8 @@ class Bot extends Component {
             direction={Store.direction[this.props.gameId][this.props.charId]}
             scale={this.context.scale}
             size={config.playerSize}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
           />
         </div>;
       case 'drone2':

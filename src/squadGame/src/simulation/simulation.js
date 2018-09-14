@@ -116,16 +116,32 @@ Simulation.prototype.getDirections       = function(direction){
 }
 Simulation.prototype.simulate = function(){
     var bot1_1Data = {
-        player:this.bots[0][0], collectives:this.collectives[0], direction: this.direction[0][0], index:0, config: this.config, gameId: 0, controlInfo: this.controlInfo
+        player:this.bots[0][0], collectives:this.collectives[0], direction: this.direction[0][0], index:0, config: this.config, gameId: 0, controlInfo: this.controlInfo, 
+		players:[
+			{position:this.bots[0][0], direction:this.direction[0][0]},
+			{position:this.bots[0][1], direction:this.direction[0][1]}
+		]
     };
     var bot1_2Data = {
-        player:this.bots[0][1], collectives:this.collectives[0], direction: this.direction[0][1], index:1, config: this.config, gameId: 0, controlInfo: this.controlInfo
+        player:this.bots[0][1], collectives:this.collectives[0], direction: this.direction[0][1], index:1, config: this.config, gameId: 0, controlInfo: this.controlInfo, 
+		players:[
+			{position:this.bots[0][0], direction:this.direction[0][0]},
+			{position:this.bots[0][1], direction:this.direction[0][1]}
+		]
     };
     var bot2_1Data = {
-        player:this.bots[1][0], collectives:this.collectives[1], direction: this.direction[1][0], index:0, config: this.config, gameId: 1, controlInfo: this.controlInfo
+        player:this.bots[1][0], collectives:this.collectives[1], direction: this.direction[1][0], index:0, config: this.config, gameId: 1, controlInfo: this.controlInfo, 
+		players:[
+			{position:this.bots[1][0], direction:this.direction[1][0]},
+			{position:this.bots[1][1], direction:this.direction[1][1]}
+		]
     };
     var bot2_2Data = {
-        player:this.bots[1][1], collectives:this.collectives[1], direction: this.direction[1][1], index:1, config: this.config, gameId: 1, controlInfo: this.controlInfo
+        player:this.bots[1][1], collectives:this.collectives[1], direction: this.direction[1][1], index:1, config: this.config, gameId: 1, controlInfo: this.controlInfo, 
+		players:[
+			{position:this.bots[1][0], direction:this.direction[1][0]},
+			{position:this.bots[1][1], direction:this.direction[1][1]}
+		]
     };
     this.direction[0][0]=this.bot1clb(bot1_1Data);
     this.direction[0][1]=this.bot1clb(bot1_2Data);

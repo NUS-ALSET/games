@@ -1,13 +1,21 @@
-import { observable, computed, extendObservable } from 'mobx';
+import { observable, computed, extendObservable, autorun } from 'mobx';
 import config from './simulation/config.json';
 import {defaultJavascriptFunctionCode} from './view/Components/defaultCode';
 
 class squadStore {
     constructor() {
+        let position = [new Array(8),new Array(8)];
+        let filled = [new Array(8),new Array(8)];
+        for(var i=0;i<8;i++){
+            position[0][i] = config.player1StartingPoint;
+            position[1][i] = config.player1StartingPoint;
+            filled[0][i] = 0;
+            filled[1][i] = 0;
+        }
         extendObservable(this, {
             time: config.time,
             prevTime: Date.now(),
-            position: [
+            /*position: [
                 [
                     config.player1StartingPoint,
                     config.player2StartingPoint
@@ -16,7 +24,11 @@ class squadStore {
                     config.player1StartingPoint,
                     config.player2StartingPoint
                 ]
-            ],
+            ],*/
+            position:position,
+            botsQuantity:config.botsQuantityPerGame,
+            //filled:[[0,0],[0,0]],
+            filled:filled,
             direction: [['right','down'], ['right','down']],
             plants: [[], []],
             score: [0, 0],
@@ -40,7 +52,9 @@ class squadStore {
         }
         var needToUpdate = false;
         this.plants[gameId].forEach((plant,plantIndex) => {
-            if(plant.state!==plantsArr[plantIndex].state||plant.health!=plantsArr[plantIndex].health)
+            if(plant.state!==plantsArr[plantIndex].state)
+                needToUpdate = true;
+            else if(plant.health-plantsArr[plantIndex].health>10)
                 needToUpdate = true;
         });
         if(needToUpdate)
@@ -64,6 +78,11 @@ class squadStore {
         if(this.score[gameId]!==score){
             
             this.score[gameId]=score;
+        }
+    }
+    updateFilling(gameId, playerId, newState){
+        if(this.filled[gameId][playerId]!==newState){
+            this.filled[gameId][playerId]=newState;
         }
     }
 }
