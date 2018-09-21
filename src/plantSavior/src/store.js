@@ -15,22 +15,12 @@ class squadStore {
         extendObservable(this, {
             time: config.time,
             prevTime: Date.now(),
-            /*position: [
-                [
-                    config.player1StartingPoint,
-                    config.player2StartingPoint
-                ],
-                [
-                    config.player1StartingPoint,
-                    config.player2StartingPoint
-                ]
-            ],*/
             position:position,
             botsQuantity:config.botsQuantityPerGame,
-            //filled:[[0,0],[0,0]],
             filled:filled,
             direction: [['right','down'], ['right','down']],
-            plants: [[], []],
+            plants1: [],
+            plants2: [],
             score: [0, 0],
             mode: 'play',
             player1Func: undefined,
@@ -47,18 +37,28 @@ class squadStore {
         }
     }
     updatePlants(gameId, plantsArr){
-        if(this.plants[gameId].length !== plantsArr.length){
-            this.plants[gameId] = plantsArr;
-        }
         var needToUpdate = false;
-        this.plants[gameId].forEach((plant,plantIndex) => {
+        if(this['plants'+(gameId+1)].length !== plantsArr.length){
+            if(gameId==0)
+                this.plants1 = plantsArr;
+            else
+                this.plants2 = plantsArr;
+        }
+        if(gameId==0)
+            var plants = this.plants1;
+        else
+            var plants = this.plants2;
+        plants.forEach((plant,plantIndex) => {
             if(plant.state!==plantsArr[plantIndex].state)
                 needToUpdate = true;
             else if(plant.health-plantsArr[plantIndex].health>10)
                 needToUpdate = true;
         });
         if(needToUpdate)
-            this.plants[gameId] = plantsArr;
+            if(gameId==0)
+                this.plants1 = plantsArr;
+            else
+                this.plants2 = plantsArr;
     }
     updateDirection(gameId, playerId, newDirection){
         if(newDirection.right)

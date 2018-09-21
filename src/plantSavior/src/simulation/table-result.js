@@ -1,9 +1,9 @@
-//import Store from '../store';
+import Store from '../store';
 function createLink(func1,func2){
     return '?player2='+func1+'&player1='+func2;
 }
 let simulate = function(botFiles, config){
-    /*let tableStart = `<table id="game-result-table" border='0' align='center' cellspacing=0 cell>
+    let tableStart = `<table id="game-result-table" border='0' align='center' cellspacing=0 cell>
         <tr><td>Totals as Player 2 &#8594;</td>`;
     let tableStart2 = "<tr id='game-result-header'><td>Totals as Player 1 &#8595;</td>";
     let tableStart3 = "";
@@ -48,31 +48,12 @@ let simulate = function(botFiles, config){
         tableStartArr[botFiles.indexOf(bot1)]+="<td>"+player1Score[botFiles.indexOf(bot1)].toFixed(1)+"</td>"
     }
     tableStart2+="</tr>"
-    for(var i=0;i<botFiles.length;i++){
+    for(var i=botFiles.length-1;i>=0;i--){
         tableStart+="<td>"+player2Score[i].toFixed(1)+"</td>";
         tableStartArr[i]+="<td>"+(player1Score[i]+player2Score[i]).toFixed(1)+"</td></tr>";
         tableStart3+=tableStartArr[i];
     }
     tableStart+="<td rowspan=2>Totals as Player1</td><td rowspan=2>Overall Total</td></tr>";
-    return tableStart+tableStart2+tableStart3+"</table>";*/
-    const Simulation = require("./simulation.js");
-    
-    var str = "";
-    var time = config.time*60;
-    for (let bot1 of botFiles){
-        for (let bot2 of botFiles){
-            time = config.time*60;
-            //if(bot1.name==bot2.name)
-                //continue;
-            var simulat = new Simulation(config,bot1,bot2,4);
-            while(time>0){
-                var result = simulat.simulate();
-                time--;
-            }
-            str+="<p>"+bot1.name+" vs. "+bot2.name+": "+result.player1+":"+result.player2+"</p>"
-        }
-    }
-    //var simulat = new Simulation(config,botFiles[0],botFiles[1],2);
-    return str;
+    return tableStart+tableStart2+tableStart3+"</table>";
 };
 export default simulate;

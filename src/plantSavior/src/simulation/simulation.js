@@ -87,35 +87,8 @@ function Simulation(config, bot1clb, bot2clb, botsQuantity){
             };
         }
     }
-    /*this.bots = [
-        [
-            {
-                x:this.config.player1StartingPoint.x,
-                y:this.config.player1StartingPoint.y,
-                loaded:null
-            },
-            {
-                x:this.config.player2StartingPoint.x,
-                y:this.config.player2StartingPoint.y,
-                loaded:null
-            }
-        ],
-        [
-            {
-                x:this.config.player1StartingPoint.x,
-                y:this.config.player1StartingPoint.y,
-                loaded:null
-            },
-            {
-                x:this.config.player2StartingPoint.x,
-                y:this.config.player2StartingPoint.y,
-                loaded:null
-            }
-        ]
-    ];*/
     this.score = [0,0];
     this.controlInfo = {keyPressed:["up", "up"], current:[0,0]};
-    //this.direction = [[{down:true}, {right:true}],[{down:true}, {right:true}]];
     this.direction = [new Array(botsQuantity), new Array(botsQuantity)];
     this.directionsArr = [{"up":true},{"down":true},{"left":true},{"right":true}];
     for(var i=0; i<botsQuantity; i++){
@@ -173,13 +146,25 @@ Simulation.prototype.getDirections = function(direction){
 Simulation.prototype.simulate = function(){
     var gamesQuant = 2;
     var botsData = [new Array(this.quantity), new Array(this.quantity)];
-    var driedPlants = this.collectives[0].filter(function(plant){
+    var driedPlants = [[],[]];
+    var pestedPlants = [[],[]];
+    var sickPlants = [[],[]];
+    driedPlants[0] = this.collectives[0].filter(function(plant){
         return plant.state==1;
     });
-    var pestedPlants = this.collectives[0].filter(function(plant){
+    driedPlants[1] = this.collectives[1].filter(function(plant){
+        return plant.state==1;
+    });
+    pestedPlants[0] = this.collectives[0].filter(function(plant){
         return plant.state==2;
     });
-    var sickPlants = this.collectives[0].filter(function(plant){
+    pestedPlants[1] = this.collectives[1].filter(function(plant){
+        return plant.state==2;
+    });
+    sickPlants[0] = this.collectives[0].filter(function(plant){
+        return plant.state==1||plant.state==2;
+    });
+    sickPlants[1] = this.collectives[1].filter(function(plant){
         return plant.state==1||plant.state==2;
     });
     for(var i=0;i<gamesQuant;i++){
@@ -187,85 +172,11 @@ Simulation.prototype.simulate = function(){
             botsData[i][j] = {
                 player:this.bots[i][j], collectives:this.collectives[i], direction: this.direction[i][j], index: j, config: this.config, gameId: i,
                 controlInfo: this.controlInfo, isFilledWithWater:this.bots[i][j].loaded == "water", isFilledWithPests:this.bots[i][j].loaded == "pests",
-                driedPlants: driedPlants, pestedPlants: pestedPlants, sickPlants: sickPlants, botIndex: j, water: this.config.lakePosition,
+                driedPlants: driedPlants[i], pestedPlants: pestedPlants[i], sickPlants: sickPlants[i], botIndex: j, water: this.config.lakePosition,
                 factory: this.config.factoryPosition
             }
         }
     }
-    
-    /*var bot1_1Data = {
-        player:this.bots[0][0], collectives:this.collectives[0], direction: this.direction[0][0], index:0, config: this.config, gameId: 0, 
-        controlInfo: this.controlInfo, isFilledWithWater:this.bots[0][0].loaded == "water", isFilledWithPests:this.bots[0][0].loaded == "pests",
-        driedPlants: this.collectives[0].filter(function(plant){
-            return plant.state==1;
-        }),
-        pestedPlants: this.collectives[0].filter(function(plant){
-            return plant.state==2;
-        }),
-        sickPlants: this.collectives[0].filter(function(plant){
-            return plant.state==1||plant.state==2;
-        }),
-        water: this.config.lakePosition,
-        factory: this.config.factoryPosition,
-        config: this.config,
-        botIndex: 1
-    };
-    var bot1_2Data = {
-        player:this.bots[0][1], collectives:this.collectives[0], direction: this.direction[0][1], index:1, config: this.config, gameId: 0, 
-        controlInfo: this.controlInfo, isFilledWithWater:this.bots[0][1].loaded == "water", isFilledWithPests:this.bots[0][1].loaded == "pests",
-        driedPlants: this.collectives[0].filter(function(plant){
-            return plant.state==1;
-        }),
-        pestedPlants: this.collectives[0].filter(function(plant){
-            return plant.state==2;
-        }),
-        sickPlants: this.collectives[0].filter(function(plant){
-            return plant.state==1||plant.state==2;
-        }),
-        water: this.config.lakePosition,
-        factory: this.config.factoryPosition,
-        config: this.config,
-        botIndex: 2
-    };
-    var bot2_1Data = {
-        player:this.bots[1][0], collectives:this.collectives[1], direction: this.direction[1][0], index:0, config: this.config, gameId: 1, 
-        controlInfo: this.controlInfo, isFilledWithWater:this.bots[1][0].loaded == "water", isFilledWithPests:this.bots[1][0].loaded == "pests",
-        driedPlants: this.collectives[1].filter(function(plant){
-            return plant.state==1;
-        }),
-        pestedPlants: this.collectives[1].filter(function(plant){
-            return plant.state==2;
-        }),
-        sickPlants: this.collectives[1].filter(function(plant){
-            return plant.state==1||plant.state==2;
-        }),
-        water: this.config.lakePosition,
-        factory: this.config.factoryPosition,
-        config: this.config,
-        botIndex: 1
-    };
-    var bot2_2Data = {
-        player:this.bots[1][1], collectives:this.collectives[1], direction: this.direction[1][1], index:1, config: this.config, gameId: 1, 
-        controlInfo: this.controlInfo, isFilledWithWater:this.bots[1][1].loaded == "water", isFilledWithPests:this.bots[1][1].loaded == "pests",
-        driedPlants: this.collectives[1].filter(function(plant){
-            return plant.state==1;
-        }),
-        pestedPlants: this.collectives[1].filter(function(plant){
-            return plant.state==2;
-        }),
-        sickPlants: this.collectives[1].filter(function(plant){
-            return plant.state==1||plant.state==2;
-        }),
-        water: this.config.lakePosition,
-        factory: this.config.factoryPosition,
-        config: this.config,
-        botIndex: 2
-    };
-    this.direction[0][0]=this.bot1clb(bot1_1Data);
-    this.direction[0][1]=this.bot1clb(bot1_2Data);
-    this.direction[1][0]=this.bot2clb(bot2_1Data);
-    this.direction[1][1]=this.bot2clb(bot2_2Data);*/
-    var gamesQuant = 2;
     for(var gameId = 0; gameId < gamesQuant; gameId++){
         if(gameId==0)
             var clb = this.bot1clb;

@@ -1,7 +1,4 @@
-function round(value, precision) {
-    var multiplier = Math.pow(10, precision || 0);
-    return Math.round(value * multiplier) / multiplier;
-}
+import Store from '../store';
 function createLink(func1,func2){
     return '?player2='+func1+'&player1='+func2;
 }
@@ -25,7 +22,7 @@ let simulate = function(botFiles, config){
             if(bot1!==bot2){
                 var time = config.time*60;
                 var result;
-                var simulation = new Simulation(config,bot1,bot2);
+                var simulation = new Simulation(config,bot1,bot2,Store.botsQuantity);
                 while(time>0){
                     result = simulation.simulate();
                     time--;
@@ -50,8 +47,8 @@ let simulate = function(botFiles, config){
         }
         tableStartArr[botFiles.indexOf(bot1)]+="<td>"+player1Score[botFiles.indexOf(bot1)].toFixed(1)+"</td>"
     }
-    tableStart2+="</tr>"
-    for(var i=0;i<botFiles.length;i++){
+    tableStart2+="</tr>";
+    for(var i=botFiles.length-1;i>=0;i--){
         tableStart+="<td>"+player2Score[i].toFixed(1)+"</td>";
         tableStartArr[i]+="<td>"+(player1Score[i]+player2Score[i]).toFixed(1)+"</td></tr>";
         tableStart3+=tableStartArr[i];

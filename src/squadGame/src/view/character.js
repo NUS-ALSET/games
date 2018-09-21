@@ -11,26 +11,24 @@ import BlackCar from './Components/Characters/CarBlack';
 import BlueCar from './Components/Characters/CarBlue';
 import OrangeCar from './Components/Characters/CarOrange';
 import WhiteCar from './Components/Characters/CarWhite';
-import Store from '../store';
 import config from '../simulation/config.json';
 import { observer } from 'mobx-react';
 
 class Bot extends Component {
   static contextTypes = {
-    loop: PropTypes.object,
-    scale: PropTypes.number,
+    scale: PropTypes.number
   };
-  func = false;
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
   render() {
     switch (this.props.type) {
       case 'gnome1':
         return <div>
           <Gnome1
-            position={Store.position[this.props.gameId][this.props.charId]}
-            direction={Store.direction[this.props.gameId][this.props.charId]}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
+            store={this.props.store}
             scale={this.context.scale}
             size={config.playerSize}
           />
@@ -38,8 +36,9 @@ class Bot extends Component {
       case 'gnome2':
         return <div>
           <Gnome2
-            position={Store.position[this.props.gameId][this.props.charId]}
-            direction={Store.direction[this.props.gameId][this.props.charId]}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
+            store={this.props.store}
             scale={this.context.scale}
             size={config.playerSize}
           />
@@ -47,8 +46,9 @@ class Bot extends Component {
       case 'blonde':
         return <div>
           <Blonde
-            position={Store.position[this.props.gameId][this.props.charId]}
-            direction={Store.direction[this.props.gameId][this.props.charId]}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
+            store={this.props.store}
             scale={this.context.scale}
             size={config.playerSize}
           />
@@ -56,8 +56,9 @@ class Bot extends Component {
       case 'brunette':
         return <div>
           <Brunette
-            position={Store.position[this.props.gameId][this.props.charId]}
-            direction={Store.direction[this.props.gameId][this.props.charId]}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
+            store={this.props.store}
             scale={this.context.scale}
             size={config.playerSize}
           />
@@ -65,8 +66,9 @@ class Bot extends Component {
       case 'drone1':
         return <div>
           <Drone1
-            position={Store.position[this.props.gameId][this.props.charId]}
-            direction={Store.direction[this.props.gameId][this.props.charId]}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
+            store={this.props.store}
             scale={this.context.scale}
             size={config.playerSize}
           />
@@ -74,8 +76,9 @@ class Bot extends Component {
       case 'drone2':
         return <div>
           <Drone2
-            position={Store.position[this.props.gameId][this.props.charId]}
-            direction={Store.direction[this.props.gameId][this.props.charId]}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
+            store={this.props.store}
             scale={this.context.scale}
             size={config.playerSize}
           />
@@ -83,8 +86,9 @@ class Bot extends Component {
       case 'drone3':
         return <div>
           <Drone3
-            position={Store.position[this.props.gameId][this.props.charId]}
-            direction={Store.direction[this.props.gameId][this.props.charId]}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
+            store={this.props.store}
             scale={this.context.scale}
             size={config.playerSize}
           />
@@ -92,8 +96,9 @@ class Bot extends Component {
       case 'black-car':
         return <div>
           <BlackCar
-            position={Store.position[this.props.gameId][this.props.charId]}
-            direction={Store.direction[this.props.gameId][this.props.charId]}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
+            store={this.props.store}
             scale={this.context.scale}
             size={config.playerSize}
           />
@@ -101,8 +106,9 @@ class Bot extends Component {
       case 'blue-car':
         return <div>
           <BlueCar
-            position={Store.position[this.props.gameId][this.props.charId]}
-            direction={Store.direction[this.props.gameId][this.props.charId]}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
+            store={this.props.store}
             scale={this.context.scale}
             size={config.playerSize}
           />
@@ -110,8 +116,9 @@ class Bot extends Component {
       case 'orange-car':
         return <div>
           <OrangeCar
-            position={Store.position[this.props.gameId][this.props.charId]}
-            direction={Store.direction[this.props.gameId][this.props.charId]}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
+            store={this.props.store}
             scale={this.context.scale}
             size={config.playerSize}
           />
@@ -119,8 +126,9 @@ class Bot extends Component {
       case 'white-car':
         return <div>
           <WhiteCar
-            position={Store.position[this.props.gameId][this.props.charId]}
-            direction={Store.direction[this.props.gameId][this.props.charId]}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
+            store={this.props.store}
             scale={this.context.scale}
             size={config.playerSize}
           />
@@ -128,8 +136,9 @@ class Bot extends Component {
       default:
         return <div>
           <Gnome1
-            position={Store.position[this.props.gameId][this.props.charId]}
-            direction={Store.direction[this.props.gameId][this.props.charId]}
+            gameId={this.props.gameId}
+            charId={this.props.charId}
+            store={this.props.store}
             scale={this.context.scale}
             size={config.playerSize}
           />

@@ -1,70 +1,15 @@
 import React, { Component } from 'react';
-import Sprite from './Components/Characters/Sprite';
-import Store from '../store';
-import img from '../assets/sprites/plant-states.png';
-import config from '../simulation/config.json';
-import PropTypes from 'prop-types';
+import Plant from './plant.js';
 import { observer } from 'mobx-react';
+import Store from '../store';
 
 class Plants extends Component {
-    static contextTypes = {
-        scale: PropTypes.number
-    };
     constructor() {
         super();
-        this.getWrapperStyles = this.getWrapperStyles.bind(this);
-    }
-    getWrapperStyles(x,y, state) {
-        var targetX = x*this.context.scale;
-        var targetY = y*this.context.scale;
-        return {
-            position: 'absolute',
-            transform: `translate(${targetX}px, ${targetY}px)`,
-            transformOrigin: 'left top',
-            width:'200px',
-            height:'200px'
-        };
-    }
-    getHealthBarStyles(){
-        return {
-            marginTop: -10*this.context.scale+"px",
-            height: 5*this.context.scale+"px",
-            width: (config.plantSize-2)*this.context.scale+"px",
-            background: "red"
-        }
-    }
-    getHealthQuantityStyles(health){
-        return {
-            height: "100%",
-            width: health+"%",
-            background: "green"
-        }
-    }
-    getsRightState(state){
-        if(state == 1)
-            return 2;
-        else if(state == 2)
-            return 1;
-        else
-            return state;
     }
     render(){
-        return <div>{Store.plants[this.props.gameId].map((plant, index) => {
-            return <div key={index} style={this.getWrapperStyles(plant.x, plant.y, plant.state)}>
-                <div style={this.getHealthBarStyles()} className={"health-bar"}>
-                    <div style={this.getHealthQuantityStyles(plant.health)} className={"health-quantity"}></div>
-                </div>
-                <Sprite
-                    repeat={true}
-                    tileWidth={200}
-                    tileHeight={200}
-                    src={img}
-                    ticksPerFrame={4}
-                    state={this.getsRightState(plant.state)}
-                    scale={(config.plantSize/200)*this.context.scale}
-                    steps={[0, 0, 0, 0]}
-                />
-            </div>
+        return <div>{this.props.store['plants'+(this.props.gameId+1)].map((plant, index) => {
+            return <Plant key={index} gameId={this.props.gameId} plant={plant}></Plant>
         })}</div>;
     }
 }
