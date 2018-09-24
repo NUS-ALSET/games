@@ -304,7 +304,7 @@ class Updater extends Component {
                 </select>
                 <ScoreDisplay store={this.props.store} gameId={0}></ScoreDisplay>
             </p>
-            <p style={{position:'absolute', left:'50%', top:'0', transform:'translate(-50%, -50%)', zIndex:100}}>
+            <p style={{position:'absolute', left:'50%', top:'15px', transform:'translate(-50%, -50%)', zIndex:100}}>
                 <button onClick={() => this.restartGame()}>Restart</button>
                 <button onClick={() => this.pauseResumeGame()}>{this.props.store.mode == 'play' ? 'Pause' : 'Resume'}</button>
                 <select id={"botsQuantity"} value={this.props.store.botsQuantity} onChange={this.changeBotsQuantity}>

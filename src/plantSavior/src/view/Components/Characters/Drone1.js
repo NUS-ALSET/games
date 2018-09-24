@@ -27,8 +27,8 @@ class Drone1 extends Component {
   }
   getWrapperStyles() {
     this.getAnimationState();
-    var targetX = this.props.store.position[this.props.gameId][this.props.charId].x*this.context.scale;
-    var targetY = this.props.store.position[this.props.gameId][this.props.charId].y*this.context.scale;
+    var targetX = this.props.store.position[this.props.gameId][this.props.charId].x*this.props.scale;
+    var targetY = this.props.store.position[this.props.gameId][this.props.charId].y*this.props.scale;
     return {
       position: 'absolute',
       transform: `translate(${targetX}px, ${targetY}px)`,
