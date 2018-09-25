@@ -28,7 +28,7 @@ class Bot extends Component {
         return <div>
           <Gnome1
             store={this.props.store}
-            scale={this.context.scale}
+            scale={this.props.scale}
             size={config.playerSize}
             gameId={this.props.gameId}
             charId={this.props.charId}
@@ -38,7 +38,7 @@ class Bot extends Component {
         return <div>
           <Gnome2
             store={this.props.store}
-            scale={this.context.scale}
+            scale={this.props.scale}
             size={config.playerSize}
             gameId={this.props.gameId}
             charId={this.props.charId}
@@ -48,7 +48,7 @@ class Bot extends Component {
         return <div>
           <Blonde
             store={this.props.store}
-            scale={this.context.scale}
+            scale={this.props.scale}
             size={config.playerSize}
             gameId={this.props.gameId}
             charId={this.props.charId}
@@ -58,7 +58,7 @@ class Bot extends Component {
         return <div>
           <Brunette
             store={this.props.store}
-            scale={this.context.scale}
+            scale={this.props.scale}
             size={config.playerSize}
             gameId={this.props.gameId}
             charId={this.props.charId}
@@ -68,7 +68,7 @@ class Bot extends Component {
         return <div>
           <Drone1
             store={this.props.store}
-            scale={this.context.scale}
+            scale={this.props.scale}
             size={config.playerSize}
             gameId={this.props.gameId}
             charId={this.props.charId}
@@ -78,7 +78,7 @@ class Bot extends Component {
         return <div>
           <Drone2
             store={this.props.store}
-            scale={this.context.scale}
+            scale={this.props.scale}
             size={config.playerSize}
             gameId={this.props.gameId}
             charId={this.props.charId}
@@ -88,7 +88,7 @@ class Bot extends Component {
         return <div>
           <Drone3
             store={this.props.store}
-            scale={this.context.scale}
+            scale={this.props.scale}
             size={config.playerSize}
             gameId={this.props.gameId}
             charId={this.props.charId}
@@ -98,7 +98,7 @@ class Bot extends Component {
         return <div>
           <BlackCar
             store={this.props.store}
-            scale={this.context.scale}
+            scale={this.props.scale}
             size={config.playerSize}
             gameId={this.props.gameId}
             charId={this.props.charId}
@@ -108,7 +108,7 @@ class Bot extends Component {
         return <div>
           <BlueCar
             store={this.props.store}
-            scale={this.context.scale}
+            scale={this.props.scale}
             size={config.playerSize}
             gameId={this.props.gameId}
             charId={this.props.charId}
@@ -118,7 +118,7 @@ class Bot extends Component {
         return <div>
           <OrangeCar
             store={this.props.store}
-            scale={this.context.scale}
+            scale={this.props.scale}
             size={config.playerSize}
             gameId={this.props.gameId}
             charId={this.props.charId}
@@ -128,7 +128,7 @@ class Bot extends Component {
         return <div>
           <WhiteCar
             store={this.props.store}
-            scale={this.context.scale}
+            scale={this.props.scale}
             size={config.playerSize}
             gameId={this.props.gameId}
             charId={this.props.charId}
@@ -138,7 +138,7 @@ class Bot extends Component {
         return <div>
           <Gnome1
             store={this.props.store}
-            scale={this.context.scale}
+            scale={this.props.scale}
             size={config.playerSize}
             gameId={this.props.gameId}
             charId={this.props.charId}

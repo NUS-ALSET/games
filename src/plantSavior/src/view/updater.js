@@ -302,7 +302,7 @@ class Updater extends Component {
                     <option value={"level2"}>Level 2</option>
                     <option value={"level3"}>Level 3</option>
                 </select>
-                <ScoreDisplay store={this.props.store} gameId={0}></ScoreDisplay>
+                <ScoreDisplay store={this.props.store} gameId={1}></ScoreDisplay>
             </p>
             <p style={{position:'absolute', left:'50%', top:'15px', transform:'translate(-50%, -50%)', zIndex:100}}>
                 <button onClick={() => this.restartGame()}>Restart</button>

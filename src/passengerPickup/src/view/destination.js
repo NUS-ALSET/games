@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import img1 from '../assets/destination/PickupGreen.png';
 import img2 from '../assets/destination/PickupViolet.png';
-import Store from '../store';
 import Sprite from './Components/Characters/Sprite';
 import { observer } from 'mobx-react';
 import PropTypes from 'prop-types';
@@ -25,30 +24,22 @@ class Destination extends Component {
     render() {
         return (
             <div>
-                {Store.destination[this.props.gameId][0]!==null&&<div style={this.getWrapperStyles(Store.destination[this.props.gameId][0])}>
-                    <Sprite
-                        repeat={true}
-                        tileWidth={102}
-                        tileHeight={102}
-                        src={img1}
-                        ticksPerFrame={4}
-                        state={0}
-                        scale={(config.passengerSize/102)*this.context.scale}
-                        steps={[7]}
-                    />
-                </div>}
-                {Store.destination[this.props.gameId][1]!==null&&<div style={this.getWrapperStyles(Store.destination[this.props.gameId][1])}>
-                    <Sprite
-                        repeat={true}
-                        tileWidth={102}
-                        tileHeight={102}
-                        src={img2}
-                        ticksPerFrame={4}
-                        state={0}
-                        scale={(config.passengerSize/102)*this.context.scale}
-                        steps={[7]}
-                    />
-                </div>}
+                {this.props.store.destination[this.props.gameId].map((dest)=>{
+                    if(dest!==null){
+                        return <div key={dest.takeofX+"-"+dest.takeofY+"-"+dest.x+"-"+dest.x} style={this.getWrapperStyles(dest)}>
+                        <Sprite
+                            repeat={true}
+                            tileWidth={102}
+                            tileHeight={102}
+                            src={Math.random()>0.5?img1:img2}
+                            ticksPerFrame={4}
+                            state={0}
+                            scale={(config.passengerSize/102)*this.context.scale}
+                            steps={[7]}
+                        />
+                    </div>
+                    }
+                })}
             </div>
         );
     }

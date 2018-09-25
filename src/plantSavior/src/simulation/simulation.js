@@ -96,7 +96,6 @@ function Simulation(config, bot1clb, bot2clb, botsQuantity){
         this.direction[0][i] = newDirection;
         this.direction[1][i] = newDirection;
     }
-
     document.addEventListener('keydown', (e) => {
         var gamesQuant = 2;
         for(var gameId = 0; gameId < gamesQuant; gameId++){

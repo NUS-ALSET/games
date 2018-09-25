@@ -1,6 +1,7 @@
 {
 	"width":500,
 	"height": 500,
+    "botsQuantityPerGame":3,
 	"minPassengers": 20,
 	"maxPassengers": 30,
     "time": 90,

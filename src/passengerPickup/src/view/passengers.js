@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Store from '../store';
 import img from '../assets/passenger/passenger.png';
 import squadConfig from '../simulation/config.json';
 import PropTypes from 'prop-types';
@@ -14,7 +13,7 @@ class Passengers extends Component {
     }
 
     render(){
-        return <div>{Store.passengers[this.props.gameId].map((passenger, index) => {
+        return <div>{this.props.store.passengers[this.props.gameId].map((passenger, index) => {
             return <div
             key={index}
             style={{

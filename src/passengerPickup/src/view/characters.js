@@ -8,17 +8,15 @@ class Characters extends Component {
     loop: PropTypes.object,
     scale: PropTypes.number,
   };
-  func = false;
-  constructor(props, context) {
+  constructor(props) {
     super(props);
     var charactersTypeArr = ['drone1', 'drone2', 'drone3'];
-    var spriteType;
   }
   render() {
     return <div>
       {this.props.store.position[this.props.gameId].map((pos,index)=>{
         if(index<this.props.store.botsQuantity)
-          return <div key={index}><Character scale={this.context.scale} store={this.props.store} gameId={this.props.gameId} charId={index} type={'drone1'}></Character></div>
+          return <div key={index}><Character scale={this.context.scale} store={this.props.store} gameId={this.props.gameId} charId={index} type={'black-car'}></Character></div>
       })}
     </div>
   }
