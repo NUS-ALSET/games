@@ -47,25 +47,25 @@ var level3 =function(world){
 			return getDirection(world.player, closestDriedPlants);
 		}
 		else if(world.isFilledWithPests){
-			return getDirection(world.player, {x:world.water.x+world.config.lakeSize-1,y:world.water.y+world.config.lakeSize-1});
+			return getDirection(world.player, {x:world.water.x+world.config.lakeSize-1,y:world.water.y+world.config.lakeSize-5});
 		}
 		else{
-			return getDirection(world.player, {x:world.water.x+world.config.lakeSize-1,y:world.water.y+world.config.lakeSize-1});
+			return getDirection(world.player, {x:world.water.x+world.config.lakeSize-1,y:world.water.y+world.config.lakeSize-5});
 		}
 	}
 	else{
-		if(world.isFilledWithWater&&world.botIndex==1){
+		if(world.isFilledWithWater&&world.botIndex%2==1){
 			var closestDriedPlants = getIllest(world.player, world.driedPlants);
 			return getDirection(world.player, closestDriedPlants);
 		}
-		else if(world.isFilledWithPests&&world.botIndex==2){
+		else if(world.isFilledWithPests&&world.botIndex%2==0){
 			var closestPestedPlants = getIllest(world.player, world.pestedPlants);
 			return getDirection(world.player, closestPestedPlants);
 		}
-		else if(world.isFilledWithPests&&world.botIndex==1){
+		else if(world.isFilledWithPests&&world.botIndex%2==1){
 			return getDirection(world.player, {x:world.water.x+world.config.lakeSize-1,y:world.water.y+world.config.lakeSize-1});
 		}
-		else if(world.isFilledWithWater&&world.botIndex==2){
+		else if(world.isFilledWithWater&&world.botIndex%2==0){
 			return getDirection(world.player, {x:world.factory.x+world.config.factorySize-1,y:world.factory.y+world.config.factorySize-1});
 		}
 		else{

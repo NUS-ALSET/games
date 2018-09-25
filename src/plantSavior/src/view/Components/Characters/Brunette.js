@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Sprite from './Sprite';
 import { observer } from 'mobx-react';
 import img from '../../../assets/sprites/brunette.png';
+import waterIcon from '../../../assets/images/water-icon.png';
+import pesticideIcon from '../../../assets/images/pesticide.png';
+import Store from '../../../store';
 
 class Brunette extends Component {
   getAnimationState() {
@@ -36,6 +39,21 @@ class Brunette extends Component {
   render() {
     return (
       <div id={'character'} style={this.getWrapperStyles()}>
+        <div
+          style={{
+            marginTop:-this.props.size/2*this.props.scale+"px",
+            marginLeft:this.props.size/4*this.props.scale+"px",
+            width:this.props.size/2*this.props.scale+"px",
+            height:this.props.size/2*this.props.scale+"px",
+          }}
+        > 
+          {Store.filled[this.props.gameId][this.props.charId]=="water"&&
+            <img src={waterIcon} style={{width:"100%", height:"100%"}}/>
+          }
+          {Store.filled[this.props.gameId][this.props.charId]=="pests"&&
+            <img src={pesticideIcon} style={{width:"100%", height:"100%"}}/>
+          }
+        </div>
         <Sprite
           repeat={true}
           tileWidth={64}

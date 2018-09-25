@@ -4,21 +4,19 @@ import {defaultJavascriptFunctionCode} from './view/Components/defaultCode';
 
 class squadStore {
     constructor() {
+        let position = [new Array(8),new Array(8)];
+        for(var i=0;i<8;i++){
+            position[0][i] = config.player1StartingPoint;
+            position[1][i] = config.player1StartingPoint;
+        }
         extendObservable(this, {
             time: config.time,
             prevTime: Date.now(),
-            position: [
-                [
-                    config.player1StartingPoint,
-                    config.player2StartingPoint
-                ],
-                [
-                    config.player1StartingPoint,
-                    config.player2StartingPoint
-                ]
-            ],
+            position: position,
+            botsQuantity:config.botsQuantityPerGame,
             direction: [['right','down'], ['right','down']],
-            collectives: [[], []],
+            collectives1: observable([]),
+            collectives2: observable([]),
             score: [0, 0],
             mode: 'play',
             player1Func: undefined,
@@ -26,8 +24,9 @@ class squadStore {
             func: defaultJavascriptFunctionCode,
             needToRestartGame: false,
             player1ControlSelected: "level3",
-            player2ControlSelected:"manual control"
+            player2ControlSelected:"manual control",
         });
+        this.data = {};
     }
     updatePosition(gameId, playerId, newPosition, offset){
         if(Math.abs(this.position[gameId][playerId].x - newPosition.x) >= offset || Math.abs(this.position[gameId][playerId].y - newPosition.y) >= offset){
@@ -35,8 +34,15 @@ class squadStore {
         }
     }
     updateCollectives(gameId, collectivesArr){
-        if(this.collectives[gameId].length !== collectivesArr.length){
-            this.collectives[gameId] = collectivesArr;
+        if(gameId==0)
+            var collectives = this.collectives1;
+        else
+            var collectives = this.collectives2;
+        if(collectives.length !== collectivesArr.length){
+            if(gameId==0)
+                this.collectives1 = collectivesArr;
+            else
+                this.collectives2 = collectivesArr;
         }
     }
     updateDirection(gameId, playerId, newDirection){

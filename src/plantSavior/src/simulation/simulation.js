@@ -1,7 +1,8 @@
-function Simulation(config, bot1clb, bot2clb){
+function Simulation(config, bot1clb, bot2clb, botsQuantity){
     this.config = config;
     this.bot1clb = bot1clb;
     this.bot2clb = bot2clb;
+    this.quantity = botsQuantity;
     if(!this.config.width||typeof this.config.width!="number"){
         this.config.width = 800;
     }
@@ -41,37 +42,60 @@ function Simulation(config, bot1clb, bot2clb){
 
     this.collectives = [[],[]];
     this.generatePlants();
-    this.bots = [
-        [
-            {
+    this.bots = [new Array(botsQuantity), new Array(botsQuantity)];
+    var minX = this.config.player1StartingPoint.x<this.config.player2StartingPoint.x?this.config.player1StartingPoint.x:this.config.player2StartingPoint.x;
+    var maxX = this.config.player1StartingPoint.x>this.config.player2StartingPoint.x?this.config.player1StartingPoint.x:this.config.player2StartingPoint.x;
+    var minY = this.config.player1StartingPoint.y<this.config.player2StartingPoint.y?this.config.player1StartingPoint.y:this.config.player2StartingPoint.y;
+    var maxY = this.config.player1StartingPoint.y>this.config.player2StartingPoint.y?this.config.player1StartingPoint.y:this.config.player2StartingPoint.y;
+    for(var i=0;i<botsQuantity;i++){
+        if(i==0){
+            this.bots[0][i] = {
                 x:this.config.player1StartingPoint.x,
                 y:this.config.player1StartingPoint.y,
                 loaded:null
-            },
-            {
+            };
+            this.bots[1][i] = {
+                x:this.config.player1StartingPoint.x,
+                y:this.config.player1StartingPoint.y,
+                loaded:null
+            }
+        }
+        else if(i==botsQuantity-1){
+            this.bots[0][i] = {
+                x:this.config.player2StartingPoint.x,
+                y:this.config.player2StartingPoint.y,
+                loaded:null
+            };
+            this.bots[1][i] = {
                 x:this.config.player2StartingPoint.x,
                 y:this.config.player2StartingPoint.y,
                 loaded:null
             }
-        ],
-        [
-            {
-                x:this.config.player1StartingPoint.x,
-                y:this.config.player1StartingPoint.y,
+        }
+        else{
+            var newX = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+            var newY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+            this.bots[0][i] = {
+                x:newX,
+                y:newY,
                 loaded:null
-            },
-            {
-                x:this.config.player2StartingPoint.x,
-                y:this.config.player2StartingPoint.y,
+            };
+            this.bots[1][i] = {
+                x:newX,
+                y:newY,
                 loaded:null
-            }
-        ]
-    ];
+            };
+        }
+    }
     this.score = [0,0];
     this.controlInfo = {keyPressed:["up", "up"], current:[0,0]};
-    this.direction = [[{down:true}, {right:true}],[{down:true}, {right:true}]];
+    this.direction = [new Array(botsQuantity), new Array(botsQuantity)];
     this.directionsArr = [{"up":true},{"down":true},{"left":true},{"right":true}];
-
+    for(var i=0; i<botsQuantity; i++){
+        var newDirection = this.directionsArr[Math.floor(Math.random()*this.directionsArr.length)]
+        this.direction[0][i] = newDirection;
+        this.direction[1][i] = newDirection;
+    }
     document.addEventListener('keydown', (e) => {
         var gamesQuant = 2;
         for(var gameId = 0; gameId < gamesQuant; gameId++){
@@ -88,13 +112,13 @@ function Simulation(config, bot1clb, bot2clb){
                 this.controlInfo.keyPressed[gameId] = "right";
             }
             else if(e.key==this.config['player'+(gameId+1)+'Keys'].switch){
-                this.controlInfo.current[gameId]=(this.controlInfo.current[gameId]==0?1:0);
+                this.controlInfo.current[gameId] = this.controlInfo.current[gameId]<this.quantity-1?this.controlInfo.current[gameId]+1:0;
             }
         }
     });
 }
 Simulation.prototype.getDirections = function(direction){
-    var botsQuant = 2;
+    var botsQuant = this.quantity;
     var gamesQuant = 2;
     for(var gameId = 0; gameId < gamesQuant; gameId++){
         for(var botId = 0; botId < botsQuant; botId++){
@@ -119,80 +143,50 @@ Simulation.prototype.getDirections = function(direction){
     return direction;
 }
 Simulation.prototype.simulate = function(){
-    var bot1_1Data = {
-        player:this.bots[0][0], collectives:this.collectives[0], direction: this.direction[0][0], index:0, config: this.config, gameId: 0, 
-        controlInfo: this.controlInfo, isFilledWithWater:this.bots[0][0].loaded == "water", isFilledWithPests:this.bots[0][0].loaded == "pests",
-        driedPlants: this.collectives[0].filter(function(plant){
-            return plant.state==1;
-        }),
-        pestedPlants: this.collectives[0].filter(function(plant){
-            return plant.state==2;
-        }),
-        sickPlants: this.collectives[0].filter(function(plant){
-            return plant.state==1||plant.state==2;
-        }),
-        water: this.config.lakePosition,
-        factory: this.config.factoryPosition,
-        config: this.config,
-        botIndex: 1
-    };
-    var bot1_2Data = {
-        player:this.bots[0][1], collectives:this.collectives[0], direction: this.direction[0][1], index:1, config: this.config, gameId: 0, 
-        controlInfo: this.controlInfo, isFilledWithWater:this.bots[0][1].loaded == "water", isFilledWithPests:this.bots[0][1].loaded == "pests",
-        driedPlants: this.collectives[0].filter(function(plant){
-            return plant.state==1;
-        }),
-        pestedPlants: this.collectives[0].filter(function(plant){
-            return plant.state==2;
-        }),
-        sickPlants: this.collectives[0].filter(function(plant){
-            return plant.state==1||plant.state==2;
-        }),
-        water: this.config.lakePosition,
-        factory: this.config.factoryPosition,
-        config: this.config,
-        botIndex: 2
-    };
-    var bot2_1Data = {
-        player:this.bots[1][0], collectives:this.collectives[1], direction: this.direction[1][0], index:0, config: this.config, gameId: 1, 
-        controlInfo: this.controlInfo, isFilledWithWater:this.bots[1][0].loaded == "water", isFilledWithPests:this.bots[1][0].loaded == "pests",
-        driedPlants: this.collectives[1].filter(function(plant){
-            return plant.state==1;
-        }),
-        pestedPlants: this.collectives[1].filter(function(plant){
-            return plant.state==2;
-        }),
-        sickPlants: this.collectives[1].filter(function(plant){
-            return plant.state==1||plant.state==2;
-        }),
-        water: this.config.lakePosition,
-        factory: this.config.factoryPosition,
-        config: this.config,
-        botIndex: 1
-    };
-    var bot2_2Data = {
-        player:this.bots[1][1], collectives:this.collectives[1], direction: this.direction[1][1], index:1, config: this.config, gameId: 1, 
-        controlInfo: this.controlInfo, isFilledWithWater:this.bots[1][1].loaded == "water", isFilledWithPests:this.bots[1][1].loaded == "pests",
-        driedPlants: this.collectives[1].filter(function(plant){
-            return plant.state==1;
-        }),
-        pestedPlants: this.collectives[1].filter(function(plant){
-            return plant.state==2;
-        }),
-        sickPlants: this.collectives[1].filter(function(plant){
-            return plant.state==1||plant.state==2;
-        }),
-        water: this.config.lakePosition,
-        factory: this.config.factoryPosition,
-        config: this.config,
-        botIndex: 2
-    };
-    this.direction[0][0]=this.bot1clb(bot1_1Data);
-    this.direction[0][1]=this.bot1clb(bot1_2Data);
-    this.direction[1][0]=this.bot2clb(bot2_1Data);
-    this.direction[1][1]=this.bot2clb(bot2_2Data);
+    var gamesQuant = 2;
+    var botsData = [new Array(this.quantity), new Array(this.quantity)];
+    var driedPlants = [[],[]];
+    var pestedPlants = [[],[]];
+    var sickPlants = [[],[]];
+    driedPlants[0] = this.collectives[0].filter(function(plant){
+        return plant.state==1;
+    });
+    driedPlants[1] = this.collectives[1].filter(function(plant){
+        return plant.state==1;
+    });
+    pestedPlants[0] = this.collectives[0].filter(function(plant){
+        return plant.state==2;
+    });
+    pestedPlants[1] = this.collectives[1].filter(function(plant){
+        return plant.state==2;
+    });
+    sickPlants[0] = this.collectives[0].filter(function(plant){
+        return plant.state==1||plant.state==2;
+    });
+    sickPlants[1] = this.collectives[1].filter(function(plant){
+        return plant.state==1||plant.state==2;
+    });
+    for(var i=0;i<gamesQuant;i++){
+        for(var j=0;j<this.quantity;j++){
+            botsData[i][j] = {
+                player:this.bots[i][j], collectives:this.collectives[i], direction: this.direction[i][j], index: j, config: this.config, gameId: i,
+                controlInfo: this.controlInfo, isFilledWithWater:this.bots[i][j].loaded == "water", isFilledWithPests:this.bots[i][j].loaded == "pests",
+                driedPlants: driedPlants[i], pestedPlants: pestedPlants[i], sickPlants: sickPlants[i], botIndex: j, water: this.config.lakePosition,
+                factory: this.config.factoryPosition
+            }
+        }
+    }
+    for(var gameId = 0; gameId < gamesQuant; gameId++){
+        if(gameId==0)
+            var clb = this.bot1clb;
+        else
+            var clb = this.bot2clb;
+        for(var botId = 0; botId < this.quantity; botId++){
+            this.direction[gameId][botId] = clb(botsData[gameId][botId]);
+        }
+    }
     this.direction = this.getDirections(this.direction);
-    var botsQuant = 2;
+    var botsQuant = this.quantity;
     var gamesQuant = 2;
     for(var gameId = 0; gameId < gamesQuant; gameId++){
         for(var botId = 0; botId < botsQuant; botId++){
@@ -250,7 +244,7 @@ Simulation.prototype.generatePlants = function(){
     });
 }
 Simulation.prototype.moveCharacters = function(){
-    var botsQuant = 2;
+    var botsQuant = this.quantity;
     var gamesQuant = 2;
     for(var gameId = 0; gameId < gamesQuant; gameId++){
         for(var botId = 0; botId < botsQuant; botId++){
@@ -292,7 +286,7 @@ Simulation.prototype.moveCharacters = function(){
     }*/
 }
 Simulation.prototype.collectCollectives = function(){
-    var botsQuant = 2;
+    var botsQuant = this.quantity;
     var gamesQuant = 2;
     for(var gameId = 0; gameId < gamesQuant; gameId++){
         for(var botId = 0; botId < botsQuant; botId++){
@@ -325,7 +319,7 @@ Simulation.prototype.collectCollectives = function(){
     }
 }
 Simulation.prototype.interactWithFactory = function(){
-    var botsQuant = 2;
+    var botsQuant = this.quantity;
     var gamesQuant = 2;
     for(var gameId = 0; gameId < gamesQuant; gameId++){
         for(var botId = 0; botId < botsQuant; botId++){
@@ -342,7 +336,7 @@ Simulation.prototype.interactWithFactory = function(){
     }
 }
 Simulation.prototype.interactWithLake = function(){
-    var botsQuant = 2;
+    var botsQuant = this.quantity;
     var gamesQuant = 2;
     for(var gameId = 0; gameId < gamesQuant; gameId++){
         for(var botId = 0; botId < botsQuant; botId++){
@@ -407,4 +401,4 @@ Simulation.prototype.decreaseHealth = function(){
     }
 }
 
-//module.exports = Simulation;
+module.exports = Simulation;

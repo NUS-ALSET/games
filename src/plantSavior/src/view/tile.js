@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TileMap } from 'react-game-kit';
-import img from '../assets/tiles/city-tile.png'
+import img from '../assets/tiles/sand.jpg'
 
 export default class Tile extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export default class Tile extends Component {
                     src={img}
                     rows={50}
                     columns={50}
-                    tileSize={400}
+                    tileSize={100}
                     layers={[[1]]}
                 />
             </div>

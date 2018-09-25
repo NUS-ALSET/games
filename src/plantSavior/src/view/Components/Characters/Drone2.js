@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import Sprite from './Sprite';
 import { observer } from 'mobx-react';
 import img from '../../../assets/sprites/drone2.png';
+import waterIcon from '../../../assets/images/water-icon.png';
+import pesticideIcon from '../../../assets/images/pesticide.png';
 
 class Drone2 extends Component {
   getAnimationState() {
-    switch (this.props.direction) {
+    switch (this.props.store.direction[this.props.gameId][this.props.charId]) {
       case 'up':
         this.animState = 0;
         break;
@@ -25,8 +27,8 @@ class Drone2 extends Component {
   }
   getWrapperStyles() {
     this.getAnimationState();
-    var targetX = this.props.position.x*this.props.scale;
-    var targetY = this.props.position.y*this.props.scale;
+    var targetX = this.props.store.position[this.props.gameId][this.props.charId].x*this.context.scale;
+    var targetY = this.props.store.position[this.props.gameId][this.props.charId].y*this.context.scale;
     return {
       position: 'absolute',
       transform: `translate(${targetX}px, ${targetY}px)`,
@@ -38,6 +40,21 @@ class Drone2 extends Component {
   render() {
     return (
       <div id={'character'} style={this.getWrapperStyles()}>
+        <div
+          style={{
+            marginTop:-this.props.size/2*this.props.scale+"px",
+            marginLeft:this.props.size/4*this.props.scale+"px",
+            width:this.props.size/2*this.props.scale+"px",
+            height:this.props.size/2*this.props.scale+"px",
+          }}
+        > 
+          {this.props.store.filled[this.props.gameId][this.props.charId]=="water"&&
+            <img src={waterIcon} style={{width:"100%", height:"100%"}}/>
+          }
+          {this.props.store.filled[this.props.gameId][this.props.charId]=="pests"&&
+            <img src={pesticideIcon} style={{width:"100%", height:"100%"}}/>
+          }
+        </div>
         <Sprite
           repeat={true}
           tileWidth={224}
