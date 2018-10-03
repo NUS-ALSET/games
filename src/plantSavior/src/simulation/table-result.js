@@ -28,15 +28,15 @@ let simulate = function(botFiles, config){
                     time--;
                 }
                 if(result.player1>result.player2){
-                    tableStartArr[botFiles.indexOf(bot1)]+="<td><a href='"+createLink(bot1.name,bot2.name)+"'>1.0</a></td>";
+                    tableStartArr[botFiles.indexOf(bot1)]+="<td><a class='restartGame' data-bot1='"+bot1.name+"' data-bot2='"+bot2.name+"' href='#'>1.0</a></td>";
                     player1Score[botFiles.indexOf(bot1)]+=1;
                 }
                 else if(result.player1<result.player2){
-                    tableStartArr[botFiles.indexOf(bot1)]+="<td><a href='"+createLink(bot1.name,bot2.name)+"'>0.0</a></td>";
+                    tableStartArr[botFiles.indexOf(bot1)]+="<td><a class='restartGame' data-bot1='"+bot1.name+"' data-bot2='"+bot2.name+"' href='#'>0.0</a></td>";
                     player2Score[botFiles.indexOf(bot2)]+=1;
                 }
                 else{
-                    tableStartArr[botFiles.indexOf(bot1)]+="<td><a href='"+createLink(bot1.name,bot2.name)+"'>0.5</a></td>";
+                    tableStartArr[botFiles.indexOf(bot1)]+="<td><a class='restartGame' data-bot1='"+bot1.name+"' data-bot2='"+bot2.name+"' href='#'>0.5</a></td>";
                     player1Score[botFiles.indexOf(bot1)]+=0.5;
                     player2Score[botFiles.indexOf(bot2)]+=0.5;
                 }

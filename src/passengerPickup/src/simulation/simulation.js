@@ -196,26 +196,6 @@ Simulation.prototype.getDirections       = function(direction){
     return direction;
 }
 Simulation.prototype.simulate            = function(){
-    /*var bot1_1Data = {
-        player:this.bots[0][0], collectives:this.collectives[0], direction: this.direction[0][0], 
-        index:0, map: this.map[0], config: this.config, controlInfo: this.controlInfo, gameId: 0
-    };
-    var bot1_2Data = {
-        player:this.bots[0][1], collectives:this.collectives[0], direction: this.direction[0][1], 
-        index:1, map: this.map[0], config: this.config, controlInfo: this.controlInfo, gameId: 0
-    };
-    var bot2_1Data = {
-        player:this.bots[1][0], collectives:this.collectives[1], direction: this.direction[1][0], 
-        index:0, map: this.map[1], config: this.config, controlInfo: this.controlInfo, gameId: 1
-    };
-    var bot2_2Data = {
-        player:this.bots[1][1], collectives:this.collectives[1], direction: this.direction[1][1], 
-        index:1, map: this.map[1], config: this.config, controlInfo: this.controlInfo, gameId: 1
-    };
-    this.direction[0][0]=this.bot1clb(bot1_1Data);
-    this.direction[0][1]=this.bot1clb(bot1_2Data);
-    this.direction[1][0]=this.bot2clb(bot2_1Data);
-    this.direction[1][1]=this.bot2clb(bot2_2Data);*/
     var gamesQuant = 2;
     var botsData = [new Array(this.quantity), new Array(this.quantity)];
     for(var i=0;i<gamesQuant;i++){

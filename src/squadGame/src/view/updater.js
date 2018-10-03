@@ -21,6 +21,18 @@ class Updater extends Component {
     };
     constructor(props) {
         super(props);
+        if(this.props.level1)
+            this.level1 = this.props.level1;
+        else
+            this.level1 = level1;
+        if(this.props.level2)
+            this.level2 = this.props.level2;
+        else
+            this.level2 = level2;
+        if(this.props.level3)
+            this.level3 = this.props.level3;
+        else
+            this.level3 = level3;
         this.loop = this.loop.bind(this);
         this.pauseResumeGame = this.pauseResumeGame.bind(this);
         this.restartGame = this.restartGame.bind(this);
