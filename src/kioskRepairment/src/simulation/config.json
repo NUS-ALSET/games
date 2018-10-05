@@ -1,0 +1,21 @@
+{
+	"width":500,
+	"height": 500,
+    "botsQuantityPerGame":3,
+    "botSize":20,
+	"minKiosks": 5,
+    "maxKiosks": 10,
+    "kioskSize": 25,
+    "kioskStartingPoint": 100,
+    "peopleSize": 15,
+    "minPeople": 10,
+    "maxPeople": 20,
+    "time": 90,
+    "speed":1,
+    "player1StartingPoint":{"x":30, "y":0},
+    "player2StartingPoint":{"x":0, "y":0},
+    "player1StartingDirection":"right",
+    "player2StartingDirection":"down",
+    "player1Keys":{"up":"w", "down":"s", "left":"a", "right":"d", "switch":"e"},
+    "player2Keys":{"up":"i", "down":"k", "left":"j", "right":"l", "switch":"o"}
+}

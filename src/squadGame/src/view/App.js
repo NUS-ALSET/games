@@ -3,7 +3,7 @@ import { Loop, Stage } from 'react-game-kit';
 
 import Tile from './tile';
 import Characters from './characters';
-
+import Store from '../store';
 import Collectives from './collectives';
 import Updater from './updater.js';
 import Time from './time';
@@ -12,22 +12,33 @@ import './style.css';
 import CodeEditor from './code-editor';
 
 export default class App extends Component {
+    constructor(){
+        super();
+    }
     render() {
         return <Loop>
-            <Updater level1={this.props.level1} level2={this.props.level2} level3={this.props.level3} store={this.props.store}></Updater>
-            <Time store={this.props.store}></Time>
+            <Updater
+                bot1={this.props.bot1}
+                bot2={this.props.bot2}
+                botsQuant={this.props.botsQuant}
+                time={this.props.time}
+                restart={this.props.restart}
+                pause={this.props.pause}
+                store={Store}
+            ></Updater>
+            <Time store={Store}></Time>
             <div style={{height: '98vh', width: '50%', float:"left"}}>
                 <Stage width={500} height={500}>
                     <Tile></Tile>
-                    <Collectives gameId={0} store={this.props.store}></Collectives>
-                    <Characters gameId={0} store={this.props.store}></Characters>
+                    <Collectives gameId={0} store={Store}></Collectives>
+                    <Characters gameId={0} store={Store}></Characters>
                 </Stage>
             </div>
             <div style={{height: '98vh', width: '50%', float:"left"}}>
                 <Stage width={500} height={500}>
                     <Tile></Tile>
-                    <Collectives gameId={1} store={this.props.store}></Collectives>
-                    <Characters gameId={1} store={this.props.store}></Characters>
+                    <Collectives gameId={1} store={Store}></Collectives>
+                    <Characters gameId={1} store={Store}></Characters>
                 </Stage>
             </div>
             <CodeEditor></CodeEditor>
