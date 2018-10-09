@@ -95,7 +95,11 @@ class Updater extends Component {
                     break;
             }
         }
-        this.simulation = new Simulation(config,this.props.store.player1Func,this.props.store.player2Func,config.botsQuantityPerGame);
+        this.simulation = new Simulation(config,this.props.store.player1Func,this.props.store.player2Func,this.props.botsQuantity);
+    }
+    componentWillMount(){
+        this.changeBotsQuantity(this.props.botsQuantity)
+        this.props.store.p1Level = this.props.player1Data.levelsToWin
     }
     loop = () => {
         if(this.props.store.mode == 'play'){
@@ -207,10 +211,8 @@ class Updater extends Component {
     }
     changeBotsQuantity(e){
         this.props.store.mode = 'pause';
-        if(e.target.value!==this.props.store.botsQuantity){
-            this.props.store.botsQuantity = e.target.value;
+            this.props.store.botsQuantity = e;
             this.restartGame();
-        }
     }
     changePlayer1Func(e){
         /*if(e.target.value!=="Custom code")
@@ -283,53 +285,21 @@ class Updater extends Component {
         //this.props.store.mode == 'play'?'pause':'play';
     }
     restartGame(){
-        this.props.store.time = config.time;
-        this.simulation = new Simulation(config,this.props.store.player1Func,this.props.store.player2Func,this.props.store.botsQuantity);
+        this.props.store.time = this.props.time;
+        this.simulation = new Simulation(config,this.props.store.player1Func,this.props.store.player2Func,this.props.botsQuantity);
         this.props.store.mode = 'play';
     }
     componentDidMount() {
         this.loopID = this.context.loop.subscribe(this.loop);
-    }
+        this.restartGame();
+    }  
     componentWillUnmount() {
         this.context.loop.unsubscribe(this.loopID);
     }
     render() {
         return (<div>
             <WinningScreen store={this.props.store} restartGame={this.restartGame}/>
-            <p style={{position:'absolute', left:0, top:0, margin:0, zIndex:100}}>
-                <ScoreDisplay store={this.props.store} gameId={0}></ScoreDisplay>
-                <select id={"player1Select"} value={this.props.store.player1ControlSelected} onChange={this.changePlayer1Func}>
-                    <option value={"custom code"}>Custom code</option>
-                    <option value={"manual control"}>Manual control</option>
-                    <option value={"level1"}>Level 1</option>
-                    <option value={"level2"}>Level 2</option>
-                    <option value={"level3"}>Level 3</option>
-                </select>
-            </p>
-            <p style={{position:'absolute', right:0, top:0, margin:0, zIndex:100}}>
-                <select id={"player2Select"} value={this.props.store.player2ControlSelected} onChange={this.changePlayer2Func}>
-                    <option value={"custom code"}>Custom code</option>
-                    <option value={"manual control"}>Manual control</option>
-                    <option value={"level1"}>Level 1</option>
-                    <option value={"level2"}>Level 2</option>
-                    <option value={"level3"}>Level 3</option>
-                </select>
-                <ScoreDisplay store={this.props.store} gameId={1}></ScoreDisplay>
-            </p>
-            <p style={{position:'absolute', left:'50%', top:'15px', transform:'translate(-50%, -50%)', zIndex:100}}>
-                <button onClick={() => this.restartGame()}>Restart</button>
-                <button onClick={() => this.pauseResumeGame()}>{this.props.store.mode == 'play' ? 'Pause' : 'Resume'}</button>
-                <select id={"botsQuantity"} value={this.props.store.botsQuantity} onChange={this.changeBotsQuantity}>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>5</option>
-                    <option value={6}>6</option>
-                    <option value={7}>7</option>
-                    <option value={8}>8</option>
-                </select>
-            </p>
+            <ScoreDisplay store={this.props.store} restartGame={this.restartGame} pauseResumeGame={this.pauseResumeGame}></ScoreDisplay>
         </div>)
     }
 } 

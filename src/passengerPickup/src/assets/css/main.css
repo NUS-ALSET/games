@@ -1,9 +1,8 @@
-body{margin: 0}
 .scoreDisplay{
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    width: 99%;
+    width: 100%;
     background-color: #e8e8e8;
     padding: 16px;
     font-size: 20px
