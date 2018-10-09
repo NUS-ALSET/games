@@ -29,7 +29,7 @@ class Updater extends Component {
     componentDidUpdate(){
         if(this.props.store.botsQuantity!==this.props.botsQuant)
             this.changeBotsQuantity();
-        //console.log(this.props)
+        console.log(this.props)
         if(this.props.pause)
             this.props.store.mode = 'pause';
         else{
@@ -37,6 +37,15 @@ class Updater extends Component {
         }
         if(this.props.restart)
             this.restartGame();
+        if(this.props.bot1!==this.props.store.player1Func){
+            this.props.store.player1Func = this.props.bot1;
+            this.restartGame();
+        }
+        if(this.props.bot2!==this.props.store.player2Func){
+            this.props.store.player2Func = this.props.bot2;
+            this.restartGame();
+        }
+
     }
     changeBotsQuantity(){
         this.props.store.mode = 'pause';
@@ -51,7 +60,8 @@ class Updater extends Component {
     loop = () => {
         if(this.props.store.mode == 'play'){
             if(this.props.store.time<=0){
-                this.props.store.mode = 'pause'
+                this.props.store.mode = 'pause';
+                this.props.onGameOver({player1Score:this.props.store.score[0], player2Score:this.props.store.score[1]});
             }
             if(Math.abs(this.props.store.prevTime - Date.now())>=1000){
                 this.props.store.time --;
@@ -70,7 +80,7 @@ class Updater extends Component {
             }
             //document.getElementById("timeHolder").innerHTML = "Time left: "+this.props.store.time;
         }
-        if(this.props.store.needToRestartGame){
+        /*if(this.props.store.needToRestartGame){
             var el1 = document.getElementById("player1Select");
             var val1 = el1.options[el1.selectedIndex].value;
             var el2 = document.getElementById("player2Select");
@@ -79,7 +89,7 @@ class Updater extends Component {
             this.setPlayer(val2,2);
             this.restartGame();
             this.props.store.needToRestartGame = false;
-        }
+        }*/
     }
     componentDidMount() {
         this.loopID = this.context.loop.subscribe(this.loop);

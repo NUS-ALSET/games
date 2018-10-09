@@ -41,7 +41,7 @@ class CodeEditor extends Component {
         return;
         }
         this.setState({ customFunctionCode: this.state.updatedCode });
-        Store.func = this.state.updatedCode;
+        this.props.store.func = this.state.updatedCode;
     }
     toggleMode() {
         this.setState({ showMode: !this.state.showMode });
@@ -70,15 +70,17 @@ class CodeEditor extends Component {
         if (this.state.mode === 'python') {
             var error = window.createFunctionFromPython(this.state.updatedCode);
             if(error==0){
-                Store.func = window.getPlayersCommands;
-                Store.needToRestartGame = true;
+                this.props.store.func = window.getPlayersCommands;
+                //this.props.store.needToRestartGame = true;
+                this.props.onCommit(this.props.store.func);
             }
         } else {
             //window.newPySrc = this.state.jscode;
             var error = 0;
             try{
-                Store.func = eval("("+this.state.jsCode+")");
-                Store.needToRestartGame = true;
+                this.props.store.func = eval("("+this.state.jsCode+")");
+                this.props.onCommit(this.props.store.func);
+                //this.props.store.needToRestartGame = true;
             }catch(e){
                 alert('Error ' + e.name + ":" + e.message);
             }
@@ -90,7 +92,7 @@ class CodeEditor extends Component {
         window.result = 'down';
         window.world = null;
         window.calculateShortestPath=()=>{};
-        Store.func = this.state.jsCode;
+        this.props.store.func = this.state.jsCode;
     }
     componentDidUpdate() {
         if (this.resetUndoManager) {
@@ -104,8 +106,7 @@ class CodeEditor extends Component {
         const { updatedCode, mode, jsCode } = this.state;
         const code = mode === 'python' ? updatedCode : jsCode;
         return (
-            <div>
-            {(Store.player1ControlSelected=='custom code'||Store.player2ControlSelected=='custom code')&&<div style={{position:'absolute', top:'100%'}} className={"editorContainer"}>
+            <div style={{position:'absolute', top:'100%'}} className={"editorContainer"}>
                 <h4 style={{ margin: '4px' }}>
                     Write <b className="active-text">{mode.toUpperCase()}</b> Code Here :{' '}
                 </h4>
@@ -168,7 +169,6 @@ class CodeEditor extends Component {
                     <h4>Python Console</h4>
                     <textarea id="python-console" className="res" />
                 </div>
-            </div>}
             </div>
         );
     }
