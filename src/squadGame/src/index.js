@@ -35,11 +35,13 @@ class TournamentWithUi extends Component {
                         onClick={()=>{
                             this.setState({
                                 startTournament:false,
+                                //levels:[level1,level2,level3],
                                 levels:[level1,level2,level3,level1,level2,level3,level1,level2,level3,level1,level2,level3,level1,level2,level3,level1],
                                 showTournament:true
                             });
                             setTimeout(()=>{this.setState({
                                 startTournament:true, 
+                                //levels:[level1,level2,level3],
                                 levels:[level1,level2,level3,level1,level2,level3,level1,level2,level3,level1,level2,level3,level1,level2,level3,level1],
                                 showTournament:true
                             })},10);

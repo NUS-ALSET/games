@@ -52,11 +52,25 @@ let simulate = function(botFiles, config){
         key1++;
     }
     tableStart2+="</tr>";
+    console.log(player1Score);
     console.log(player2Score);
-    for(var i=botFiles.length-1;i>=0;i--){
-        tableStart+="<td>"+player2Score[i].toFixed(1)+"</td>";
-        tableStartArr[i]+="<td>"+(player1Score[i]+player2Score[i]).toFixed(1)+"</td></tr>";
-        tableStart3+=tableStartArr[i];
+    var sum = player1Score.map(function (num, idx) {
+        return {sum:num + player2Score[idx], index:idx};
+    });
+    sum.sort((a,b)=>{
+        if(a.sum>b.sum)
+            return -1;
+        if(a.sum<b.sum)
+            return 1;
+        return 0;
+    });
+    
+    console.log(sum);
+    //for(var i=botFiles.length-1;i>=0;i--){
+    for(var i=0;i<sum.length;i++){
+        tableStart+="<td>"+player2Score[sum[i].index].toFixed(1)+"</td>";
+        tableStartArr[sum[i].index]+="<td>"+(player1Score[sum[i].index]+player2Score[sum[i].index]).toFixed(1)+"</td></tr>";
+        tableStart3+=tableStartArr[sum[i].index];
     }
     tableStart+="<td rowspan=2>Totals as Player1</td><td rowspan=2>Overall Total</td></tr>";
     return tableStart+tableStart2+tableStart3+"</table>";
