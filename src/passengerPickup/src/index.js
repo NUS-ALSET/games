@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Game } from './component';
+import config from './simulation/config.json'
 
 const defaultPlayer1Data = {
   pyCode: '',
@@ -35,29 +36,39 @@ function getURLParameters(paramName) {
 
 function App() {
   const gameData = {
-    playMode:  getURLParameters('mode') === 'manual' ? 'manual code' : 'custom code',
-    levelsToWin: Number(getURLParameters('level')) || 3, 
+    playMode: getURLParameters('mode') === 'manual' ? 'manual code' : 'custom code',
+    levelsToWin: Number(getURLParameters('level')) || 3,
     gameTime: Number(getURLParameters('gameTime')) || 10,
     botsQuantities: Number(getURLParameters('botsQuantities')) || 2,
     gameType: getURLParameters('gameType') || 'game',
-    scoreToWin :Number(getURLParameters('scoreToWin')) || 20
+    scoreToWin: Number(getURLParameters('scoreToWin')) || 20,
   }
+  const playAsPlayer2 = Boolean(getURLParameters('playAsPlayer2'));
+  const playerKeys = config[playAsPlayer2 ? 'player2Keys' : 'player1Keys'];
   return <div>
-    <Game player1Data={defaultPlayer1Data} gameData={gameData} onCommit={()=>{}}  />
+    <Game player1Data={defaultPlayer1Data} gameData={gameData} playAsPlayer2={playAsPlayer2} onCommit={() => { }} />
     <div className="info">
-    <p>URL params used to customize game are</p>
-    <ol>
-      <li> mode : manual || custom</li>
-      <li>level : 1 || 2 || 3 [max 3]</li>
-      <li>gameTime : 90</li>
-      <li>botsQuantities : 3 [max 8]</li>
-      <li>gameType : game || gameTournament</li>
-      <li>scoreToWin : 30</li>
+      {gameData.playMode === 'manual code' && <div>
+        <p>Keys to play game manually : </p>
+        <ol>
+          {
+            Object.keys(playerKeys).map(key => <li key={key}> {key.toUpperCase()}: {playerKeys[key]} </li>)
+          }
 
-    </ol>
-    <p>Example :</p>
-    <a href={`${window.location.origin}/?mode=manual&level=2&gameTime=200&botsQuantities=5&scoreToWin=35`}>{`${window.location.origin}/?mode=manual&level=2&gameTime=200&botsQuantities=5&scoreToWin=35`}</a>
-  
+        </ol>
+      </div>}
+      <p>URL params used to customize game are</p>
+      <ol>
+        <li>mode : 'manual' || 'custom'</li>
+        <li>level : 1 || 2 || 3 [max 3]</li>
+        <li>gameTime : 90</li>
+        <li>botsQuantities : 3 [max {config.maxBotsQuantityPerGame}]</li>
+        <li>gameType : 'game' || 'gameTournament'</li>
+        <li>scoreToWin : 30</li>
+        <li>playAsPlayer2 : true || false [default false]</li>
+      </ol>
+      <p>Example :</p>
+      <a href={`${window.location.origin}/?mode=manual&level=2&gameTime=200&botsQuantities=5&scoreToWin=35&playAsPlayer2=true`}>{`${window.location.origin}/?mode=manual&level=2&gameTime=200&botsQuantities=5&scoreToWin=35&playAsPlayer2=true`}</a>
     </div>
   </div>
 }
