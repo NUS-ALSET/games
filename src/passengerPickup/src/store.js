@@ -4,9 +4,9 @@ import {defaultJavascriptFunctionCode} from './view/Components/defaultCode';
 
 class passengerStore {
     constructor() {
-        let position = [new Array(8),new Array(8)];
-        let destination = [new Array(8),new Array(8)];
-        for(var i=0;i<8;i++){
+        let position = [new Array(config.maxBotsQuantityPerGame),new Array(config.maxBotsQuantityPerGame)];
+        let destination = [new Array(config.maxBotsQuantityPerGame),new Array(config.maxBotsQuantityPerGame)];
+        for(var i=0;i<config.maxBotsQuantityPerGame;i++){
             position[0][i] = config.player1StartingPoint;
             position[1][i] = config.player1StartingPoint;
             destination[0][i] = null;
@@ -16,7 +16,7 @@ class passengerStore {
             time: config.time,
             prevTime: Date.now(),
             position: position,
-            botsQuantity:config.botsQuantityPerGame,
+            botsQuantity: config.botsQuantityPerGame,
             direction: [['right','down'], ['right','down']],
             passengers: [[], []],
             destination: destination,
@@ -26,8 +26,10 @@ class passengerStore {
             player2Func: undefined,
             func: defaultJavascriptFunctionCode,
             needToRestartGame: false,
-            player1ControlSelected: "level3",
-            player2ControlSelected:"manual control"
+            editorMode : config.editorMode,
+            editorPyCode : '',
+            currentLevel : 1,
+            showGameSimulation:false
         });
     }
     updatePosition(gameId, playerId, newPosition, offset){
@@ -49,8 +51,6 @@ class passengerStore {
             var direction = 'up';
         else if(newDirection.down)
             var direction = 'down';
-        
-        
         if(this.direction[gameId][playerId]!=direction){
             this.direction[gameId][playerId]=direction;
         }

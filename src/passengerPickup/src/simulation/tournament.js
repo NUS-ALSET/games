@@ -4,67 +4,106 @@ import level3 from './level3';
 import config from './config.json';
 import React, { Component } from 'react';
 import tableResult from './table-result';
+import App from '../view/App';
 import { observer } from 'mobx-react';
 import Store from '../store';
 
 class Tournament extends Component {
     constructor(){
         super();
+        
         this.state = {
             presult:"",
-            showTable:true
+            showTable:true,
+            gameTitle:''
         }
-        Object.defineProperty(level1, "name", { value: "level1" });
-        Object.defineProperty(level2, "name", { value: "level2" });
-        Object.defineProperty(level3, "name", { value: "level3" });
+        if(typeof Store.func === 'string')
+            Store.func = eval('('+Store.func+')');
+        Object.defineProperty(level3, "name", { value: "Hard bot" });
+        Object.defineProperty(level2, "name", { value: "Medium bot" });
+        Object.defineProperty(level1, "name", { value: "Easy bot" });
+        Object.defineProperty(Store.func, "name", { value: "You" });
     }
     attachClickEvent(){
         var restartGame = document.getElementsByClassName('restartGame');
         for (var i = 0; i < restartGame.length; i++) {
             restartGame[i].onclick= (e)=>{
-                //console.log(e.target.attributes[1].value, e.target.attributes[2].value)
-                Store.player1ControlSelected = e.target.attributes[1].value=='level1'||'level2'||'level3'?e.target.attributes[1].value:'custom code';
-                Store.player2ControlSelected = e.target.attributes[2].value=='level1'||'level2'||'level3'?e.target.attributes[2].value:'custom code';
+                Store.player1Func = this.evaluateCode(e.target.attributes[1].value=='level1'||'level2'||'level3'?e.target.attributes[1].value:'custom code');
+                Store.player2Func = this.evaluateCode(e.target.attributes[2].value=='level1'||'level2'||'level3'?e.target.attributes[2].value:'custom code');
+                this.state.gameTitle = e.target.attributes[1].value+' vs '+ e.target.attributes[2].value;
+                Store.showGameSimulation = true;
                 Store.needToRestartGame = true;
+                console.log("sfd");
             };
         }
     }
+    evaluateCode(code){
+        switch(code){
+            case 'level1':
+                return level1;
+            case 'level2':
+                return level2;
+            case 'level3':
+                return level3;
+            case 'Easy bot':
+                return level1;
+            case 'Medium bot':
+                return level2;
+            case 'Hard bot':
+                return level3;
+            default:
+                if(typeof  Store.func == 'string')
+                    Store.func = eval('('+Store.func+')')
+                Object.defineProperty(Store.func, "name", { value: "You" });
+                return Store.func;
+        }
+    }
+    componentWillMount(){
+        console.log("ssaa");
+        if(typeof Store.func == 'string')
+            Store.func = eval("("+Store.func+")");
+        var result = tableResult([Store.func,level1,level2,level3], config);
+        this.setState({presult : result});
+        setTimeout(()=>{
+            this.attachClickEvent();
+        },1000);
+    }
     render() {
         return (
-            <div style={{position:'absolute', zIndex:100, left:'50%', transform:'translate(-50%, 0%)', top:'45px'}}>
-                <div style={{textAlign:'center'}}>
-                    <button className="control-btn active"  onClick={()=>{
-                        /*tournamentSimulate.default().then((result)=>{
-                            this.setState({presult : result, showTable: true});
-                        });*/
-                        var result = tableResult([level1,level2,level3], config);
-                        this.setState({presult : result, showTable: true});
-                        setTimeout(()=>{
-                            this.attachClickEvent();
-                        },1000);
-                        
-                    }}
-                    >Run tournament</button>
-                    <button class="control-btn active"  onClick={()=>{
-                        /*tournamentSimulate.default().then((result)=>{
-                            this.setState({presult : result, showTable: true});
-                        });*/
-                        if(typeof Store.func == 'string')
-                            Store.func = eval("("+Store.func+")");
-                        var result = tableResult([Store.func,level1,level2,level3], config);
-                        this.setState({presult : result, showTable: true});
-                    }}
-                    >Custom code tournament</button>
-                    <button class="control-btn active" onClick={()=>{
-                        this.setState({showTable: !this.state.showTable});
-                    }}>Hide tournament</button>
-                </div>
-                <div style={{background:'white'}}>
+            <div>
+                {!Store.showGameSimulation&&<div><div style={{background:'white'}}>
                     {
-                        this.state.showTable && <p dangerouslySetInnerHTML={{__html: this.state.presult}} />
+                        <p dangerouslySetInnerHTML={{__html: this.state.presult}} />
                         
                     }
                 </div>
+                <div style={{textAlign:'right'}}>
+                    <button className="btn-smaller control-btn"  onClick={()=>{
+                        if(typeof Store.func == 'string')
+                            Store.func = eval("("+Store.func+")");
+                        var result = tableResult([Store.func,level1,level2,level3], config);
+                        this.setState({presult : result});
+                        setTimeout(()=>{
+                            this.attachClickEvent();
+                        },1000);
+                    }}
+                    >RESIMULATE</button>
+                </div></div>}
+                {Store.showGameSimulation&&<div>
+                    <div className="gameHeader"><button
+                        onClick={()=>{
+                            Store.showGameSimulation = false;
+                            if(typeof Store.func == 'string')
+                                Store.func = eval("("+Store.func+")");
+                            var result = tableResult([Store.func,level1,level2,level3], config);
+                            this.setState({presult : result});
+                            setTimeout(()=>{
+                                this.attachClickEvent();
+                            },1000);
+                        }}
+                    >X</button><b>Match: {this.state.gameTitle}</b></div>
+                    <App {...this.props} store={Store}/>
+                </div>}
             </div>
         );
       }
