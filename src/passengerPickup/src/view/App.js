@@ -11,6 +11,7 @@ import CodeEditor from './code-editor';
 
 export default class App extends Component {
     render() {
+        console.log(this.props);
         return <Loop>
             <Updater {...this.props}></Updater>
             <div className="stage">

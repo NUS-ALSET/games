@@ -120,3 +120,68 @@ body{margin: 0}
   color: red;
   font-family: monospace;
 }
+#game-result-table{
+  font-family: sans-serif;
+  font-size: 13px;
+}
+.cell-player-name{
+  font-weight: bold;
+  padding-right: 10px;
+  width: 92px;
+  font-size: 12px;
+}
+.cell-player-number {
+  border: 2px solid #b3b3b3;
+  text-align: center;
+}
+.cell-number-won {
+  text-align: right;
+}
+.cell-number-won a {
+  text-decoration: none;
+  color:green;
+  font-size: 14px;
+}
+.cell-number-even {
+  text-align: right;
+}
+.cell-number-even a {
+  text-decoration: none;
+  color:blue;
+  font-size: 14px;
+}
+.cell-number-lose {
+  text-align: right;
+}
+.cell-number-lose a {
+  text-decoration: none;
+  color:red;
+  font-size: 14px;
+}
+.cell-empty-cells {
+  background: #d0d0d0;
+  border: 2px solid #c7c7c7;
+}
+.cell-number {
+  text-align: right;
+}
+.cell-number-bold {
+  text-align: right;
+  font-weight: bold;
+}
+.gameHeader {
+  background: #1a237e;
+  padding: 10px;
+}
+.gameHeader button {
+  background: none;
+  border: none;
+  color: white;
+  padding-right: 20px;
+}
+.gameHeader b {
+  background: #4d57bb;
+  color: white;
+  padding: 5px;
+  padding-right: 50px;
+}

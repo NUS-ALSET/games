@@ -9,13 +9,25 @@ import { observer } from 'mobx-react';
 import Store from '../store';
 
 class Tournament extends Component {
-    constructor(){
-        super();
-        
+    constructor(props){
+        super(props);
+        console.log(props)
         this.state = {
             presult:"",
             showTable:true,
-            gameTitle:''
+            gameTitle:'',
+            firstTimeRunGame:false,
+            gameData: props.gameData,
+            player1Data: props.player1Data,
+            playAsPlayer2: props.playAsPlayer2
+        }
+        if(this.state.player1Data.jsCode){
+            Store.func = this.state.player1Data.jsCode;
+        }
+        else if(this.state.player1Data.pyCode){
+            window.createFunctionFromPython(this.state.player1Data.pyCode);
+            Store.func = window.getPlayersCommands;
+            Store.editorPyCode = this.state.player1Data.pyCode;
         }
         if(typeof Store.func === 'string')
             Store.func = eval('('+Store.func+')');
@@ -28,13 +40,41 @@ class Tournament extends Component {
         var restartGame = document.getElementsByClassName('restartGame');
         for (var i = 0; i < restartGame.length; i++) {
             restartGame[i].onclick= (e)=>{
+                e.preventDefault();
                 Store.player1Func = this.evaluateCode(e.target.attributes[1].value=='level1'||'level2'||'level3'?e.target.attributes[1].value:'custom code');
                 Store.player2Func = this.evaluateCode(e.target.attributes[2].value=='level1'||'level2'||'level3'?e.target.attributes[2].value:'custom code');
-                this.state.gameTitle = e.target.attributes[1].value+' vs '+ e.target.attributes[2].value;
-                Store.showGameSimulation = true;
-                Store.needToRestartGame = true;
-                console.log("sfd");
+                this.state.gameTitle = e.target.attributes[1].value + ' vs '+ e.target.attributes[2].value;
+                if(Store.player2Func.name == "You"){
+                    this.state.playAsPlayer2 = true;
+                    this.state.gameData.levelsToWin = this.getLevelToBeat(Store.player1Func.name);
+                }
+                else{
+                    this.state.playAsPlayer2 = false;
+                    this.state.gameData.levelsToWin = this.getLevelToBeat(Store.player2Func.name);
+                }
+                if(Store.player1Func.name=="You"||Store.player2Func.name=="You"){
+                    if(Store.editorPyCode)
+                        this.state.player1Data.pyCode = Store.editorPyCode;
+                    Store.showGameSimulation = true;
+                    Store.needToRestartGame = true;
+                }
             };
+        }
+    }
+    getLevelToBeat(levelName){
+        switch(levelName){
+            case 'level1':
+                return 1;
+            case 'level2':
+                return 2;
+            case 'level3':
+                return 3;
+            case 'Easy bot':
+                return 1;
+            case 'Medium bot':
+                return 2;
+            case 'Hard bot':
+                return 3;
         }
     }
     evaluateCode(code){
@@ -59,11 +99,17 @@ class Tournament extends Component {
         }
     }
     componentWillMount(){
-        console.log("ssaa");
         if(typeof Store.func == 'string')
             Store.func = eval("("+Store.func+")");
-        var result = tableResult([Store.func,level1,level2,level3], config);
-        this.setState({presult : result});
+        var newConfig = {
+            ...config,
+            botsQuantityPerGame: this.state.gameData.botsQuantities||config.botsQuantityPerGame,
+            time: this.state.gameData.gameTime||config.time,
+            scoreToWin: this.state.gameData.scoreToWin||config.scoreToWin
+        }
+        var result = tableResult([Store.func,level1,level2,level3], newConfig);
+        this.setState({presult : result.tableHtml});
+        Store.tournamentScoreBeaten=result.score>this.state.gameData.tournamentScoreToWin?true:false;
         setTimeout(()=>{
             this.attachClickEvent();
         },1000);
@@ -71,42 +117,49 @@ class Tournament extends Component {
     render() {
         return (
             <div>
-                {!Store.showGameSimulation&&<div><div style={{background:'white'}}>
+                {!Store.showGameSimulation?<div><div style={{background:'white'}}>
                     {
                         <p dangerouslySetInnerHTML={{__html: this.state.presult}} />
                         
                     }
-                </div>
-                <div style={{textAlign:'right'}}>
-                    <button className="btn-smaller control-btn"  onClick={()=>{
-                        if(typeof Store.func == 'string')
-                            Store.func = eval("("+Store.func+")");
-                        var result = tableResult([Store.func,level1,level2,level3], config);
-                        this.setState({presult : result});
-                        setTimeout(()=>{
-                            this.attachClickEvent();
-                        },1000);
-                    }}
-                    >RESIMULATE</button>
-                </div></div>}
-                {Store.showGameSimulation&&<div>
+                    <div style={{textAlign:'right'}}>
+                        {Store.tournamentScoreBeaten&&<button className="btn-smaller control-btn"  onClick={(e)=>{
+                            this.props.onCommit({pyCode:this.store.editorPyCode});
+                        }}>Commit</button>}
+                        <button className="btn-smaller control-btn"  onClick={(e)=>{
+                            e.target.disabled = true;
+                            if(typeof Store.func == 'string')
+                                Store.func = eval("("+Store.func+")");
+                            Object.defineProperty(Store.func, "name", { value: "You" });
+                            var newConfig = {
+                                ...config,
+                                botsQuantityPerGame: this.state.gameData.botsQuantities||config.botsQuantityPerGame,
+                                time: this.state.gameData.gameTime||config.time,
+                                scoreToWin: this.state.gameData.scoreToWin||config.scoreToWin
+                            }
+                            var result = tableResult([Store.func,level1,level2,level3], newConfig);
+                            this.setState({presult : result.tableHtml});
+                            Store.tournamentScoreBeaten=result.score>this.state.gameData.tournamentScoreToWin?true:false;
+                            setTimeout(()=>{
+                                this.attachClickEvent();
+                            },1000);
+                            e.target.disabled = false;
+                        }}
+                        >RESIMULATE</button>
+                    </div>
+                </div></div>:<div>
                     <div className="gameHeader"><button
                         onClick={()=>{
                             Store.showGameSimulation = false;
-                            if(typeof Store.func == 'string')
-                                Store.func = eval("("+Store.func+")");
-                            var result = tableResult([Store.func,level1,level2,level3], config);
-                            this.setState({presult : result});
                             setTimeout(()=>{
                                 this.attachClickEvent();
                             },1000);
                         }}
                     >X</button><b>Match: {this.state.gameTitle}</b></div>
-                    <App {...this.props} store={Store}/>
+                    <App gameData={this.state.gameData} player1Data={this.state.player1Data} playAsPlayer2={this.state.playAsPlayer2} store={Store}/>
                 </div>}
             </div>
         );
-      }
+    }
 }
-//export default Tournament;
 export default observer(Tournament);

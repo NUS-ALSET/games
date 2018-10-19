@@ -41,6 +41,7 @@ function App() {
     botsQuantities: Number(getURLParameters('botsQuantities')) || 2,
     gameType: getURLParameters('gameType') || 'game',
     scoreToWin: Number(getURLParameters('scoreToWin')) || 20,
+    tournamentScoreToWin: Number(getURLParameters('tournamentScoreToWin')) || 3,
   }
   const playAsPlayer2 = Boolean(getURLParameters('playAsPlayer2'));
   const playerKeys = config[playAsPlayer2 ? 'player2Keys' : 'player1Keys'];
@@ -54,7 +55,6 @@ function App() {
           {
             Object.keys(playerKeys).map(key => <li key={key}> {key.toUpperCase()}: {playerKeys[key]} </li>)
           }
-
         </ol>
       </div>}
       <p>URL params used to customize game are</p>
@@ -65,6 +65,7 @@ function App() {
         <li>botsQuantities : 3 [max {config.maxBotsQuantityPerGame}]</li>
         <li>gameType : 'game' || 'gameTournament'</li>
         <li>scoreToWin : 30</li>
+        <li>tournamentScoreToWin : 3 || false [max = 3(levels)*2 = 6]</li>
         <li>playAsPlayer2 : true || false [default false]</li>
       </ol>
       <p>Example :</p>

@@ -74,10 +74,20 @@ class Updater extends Component {
             }
         }
         if (this.props.store.needToRestartGame) {
-            if(!this.props.store.player1Func)
+            //if(!this.props.store.player1Func)
+                //this.props.store.player1Func = this.props.store.func;
+            //this.updateStateFromProps(this.props);
+            if(this.props.playAsPlayer2&&this.props.gameData.playMode === CUSTOM_CODE){
+                this.props.store.player2Func = this.props.store.func;
+            }
+            else if(this.props.gameData.playMode === CUSTOM_CODE){
                 this.props.store.player1Func = this.props.store.func;
-            this.restartGame();
+            }
+            else if(!this.props.store.player1Func)
+                this.props.store.player1Func = this.props.store.func;
             this.props.store.needToRestartGame = false;
+            this.restartGame();
+            
         }
     }
 
@@ -90,10 +100,20 @@ class Updater extends Component {
             this.props.store.botsQuantity = Math.min(props.gameData.botsQuantities || props.store.botsQuantity, config.maxBotsQuantityPerGame);
             this.props.store.currentLevel = Math.min(Number(props.gameData.levelsToWin) || 1, 3);
             if(this.props.playAsPlayer2){
-                this.props.store.player2Func = props.gameData.playMode === CUSTOM_CODE ? props.player1Data.jsCode || defaultJavascriptFunctionCode : control;
+                if(!props.player1Data.pyCode)
+                    this.props.store.player2Func = props.gameData.playMode === CUSTOM_CODE ? props.player1Data.jsCode || defaultJavascriptFunctionCode : control;
+                else{
+                    window.createFunctionFromPython(props.player1Data.pyCode);
+                    this.props.store.player2Func = props.gameData.playMode === CUSTOM_CODE ? window.getPlayersCommands:control;
+                }
                 this.props.store.player1Func = (props.player2Data || {}).jsCode || levels[props.gameData.levelsToWin - 1];
             }else{
-                this.props.store.player1Func = props.gameData.playMode === CUSTOM_CODE ? props.player1Data.jsCode || defaultJavascriptFunctionCode : control;
+                if(!props.player1Data.pyCode)
+                    this.props.store.player1Func = props.gameData.playMode === CUSTOM_CODE ? props.player1Data.jsCode || defaultJavascriptFunctionCode : control;
+                else{
+                    window.createFunctionFromPython(props.player1Data.pyCode);
+                    this.props.store.player1Func = props.gameData.playMode === CUSTOM_CODE ? window.getPlayersCommands:control;
+                }
                 this.props.store.player2Func = (props.player2Data || {}).jsCode || levels[props.gameData.levelsToWin - 1];
             }
             this.restartGame();

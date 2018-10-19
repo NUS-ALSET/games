@@ -13,7 +13,7 @@ class CodeEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pyCode: props.player1Data.pyCode || defaultPythonCodeFunction,
+            pyCode: Store.editorPyCode || props.player1Data.pyCode || defaultPythonCodeFunction,
             jsCode: props.player1Data.jsCode || defaultJavascriptFunctionCode,
             errors: [],
             mode: Store.editorMode,

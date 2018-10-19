@@ -71,7 +71,7 @@ export default class Sprite extends Component {
   }
 
   componentWillUnmount() {
-    //this.context.loop.unsubscribe(this.loopID);
+    this.context.loop.unsubscribe(this.loopID);
   }
 
   animate(props) {

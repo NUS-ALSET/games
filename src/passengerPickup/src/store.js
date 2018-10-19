@@ -29,7 +29,8 @@ class passengerStore {
             editorMode : config.editorMode,
             editorPyCode : '',
             currentLevel : 1,
-            showGameSimulation:false
+            showGameSimulation:false,
+            tournamentScoreBeaten:false
         });
     }
     updatePosition(gameId, playerId, newPosition, offset){
