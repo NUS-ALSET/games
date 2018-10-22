@@ -1,6 +1,6 @@
 var bot = function(world){
     var direction = false;
-    if(world.controlInfo.current[world.gameId] == world.index){
+    if(world.controlInfo.current[world.gameId] === world.index){
         switch (world.controlInfo.keyPressed[world.gameId]) {
             case "up":
                 direction = {up:true}

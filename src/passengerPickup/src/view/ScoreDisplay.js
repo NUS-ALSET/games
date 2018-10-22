@@ -9,7 +9,7 @@ const ScoreDisplay = ({ store, restartGame, pauseResumeGame, playAsPlayer2, inti
         </div>
         <div>
             <button className="btn control-btn restart" onClick={() => restartGame()}> {intiGame ? 'Start Game' : 'Restart'}</button>
-            {!intiGame &&  <button className="btn control-btn pause" onClick={() => pauseResumeGame()}> {store.mode == 'play' ? 'Pause' : 'Resume'} </button>}
+            {!intiGame &&  <button className="btn control-btn pause" onClick={() => pauseResumeGame()}> {store.mode === 'play' ? 'Pause' : 'Resume'} </button>}
         </div>
         <div>Level: {store.currentLevel}</div>
         <div> {playAsPlayer2 ? 'My' : 'Bot'} Score: {store.score[1]}</div>

@@ -1,4 +1,4 @@
-import { observable, computed, extendObservable } from 'mobx';
+import { extendObservable } from 'mobx';
 import config from './simulation/config.json';
 import {defaultJavascriptFunctionCode} from './view/Components/defaultCode';
 
@@ -44,15 +44,16 @@ class passengerStore {
         }
     }
     updateDirection(gameId, playerId, newDirection){
+        var direction = 'right';
         if(newDirection.right)
-            var direction = 'right';
+            direction = 'right';
         else if(newDirection.left)
-            var direction = 'left';
+            direction = 'left';
         else if(newDirection.up)
-            var direction = 'up';
+            direction = 'up';
         else if(newDirection.down)
-            var direction = 'down';
-        if(this.direction[gameId][playerId]!=direction){
+            direction = 'down';
+        if(this.direction[gameId][playerId]!==direction){
             this.direction[gameId][playerId]=direction;
         }
     }

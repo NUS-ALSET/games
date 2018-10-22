@@ -3,10 +3,6 @@ import { TileMap } from 'react-game-kit';
 import img from '../assets/tiles/grass.jpg'
 
 export default class Tile extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Store from '../store';
-import brace from 'brace';
 import AceEditor from 'react-ace';
 import 'brace/mode/javascript';
 import 'brace/mode/python';
@@ -59,7 +57,7 @@ class CodeEditor extends Component {
         }
         if (Store.editorMode === 'python') {
             const error = window.createFunctionFromPython(this.state.pyCode);
-            if (error == 0) {
+            if (error === 0) {
                 Store.func = window.getPlayersCommands;
                 Store.editorPyCode = this.state.pyCode;
                 this.setState({ pythonSyntaxError : ''});
@@ -69,8 +67,8 @@ class CodeEditor extends Component {
             }
         } else {
             //window.newPySrc = this.state.jscode;
-            var error = 0;
             try {
+                // eslint-disable-next-line
                 Store.func = eval("(" + this.state.jsCode + ")");
                 Store.needToRestartGame = true;
             } catch (e) {
@@ -95,7 +93,6 @@ class CodeEditor extends Component {
         }
     }
     render() {
-        const { classes } = this.props;
         const { pyCode, jsCode, pythonSyntaxError } = this.state;
         const code = Store.editorMode === 'python' ? pyCode : jsCode;
         return (

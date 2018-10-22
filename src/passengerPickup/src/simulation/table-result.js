@@ -1,7 +1,4 @@
 import Store from '../store';
-function createLink(func1,func2){
-    return '?player2='+func1+'&player1='+func2;
-}
 
 let simulate = function(botFiles, config){
     let tableStart = `<table id="game-result-table" border='0' align='center' cellspacing=0 cell><tr><td></td><td></td>`;
@@ -68,7 +65,7 @@ let simulate = function(botFiles, config){
     });
     tableStart+="<td class='cell-player-name'>Won as Player 1</td><td class='cell-player-name'>Won as Player 2</td><td class='cell-player-name'>Overall Total</td></tr>";
     tableStart+=tableStart2;
-    for(var i=0;i<sum.length;i++){
+    for(i=0;i<sum.length;i++){
         tableStart+=tableStartArr[sum[i].index];
     }
 

@@ -27,18 +27,19 @@ class Destination extends Component {
                 {this.props.store.destination[this.props.gameId].map((dest)=>{
                     if(dest!==null){
                         return <div key={dest.takeofX+"-"+dest.takeofY+"-"+dest.x+"-"+dest.x} style={this.getWrapperStyles(dest)}>
-                        <Sprite
-                            repeat={true}
-                            tileWidth={102}
-                            tileHeight={102}
-                            src={Math.random()>0.5?img1:img2}
-                            ticksPerFrame={4}
-                            state={0}
-                            scale={(config.passengerSize/102)*this.context.scale}
-                            steps={[7]}
-                        />
-                    </div>
+                            <Sprite
+                                repeat={true}
+                                tileWidth={102}
+                                tileHeight={102}
+                                src={Math.random()>0.5?img1:img2}
+                                ticksPerFrame={4}
+                                state={0}
+                                scale={(config.passengerSize/102)*this.context.scale}
+                                steps={[7]}
+                            />
+                        </div>
                     }
+                    return false;
                 })}
             </div>
         );

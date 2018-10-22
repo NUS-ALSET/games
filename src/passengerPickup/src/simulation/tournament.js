@@ -30,6 +30,7 @@ class Tournament extends Component {
             Store.editorPyCode = this.state.player1Data.pyCode;
         }
         if(typeof Store.func === 'string')
+            // eslint-disable-next-line
             Store.func = eval('('+Store.func+')');
         Object.defineProperty(level3, "name", { value: "Hard bot" });
         Object.defineProperty(level2, "name", { value: "Medium bot" });
@@ -41,19 +42,25 @@ class Tournament extends Component {
         for (var i = 0; i < restartGame.length; i++) {
             restartGame[i].onclick= (e)=>{
                 e.preventDefault();
-                Store.player1Func = this.evaluateCode(e.target.attributes[1].value=='level1'||'level2'||'level3'?e.target.attributes[1].value:'custom code');
-                Store.player2Func = this.evaluateCode(e.target.attributes[2].value=='level1'||'level2'||'level3'?e.target.attributes[2].value:'custom code');
+                Store.player1Func = this.evaluateCode(e.target.attributes[1].value==='level1'||'level2'||'level3'?e.target.attributes[1].value:'custom code');
+                Store.player2Func = this.evaluateCode(e.target.attributes[2].value==='level1'||'level2'||'level3'?e.target.attributes[2].value:'custom code');
+                // eslint-disable-next-line
                 this.state.gameTitle = e.target.attributes[1].value + ' vs '+ e.target.attributes[2].value;
-                if(Store.player2Func.name == "You"){
+                if(Store.player2Func.name === "You"){
+                    // eslint-disable-next-line
                     this.state.playAsPlayer2 = true;
+                    // eslint-disable-next-line
                     this.state.gameData.levelsToWin = this.getLevelToBeat(Store.player1Func.name);
                 }
                 else{
+                    // eslint-disable-next-line
                     this.state.playAsPlayer2 = false;
+                    // eslint-disable-next-line
                     this.state.gameData.levelsToWin = this.getLevelToBeat(Store.player2Func.name);
                 }
-                if(Store.player1Func.name=="You"||Store.player2Func.name=="You"){
+                if(Store.player1Func.name==="You"||Store.player2Func.name==="You"){
                     if(Store.editorPyCode)
+                        // eslint-disable-next-line
                         this.state.player1Data.pyCode = Store.editorPyCode;
                     Store.showGameSimulation = true;
                     Store.needToRestartGame = true;
@@ -75,6 +82,8 @@ class Tournament extends Component {
                 return 2;
             case 'Hard bot':
                 return 3;
+            default:
+                return 1;
         }
     }
     evaluateCode(code){
@@ -92,14 +101,16 @@ class Tournament extends Component {
             case 'Hard bot':
                 return level3;
             default:
-                if(typeof  Store.func == 'string')
+                if(typeof  Store.func === 'string')
+                    // eslint-disable-next-line
                     Store.func = eval('('+Store.func+')')
                 Object.defineProperty(Store.func, "name", { value: "You" });
                 return Store.func;
         }
     }
     componentWillMount(){
-        if(typeof Store.func == 'string')
+        if(typeof Store.func === 'string')
+            // eslint-disable-next-line
             Store.func = eval("("+Store.func+")");
         var newConfig = {
             ...config,
@@ -128,7 +139,8 @@ class Tournament extends Component {
                         }}>Commit</button>}
                         <button className="btn-smaller control-btn"  onClick={(e)=>{
                             e.target.disabled = true;
-                            if(typeof Store.func == 'string')
+                            if(typeof Store.func === 'string')
+                                // eslint-disable-next-line
                                 Store.func = eval("("+Store.func+")");
                             Object.defineProperty(Store.func, "name", { value: "You" });
                             var newConfig = {

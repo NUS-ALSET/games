@@ -18,13 +18,13 @@ function getURLParameters(paramName) {
     for (let i = 0; i < arrURLParams.length; i++) {
       const sParam = arrURLParams[i].split("=");
       arrParamNames[i] = sParam[0];
-      if (sParam[1] != "")
+      if (sParam[1] !== "")
         arrParamValues[i] = unescape(sParam[1]);
       else
         arrParamValues[i] = "No Value";
     }
     for (let i = 0; i < arrURLParams.length; i++) {
-      if (arrParamNames[i] == paramName) {
+      if (arrParamNames[i] === paramName) {
         //alert("Parameter:" + arrParamValues[i]);
         return arrParamValues[i].split('#').join('');
       }
@@ -42,8 +42,9 @@ function App() {
     gameType: getURLParameters('gameType') || 'game',
     scoreToWin: Number(getURLParameters('scoreToWin')) || 20,
     tournamentScoreToWin: Number(getURLParameters('tournamentScoreToWin')) || 3,
+    singleWindowGame: getURLParameters('singleWindowGame')==='true'
   }
-  const playAsPlayer2 = Boolean(getURLParameters('playAsPlayer2'));
+  const playAsPlayer2 = getURLParameters('playAsPlayer2')==='true';
   const playerKeys = config[playAsPlayer2 ? 'player2Keys' : 'player1Keys'];
 
   return <div>
@@ -67,6 +68,7 @@ function App() {
         <li>scoreToWin : 30</li>
         <li>tournamentScoreToWin : 3 || false [max = 3(levels)*2 = 6]</li>
         <li>playAsPlayer2 : true || false [default false]</li>
+        <li>singleWindowGame : true || false [default false]</li>
       </ol>
       <p>Example :</p>
       <a href={`${window.location.origin}/?mode=custom&level=2&gameTime=200&botsQuantities=5&scoreToWin=35&playAsPlayer2=true&&gameType=gameTournament`}>{`${window.location.origin}/?mode=custom&level=2&gameTime=200&botsQuantities=5&scoreToWin=35&playAsPlayer2=true&&gameType=gameTournament`}</a>

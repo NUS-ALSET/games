@@ -8,9 +8,6 @@ class Passengers extends Component {
     static contextTypes = {
         scale: PropTypes.number
     };
-    constructor() {
-        super();
-    }
 
     render(){
         return <div>{this.props.store.passengers[this.props.gameId].map((passenger, index) => {
@@ -24,6 +21,7 @@ class Passengers extends Component {
                 height: squadConfig.passengerSize*this.context.scale
             }}>
                 <img
+                    alt={""}
                     style={{ 'width': '100%', 'height': '100%' }}
                     src={img}
                 />

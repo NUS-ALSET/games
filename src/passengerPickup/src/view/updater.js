@@ -9,7 +9,7 @@ import level3 from '../simulation/level3';
 import config from '../simulation/config.json';
 import WinningScreen from './WinningScreen';
 import ScoreDisplay from './ScoreDisplay';
-
+//eslint-disable-next-line
 import { defaultJavascriptFunctionCode, defaultPythonCodeFunction } from './Components/defaultCode';
 
 const levels = [level1, level2, level3];
@@ -36,7 +36,7 @@ class Updater extends Component {
     }
 
     loop = () => {
-        if (this.props.store.mode == PLAY) {
+        if (this.props.store.mode === PLAY) {
             const gameOver = this.props.store.time <= 0 ? {
                 status: true,
                 winner: null,
@@ -135,17 +135,23 @@ class Updater extends Component {
         })
         this.props.store.score = [0, 0];
         this.props.store.time = this.props.gameData.gameTime || config.time;
+        var newConfig = {
+            width: this.props.gameData.singleWindowGame? config.width*2:config.width,
+            ...config
+        };
         this.simulation = new Simulation(
-            config,
+            newConfig,
             this.evaluateStringCode(this.props.store.player1Func),
             this.evaluateStringCode(this.props.store.player2Func),
-            this.props.gameData.botsQuantities
+            this.props.gameData.botsQuantities,
+            this.props.gameData.singleWindowGame
         );
         this.props.store.mode = gameState;
     }
     evaluateStringCode = (code) => {
-        if (typeof code == 'string') {
+        if (typeof code === 'string') {
             try {
+                // eslint-disable-next-line
                 return eval("(" + code + ")");
             } catch (error) {
                 // console.log(error);
@@ -156,8 +162,8 @@ class Updater extends Component {
     }
     submitSolution = () => {
         this.props.onCommit({
-            status: this.state.gameOver.winner === 0 ? 'DRAW' : this.state.gameOver.winner == 1 ? "WON" : 'LOST',
-            result: this.state.gameOver.winner === 0 ? 'NONE' : this.state.gameOver.winner == 1 ? "WON" : 'LOST',
+            status: this.state.gameOver.winner === 0 ? 'DRAW' : this.state.gameOver.winner === 1 ? "WON" : 'LOST',
+            result: this.state.gameOver.winner === 0 ? 'NONE' : this.state.gameOver.winner === 1 ? "WON" : 'LOST',
             score: [this.props.store.score[0], this.props.store.score[1]],
             timeTaken: this.gameTime - this.props.store.time,
             jsCode: this.props.gameData.playMode === CUSTOM_CODE  && this.props.store.editorMode==='javascript' ? this.props.store.player1Func.toString() : '',

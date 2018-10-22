@@ -4,10 +4,6 @@ import img from '../assets/tiles/asphalt.jpg';
 import squadConfig from '../simulation/config.json';
 
 export default class Road extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>
