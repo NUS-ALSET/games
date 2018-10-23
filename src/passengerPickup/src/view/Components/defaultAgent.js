@@ -1,5 +1,12 @@
 /* eslint-disable */
-var bot = function(world) {
+export const agentPythonCodeFunction = `import random
+def getPlayersCommands(world):
+  foo = ['RIGHT', 'LEFT', 'UP','DOWN']
+  result = random.choice(foo)
+  print(result)
+	return result`;
+	
+export const agentJavascriptFunctionCode = `function getPlayersCommands(world) {
 	var findShortestPath = function(arr, pointA, pointB, charId){
 		var heuristic = function (a,b){
 			var x = a.x - b.x;
@@ -108,5 +115,4 @@ var bot = function(world) {
 		}
 		return direction;
 	}
-}
-module.exports = bot;
+}`;

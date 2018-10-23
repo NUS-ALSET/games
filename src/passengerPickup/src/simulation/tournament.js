@@ -1,3 +1,4 @@
+/* eslint-disable */
 import level1 from './level1';
 import level2 from './level2';
 import level3 from './level3';
@@ -31,7 +32,7 @@ class Tournament extends Component {
     }
     render() {
         return (
-            <div style={{position:'absolute', zIndex:100, left:'50%', transform:'translate(-50%, 0%)', top:'45px'}}>
+            <div style={{position:'absolute', zIndex:1101, left:'50%', transform:'translate(-50%, 0%)', top:'70px'}}>
                 <div style={{textAlign:'center'}}>
                     <button className="control-btn active"  onClick={()=>{
                         /*tournamentSimulate.default().then((result)=>{
@@ -45,7 +46,7 @@ class Tournament extends Component {
                         
                     }}
                     >Run tournament</button>
-                    <button class="control-btn active"  onClick={()=>{
+                    <button className="control-btn active"  onClick={()=>{
                         /*tournamentSimulate.default().then((result)=>{
                             this.setState({presult : result, showTable: true});
                         });*/
@@ -55,7 +56,7 @@ class Tournament extends Component {
                         this.setState({presult : result, showTable: true});
                     }}
                     >Custom code tournament</button>
-                    <button class="control-btn active" onClick={()=>{
+                    <button className="control-btn active" onClick={()=>{
                         this.setState({showTable: !this.state.showTable});
                     }}>Hide tournament</button>
                 </div>

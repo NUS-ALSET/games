@@ -1,11 +1,76 @@
+/* eslint-disable */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './view/App.js';
-import Tournament from './simulation/tournament';
-import Store from './store';
-import level1 from './simulation/level1';
-import level2 from './simulation/level2';
-import level3 from './simulation/level3';
+import { Game } from './component';
+import config from './simulation/config.json'
 
-ReactDOM.render(<Tournament></Tournament>, document.getElementById('simulation'));
-ReactDOM.render(<App level1={level1} level2={level2} level3={level3} store={Store}></App>, document.getElementById('root'));
+const defaultPlayer1Data = {
+  pyCode: '',
+  jsCode: ''
+}
+
+function getURLParameters(paramName) {
+  const sURL = window.document.URL.toString();
+  if (sURL.indexOf("?") > 0) {
+    const arrParams = sURL.split("?");
+    const arrURLParams = arrParams[1].split("&");
+    const arrParamNames = new Array(arrURLParams.length);
+    const arrParamValues = new Array(arrURLParams.length);
+    for (let i = 0; i < arrURLParams.length; i++) {
+      const sParam = arrURLParams[i].split("=");
+      arrParamNames[i] = sParam[0];
+      if (sParam[1] != "")
+        arrParamValues[i] = unescape(sParam[1]);
+      else
+        arrParamValues[i] = "No Value";
+    }
+    for (let i = 0; i < arrURLParams.length; i++) {
+      if (arrParamNames[i] == paramName) {
+        //alert("Parameter:" + arrParamValues[i]);
+        return arrParamValues[i];
+      }
+    }
+    return '';
+  }
+}
+
+function App() {
+  const gameData = {
+    playMode: getURLParameters('mode') === 'manual' ? 'manual code' : 'custom code',
+    levelsToWin: Number(getURLParameters('level')) || 3,
+    gameTime: Number(getURLParameters('gameTime')) || 10,
+    botsQuantities: Number(getURLParameters('botsQuantities')) || 2,
+    gameType: getURLParameters('gameType') || 'game',
+    scoreToWin: Number(getURLParameters('scoreToWin')) || 20,
+  }
+  const playAsPlayer2 = Boolean(getURLParameters('playAsPlayer2'));
+  const playerKeys = config[playAsPlayer2 ? 'player2Keys' : 'player1Keys'];
+  return <div>
+    <Game player1Data={defaultPlayer1Data} gameData={gameData} playAsPlayer2={playAsPlayer2} onCommit={() => { }} />
+    <div className="info">
+      {gameData.playMode === 'manual code' && <div>
+        <p>Keys to play game manually : </p>
+        <ol>
+          {
+            Object.keys(playerKeys).map(key => <li key={key}> {key.toUpperCase()}: {playerKeys[key]} </li>)
+          }
+
+        </ol>
+      </div>}
+      <p>URL params used to customize game are</p>
+      <ol>
+        <li>mode : 'manual' || 'custom'</li>
+        <li>level : 1 || 2 || 3 [max 3]</li>
+        <li>gameTime : 90</li>
+        <li>botsQuantities : 3 [max {config.maxBotsQuantityPerGame}]</li>
+        <li>gameType : 'game' || 'gameTournament'</li>
+        <li>scoreToWin : 30</li>
+        <li>playAsPlayer2 : true || false [default false]</li>
+      </ol>
+      <p>Example :</p>
+      <a href={`${window.location.origin}/?mode=manual&level=2&gameTime=200&botsQuantities=5&scoreToWin=35&playAsPlayer2=true`}>{`${window.location.origin}/?mode=manual&level=2&gameTime=200&botsQuantities=5&scoreToWin=35&playAsPlayer2=true`}</a>
+    </div>
+  </div>
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
