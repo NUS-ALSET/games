@@ -1,4 +1,3 @@
-/* eslint-disable */
 export const agentPythonCodeFunction = `import random
 def getPlayersCommands(world):
   foo = ['RIGHT', 'LEFT', 'UP','DOWN']

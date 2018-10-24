@@ -11,13 +11,15 @@ class Characters extends Component {
   };
   constructor(props) {
     super(props);
-    var charactersTypeArr = ['drone1', 'drone2', 'drone3'];
+    //this.charactersTypeArr = ['black-car', 'blue-car', 'orange-car', 'white-car'];
+    this.charactersTypeArr = ['orange-car'];
   }
   render() {
     return <div>
       {this.props.store.position[this.props.gameId].map((pos,index)=>{
         if(index<this.props.store.botsQuantity)
-          return <div key={index}><Character scale={this.context.scale} store={this.props.store} gameId={this.props.gameId} charId={index} type={'black-car'}></Character></div>
+          return <div key={index}><Character scale={this.context.scale} store={this.props.store} gameId={this.props.gameId} charId={index} type={this.charactersTypeArr[Math.floor(Math.random()*this.charactersTypeArr.length)]}></Character></div>
+        return false;
       })}
     </div>
   }

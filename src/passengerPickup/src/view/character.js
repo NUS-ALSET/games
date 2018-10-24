@@ -12,7 +12,6 @@ import BlackCar from './Components/Characters/CarBlack';
 import BlueCar from './Components/Characters/CarBlue';
 import OrangeCar from './Components/Characters/CarOrange';
 import WhiteCar from './Components/Characters/CarWhite';
-import Store from '../store';
 import config from '../simulation/config.json';
 import { observer } from 'mobx-react';
 
@@ -22,9 +21,6 @@ class Bot extends Component {
     scale: PropTypes.number,
   };
   func = false;
-  constructor(props) {
-    super(props);
-  }
   render() {
     switch (this.props.type) {
       case 'gnome1':
