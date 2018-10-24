@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Store from '../store';
 
 let simulate = function (botFiles, config) {
