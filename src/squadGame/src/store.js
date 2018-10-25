@@ -25,6 +25,9 @@ class squadStore {
             needToRestartGame: false,
             player1ControlSelected: "level3",
             player2ControlSelected:"manual control",
+            //tournament control
+            startTournament:false,
+            startCustomTournament:false
         });
         this.data = {};
     }

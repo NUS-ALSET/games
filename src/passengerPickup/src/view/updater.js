@@ -9,299 +9,181 @@ import level3 from '../simulation/level3';
 import config from '../simulation/config.json';
 import WinningScreen from './WinningScreen';
 import ScoreDisplay from './ScoreDisplay';
-import brace from 'brace';
-import AceEditor from 'react-ace';
-import 'brace/mode/javascript';
-import 'brace/mode/python';
-import 'brace/theme/github';
+//eslint-disable-next-line
+import { defaultJavascriptFunctionCode, defaultPythonCodeFunction } from './Components/defaultCode';
+
+const levels = [level1, level2, level3];
+const PLAY = 'play';
+const PAUSE = 'pause';
+const CUSTOM_CODE = 'custom code';
 
 class Updater extends Component {
-    static contextTypes = {
-        loop: PropTypes.object
-    };
-    constructor(props) {
-        super(props);
-        if(this.props.level1)
-            this.level1 = this.props.level1;
-        else
-            this.level1 = level1;
-        if(this.props.level2)
-            this.level2 = this.props.level2;
-        else
-            this.level2 = level2;
-        if(this.props.level3)
-            this.level3 = this.props.level3;
-        else
-            this.level3 = level3;
-        this.loop = this.loop.bind(this);
-        this.pauseResumeGame = this.pauseResumeGame.bind(this);
-        this.restartGame = this.restartGame.bind(this);
-        this.changePlayer1Func = this.changePlayer1Func.bind(this);
-        this.changePlayer2Func = this.changePlayer2Func.bind(this);
-        this.changeBotsQuantity = this.changeBotsQuantity.bind(this);
-        this.props.store.player1Func = level3;
-        this.props.store.player2Func = control;
-        if(this.getURLParameters('player1')){
-            var funcName = this.getURLParameters('player1');
-            switch(funcName){
-                case 'control':
-                    this.props.store.player1Func = control;
-                    this.props.store.player1ControlSelected = 'manual control';
-                    break;
-                case 'level1':
-                    this.props.store.player1Func = level1;
-                    this.props.store.player1ControlSelected = 'level1';
-                    break;
-                case 'level2':
-                    this.props.store.player1Func = level2;
-                    this.props.store.player1ControlSelected = 'level2';
-                    break;
-                case 'level3':
-                    this.props.store.player1Func = level3;
-                    this.props.store.player1ControlSelected = 'level3';
-                    break;
-                case 'custom code':
-                    this.props.store.player1Func = this.props.store.func;
-                    this.props.store.player1ControlSelected = 'custom code';
-                    break;
-                default:
-                    break
-            }
-        }
-        if(this.getURLParameters('player2')){
-            var funcName = this.getURLParameters('player2');
-            switch(funcName){
-                case 'control':
-                    this.props.store.player2Func = control;
-                    this.props.store.player2ControlSelected = 'manual control';
-                    break;
-                case 'level1':
-                    this.props.store.player2Func = level1;
-                    this.props.store.player2ControlSelected = 'level1';
-                    break;
-                case 'level2':
-                    this.props.store.player2Func = level2;
-                    this.props.store.player2ControlSelected = 'level2';
-                    break;
-                case 'level3':
-                    this.props.store.player2Func = level3;
-                    this.props.store.player2ControlSelected = 'level3';
-                    break;
-                case 'custom code':
-                    this.props.store.player2Func = this.props.store.func;
-                    this.props.store.player2ControlSelected = 'custom code';
-                    break;
-                default:
-                    break;
-            }
-        }
-        this.simulation = new Simulation(config,this.props.store.player1Func,this.props.store.player2Func,this.props.botsQuantity);
+  static contextTypes = {
+    loop: PropTypes.object
+  };
+  constructor(props) {
+    super(props);
+    this.loop = this.loop.bind(this);
+    this.state = {
+      gameOver: {
+        status: false,
+        message: ''
+      }
     }
-    componentWillMount(){
-        this.changeBotsQuantity(this.props.botsQuantity)
-        this.props.store.p1Level = this.props.player1Data.levelsToWin
-    }
-    loop = () => {
-        if(this.props.store.mode == 'play'){
-            if(this.props.store.time<=0){
-                this.props.store.mode = 'pause'
-            }
-            if(Math.abs(this.props.store.prevTime - Date.now())>=1000){
-                this.props.store.time --;
-                this.props.store.prevTime = Date.now();
-            }
-            var data = this.simulation.simulate();
-            var gamesQount = 2;
-            var charQount = data.bots[0].length;
-            for(var i=0;i<gamesQount;i++){
-                this.props.store.updatePassengers(i, data.collectives[i]);
-                this.props.store.updateScore(i, data.score[i]);
-                for(var j=0;j<charQount;j++){
-                    this.props.store.updatePosition(i, j, data.bots[i][j], 1);
-                    this.props.store.updateDirection(i, j, data.direction[i][j]);
-                    this.props.store.updateDestination(i, j, data.bots[i][j].passenger);
-                }
-            }
-        }
-        if(this.props.store.needToRestartGame){
-            var el1 = document.getElementById("player1Select");
-            var val1 = el1.options[el1.selectedIndex].value;
-            var el2 = document.getElementById("player2Select");
-            var val2 = el2.options[el2.selectedIndex].value;
-            this.setPlayer(val1,1);
-            this.setPlayer(val2,2);
-            this.restartGame();
-            this.props.store.needToRestartGame = false;
-        }
-    }
-    setPlayer(value, playerId){
-        switch(value){
-            case 'level1':
-                if(playerId==1){
-                    this.props.store.player1Func = level1;
-                    this.props.store.player1ControlSelected = 'level1';}
-                else{
-                    this.props.store.player2Func = level1;
-                    this.props.store.player2ControlSelected = 'level1';}
-                break;
-            case 'level2':
-                if(playerId==1){
-                    this.props.store.player1Func = level2;
-                    this.props.store.player1ControlSelected = 'level2';}
-                else{
-                    this.props.store.player2Func = level2;
-                    this.props.store.player2ControlSelected = 'level2';}
-                break;
-            case 'level3':
-                if(playerId==1){
-                    this.props.store.player1Func = level3;
-                    this.props.store.player1ControlSelected = 'level3';}
-                else{
-                    this.props.store.player2Func = level3;
-                    this.props.store.player2ControlSelected = 'level3';}
-                break;
-            case 'custom code':
-                if(playerId==1){
-                    this.props.store.player1Func = this.props.store.func;
-                    this.props.store.player1ControlSelected = 'custom code';}
-                else{
-                    this.props.store.player2Func = this.props.store.func;
-                    this.props.store.player2ControlSelected = 'custom code';}
-                break;
-            case 'manual control':
-                if(playerId==1){
-                    this.props.store.player1Func = control;
-                    this.props.store.player1ControlSelected = 'manual control';}
-                else{
-                    this.props.store.player2Func = control;
-                    this.props.store.player2ControlSelected = 'manual control';}
-                break;
-        }
-    }
-    getURLParameters(paramName)
-    {
-        var sURL = window.document.URL.toString();
-        if (sURL.indexOf("?") > 0)
-        {
-            var arrParams = sURL.split("?");
-            var arrURLParams = arrParams[1].split("&");
-            var arrParamNames = new Array(arrURLParams.length);
-            var arrParamValues = new Array(arrURLParams.length);
+    this.pauseResumeGame = this.pauseResumeGame.bind(this);
+    this.restartGame = this.restartGame.bind(this);
+    this.updateStateFromProps = this.updateStateFromProps.bind(this);
+  }
 
-            var i = 0;
-            for (i = 0; i<arrURLParams.length; i++)
-            {
-                var sParam =  arrURLParams[i].split("=");
-                arrParamNames[i] = sParam[0];
-                if (sParam[1] != "")
-                    arrParamValues[i] = unescape(sParam[1]);
-                else
-                    arrParamValues[i] = "No Value";
-            }
-            for (i=0; i<arrURLParams.length; i++)
-            {
-                if (arrParamNames[i] == paramName)
-                {
-                    //alert("Parameter:" + arrParamValues[i]);
-                    return arrParamValues[i];
-                }
-            }
-            return false;
+  loop = () => {
+    if (this.props.store.mode === PLAY) {
+      const gameOver = this.props.store.time <= 0 ? {
+        status: true,
+        winner: null,
+        message: 'Time Over'
+      } : this.props.store.score[0] >= this.props.store.scoreToWin || this.props.store.score[1] >= this.props.store.scoreToWin ? {
+        status: true,
+        winner: this.props.store.score[0] === this.props.store.score[1] ? 0 : this.props.store.score[1] >= this.props.store.scoreToWin ? 2 : 1,
+        message: this.props.store.score[0] === this.props.store.score[1] ? 'Score is even' : this.props.store.score[1] >= this.props.store.scoreToWin ? 'Player 2 won!!!' : 'Player 1 won!!!'
+      } : {
+            status: false,
+            winner: null,
+            message: 'Keep Playing'
+          };
+      this.setState({ gameOver });
+      if (gameOver.status) {
+        this.props.store.mode = PAUSE;
+      }
+      if (Math.abs(this.props.store.prevTime - Date.now()) >= 1000) {
+        this.props.store.time--;
+        this.props.store.prevTime = Date.now();
+      }
+      var data = this.simulation.simulate();
+      var gamesQount = 2;
+      var charQount = data.bots[0].length;
+
+      for (var i = 0; i < gamesQount; i++) {
+        this.props.store.updatePassengers(i, data.collectives[i]);
+        this.props.store.updateScore(i, data.score[i]);
+        for (var j = 0; j < charQount; j++) {
+          // !data.bots[i][j] && console.log(data.bots, i, j)
+          this.props.store.updatePosition(i, j, data.bots[i][j], 1);
+          this.props.store.updateDirection(i, j, data.direction[i][j]);
+          this.props.store.updateDestination(i, j, data.bots[i][j].passenger);
         }
+      }
     }
-    changeBotsQuantity(e){
-        this.props.store.mode = 'pause';
-            this.props.store.botsQuantity = e;
-            this.restartGame();
+    if (this.props.store.needToRestartGame) {
+      //if(!this.props.store.player1Func)
+      //this.props.store.player1Func = this.props.store.func;
+      //this.updateStateFromProps(this.props);
+      if (this.props.playAsPlayer2 && this.props.gameData.playMode === CUSTOM_CODE) {
+        this.props.store.player2Func = this.props.store.func;
+      }
+      else if (this.props.gameData.playMode === CUSTOM_CODE) {
+        this.props.store.player1Func = this.props.store.func;
+      }
+      else if (!this.props.store.player1Func)
+        this.props.store.player1Func = this.props.store.func;
+      this.props.store.needToRestartGame = false;
+      this.restartGame();
+
     }
-    changePlayer1Func(e){
-        /*if(e.target.value!=="Custom code")
-            this.props.store.player1Func = eval("("+e.target.value+")");
-        else
-            this.props.store.player1Func = this.props.store.func;*/
-        switch(e.target.value){
-            case 'level1':
-                this.props.store.player1Func = level1;
-                this.props.store.player1ControlSelected = 'level1';
-                break;
-            case 'level2':
-                this.props.store.player1Func = level2;
-                this.props.store.player1ControlSelected = 'level2';
-                break;
-            case 'level3':
-                this.props.store.player1Func = level2;
-                this.props.store.player1ControlSelected = 'level3';
-                break;
-            case 'custom code':
-                if(typeof this.props.store.func == 'string')
-                    this.props.store.func = eval("("+this.props.store.func+")");
-                this.props.store.player1Func = this.props.store.func;
-                this.props.store.player1ControlSelected = 'custom code';
-                break;
-            case 'manual control':
-                this.props.store.player1Func = control;
-                this.props.store.player1ControlSelected = 'manual control';
-                break;
+  }
+
+  updateStateFromProps(props) {
+    if (props.player1Data) {
+      this.props.store.mode = PAUSE;
+      this.gameTime = this.props.gameData.gameTime || config.time;
+      this.props.store.time = this.gameTime;
+      this.props.store.scoreToWin = props.gameData.scoreToWin || config.scoreToWin;
+      this.props.store.botsQuantity = Math.min(props.gameData.botsQuantities || props.store.botsQuantity, config.maxBotsQuantityPerGame);
+      this.props.store.currentLevel = Math.min(Number(props.gameData.levelsToWin) || 1, 3);
+      if (this.props.playAsPlayer2) {
+        if (!props.player1Data.pyCode)
+          this.props.store.player2Func = props.gameData.playMode === CUSTOM_CODE ? props.player1Data.jsCode || defaultJavascriptFunctionCode : control;
+        else {
+          window.createFunctionFromPython(props.player1Data.pyCode);
+          this.props.store.player2Func = props.gameData.playMode === CUSTOM_CODE ? window.getPlayersCommands : control;
         }
-        this.restartGame();
-    }
-    changePlayer2Func(e){
-        /*if(e.target.value!=="Custom code")
-            this.props.store.player2Func = eval("("+e.target.value+")");
-        else
-            this.props.store.player2Func = this.props.store.func;*/
-        //this.props.store.player2Func = eval(e.target.value);
-        switch(e.target.value){
-            case 'level1':
-                this.props.store.player2Func = level1;
-                this.props.store.player2ControlSelected = 'level1';
-                break;
-            case 'level2':
-                this.props.store.player2Func = level2;
-                this.props.store.player2ControlSelected = 'level2';
-                break;
-            case 'level3':
-                this.props.store.player2Func = level2;
-                this.props.store.player2ControlSelected = 'level3';
-                break;
-            case 'custom code':
-                if(typeof this.props.store.func == 'string')
-                    this.props.store.func = eval("("+this.props.store.func+")");
-                this.props.store.player2Func = this.props.store.func;
-                this.props.store.player2ControlSelected = 'custom code';
-                break;
-            case 'manual control':
-                this.props.store.player2Func = control;
-                this.props.store.player2ControlSelected = 'manual control';
-                break;
+        this.props.store.player1Func = (props.player2Data || {}).jsCode || levels[props.gameData.levelsToWin - 1];
+      } else {
+        if (!props.player1Data.pyCode)
+          this.props.store.player1Func = props.gameData.playMode === CUSTOM_CODE ? props.player1Data.jsCode || defaultJavascriptFunctionCode : control;
+        else {
+          window.createFunctionFromPython(props.player1Data.pyCode);
+          this.props.store.player1Func = props.gameData.playMode === CUSTOM_CODE ? window.getPlayersCommands : control;
         }
-        this.restartGame();
+        this.props.store.player2Func = (props.player2Data || {}).jsCode || levels[props.gameData.levelsToWin - 1];
+      }
+      this.restartGame();
+    } else {
+      this.props.store.mode = PAUSE;
     }
-    pauseResumeGame(){
-        if(this.props.store.mode == 'play')
-            this.props.store.mode = 'pause';
-        else
-            this.props.store.mode = 'play';
-        //this.props.store.mode == 'play'?'pause':'play';
+  }
+
+  pauseResumeGame() {
+    this.props.store.mode = this.props.store.mode === PLAY ? PAUSE : PLAY;
+  }
+  restartGame(gameState = PLAY) {
+    this.setState({
+      gameOver: {
+        status: false,
+        winner: null,
+        message: 'Keep Playing'
+      }
+    })
+    this.props.store.score = [0, 0];
+    this.props.store.time = this.props.gameData.gameTime || config.time;
+    var newConfig = {
+      width: this.props.gameData.singleWindowGame ? config.width * 2 : config.width,
+      ...config
+    };
+    this.simulation = new Simulation(
+      newConfig,
+      this.evaluateStringCode(this.props.store.player1Func),
+      this.evaluateStringCode(this.props.store.player2Func),
+      this.props.gameData.botsQuantities,
+      this.props.gameData.singleWindowGame
+    );
+    this.props.store.mode = gameState;
+  }
+  evaluateStringCode = (code) => {
+    if (typeof code === 'string') {
+      try {
+        // eslint-disable-next-line
+        return eval("(" + code + ")");
+      } catch (error) {
+        // console.log(error);
+        return () => { return { right: true } };
+      }
     }
-    restartGame(){
-        this.props.store.time = this.props.time;
-        this.simulation = new Simulation(config,this.props.store.player1Func,this.props.store.player2Func,this.props.botsQuantity);
-        this.props.store.mode = 'play';
-    }
-    componentDidMount() {
-        this.loopID = this.context.loop.subscribe(this.loop);
-        this.restartGame();
-    }  
-    componentWillUnmount() {
-        this.context.loop.unsubscribe(this.loopID);
-    }
-    render() {
-        return (<div>
-            <WinningScreen store={this.props.store} restartGame={this.restartGame}/>
-            <ScoreDisplay store={this.props.store} restartGame={this.restartGame} pauseResumeGame={this.pauseResumeGame}></ScoreDisplay>
-        </div>)
-    }
-} 
+    return code;
+  }
+  submitSolution = () => {
+    this.props.onCommit({
+      status: this.state.gameOver.winner === 0 ? 'DRAW' : this.state.gameOver.winner === 1 ? "WON" : 'LOST',
+      result: this.state.gameOver.winner === 0 ? 'NONE' : this.state.gameOver.winner === 1 ? "WON" : 'LOST',
+      score: [this.props.store.score[0], this.props.store.score[1]],
+      timeTaken: this.gameTime - this.props.store.time,
+      jsCode: this.props.gameData.playMode === CUSTOM_CODE && this.props.store.editorMode === 'javascript' ? this.props.store.player1Func.toString() : '',
+      pyCode: this.props.gameData.playMode === CUSTOM_CODE && this.props.store.editorMode === 'python' ? this.props.store.editorPyCode : ''
+    })
+  }
+  componentDidMount() {
+    this.loopID = this.context.loop.subscribe(this.loop);
+    this.updateStateFromProps(this.props);
+    this.restartGame(PAUSE);
+  }
+  componentWillUnmount() {
+    this.context.loop.unsubscribe(this.loopID);
+  }
+  render() {
+    return (<div>
+      <WinningScreen gameOver={this.state.gameOver} restartGame={this.restartGame} submitSolution={this.submitSolution} />
+      <ScoreDisplay store={this.props.store} intiGame={this.gameTime === this.props.store.time} playAsPlayer2={this.props.playAsPlayer2} restartGame={this.restartGame} pauseResumeGame={this.pauseResumeGame} />
+    </div>)
+  }
+}
 
 export default observer(Updater);

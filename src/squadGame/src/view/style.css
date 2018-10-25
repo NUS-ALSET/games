@@ -16,3 +16,15 @@ body{margin: 0}
 .empty-cells{
     background: #dadaea;
 }
+#player1ScoreHolder{
+    position: absolute;
+    left: 0;
+    top:20px;
+    z-index: 1000;
+}
+#player2ScoreHolder{
+    position: absolute;
+    right: 0;
+    top:20px;
+    z-index: 1000;
+}

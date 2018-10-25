@@ -5,64 +5,41 @@ import config from './config.json';
 import React, { Component } from 'react';
 import tableResult from './table-result';
 import { observer } from 'mobx-react';
-import Store from '../store';
 
 class Tournament extends Component {
     constructor(){
         super();
         this.state = {
-            presult:"",
-            showTable:true
+            presult:""
         }
-        Object.defineProperty(level1, "name", { value: "level1" });
-        Object.defineProperty(level2, "name", { value: "level2" });
-        Object.defineProperty(level3, "name", { value: "level3" });
     }
     attachClickEvent(){
         var restartGame = document.getElementsByClassName('restartGame');
         for (var i = 0; i < restartGame.length; i++) {
             restartGame[i].onclick= (e)=>{
                 //console.log(e.target.attributes[1].value, e.target.attributes[2].value)
-                Store.player1ControlSelected = e.target.attributes[1].value=='level1'||'level2'||'level3'?e.target.attributes[1].value:'custom code';
-                Store.player2ControlSelected = e.target.attributes[2].value=='level1'||'level2'||'level3'?e.target.attributes[2].value:'custom code';
-                Store.needToRestartGame = true;
+                this.props.store.player1ControlSelected = e.target.attributes[1].value=='level1'||'level2'||'level3'?e.target.attributes[1].value:'custom code';
+                this.props.store.player2ControlSelected = e.target.attributes[2].value=='level1'||'level2'||'level3'?e.target.attributes[2].value:'custom code';
+                this.props.store.needToRestartGame = true;
             };
+        }
+    }
+    componentWillUpdate(){
+        if(!this.props.startTournament){
+            var result = tableResult(this.props.levels, config);
+            this.setState({presult : result});
+            setTimeout(()=>{
+                this.attachClickEvent();
+            },1000);
+            //console.log("test");
         }
     }
     render() {
         return (
-            <div style={{position:'absolute', zIndex:100, left:'50%', transform:'translate(-50%, 0%)', top:'45px'}}>
-                <div style={{textAlign:'center'}}>
-                    <button class="control-btn active"  onClick={()=>{
-                        /*tournamentSimulate.default().then((result)=>{
-                            this.setState({presult : result, showTable: true});
-                        });*/
-                        var result = tableResult([level1,level2,level3], config);
-                        this.setState({presult : result, showTable: true});
-                        setTimeout(()=>{
-                            this.attachClickEvent();
-                        },1000);
-                    }}
-                    >Run tournament</button>
-                    <button class="control-btn active"  onClick={()=>{
-                        /*tournamentSimulate.default().then((result)=>{
-                            this.setState({presult : result, showTable: true});
-                        });*/
-                        if(typeof Store.func == 'string')
-                            Store.func = eval("("+Store.func+")");
-                        var result = tableResult([Store.func,level1,level2,level3], config);
-                        this.setState({presult : result, showTable: true});
-                    }}
-                    >Custom code tournament</button>
-                    <button class="control-btn active" onClick={()=>{
-                        this.setState({showTable: !this.state.showTable});
-                    }}>Hide tournament</button>
-                </div>
-                <div style={{background:'white'}}>
-                    {
-                        this.state.showTable && <p dangerouslySetInnerHTML={{__html: this.state.presult}} />
-                    }
-                </div>
+            <div style={{background:'white'}}>
+                {
+                    <p dangerouslySetInnerHTML={{__html: this.state.presult}} />
+                }
             </div>
         );
       }
