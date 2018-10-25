@@ -248,18 +248,6 @@ Simulation.prototype.moveCharacters = function(){
             }
         }
     }
-    /*if(this.bots[0][0].x==this.bots[0][1].x&&this.bots[0][0].y==this.bots[0][1].y){
-        this.bots[0][0].x+=this.config.playerSize;
-        this.bots[0][1].x-=this.config.playerSize;
-        this.bots[0][0].y+=this.config.playerSize;
-        this.bots[0][1].y-=this.config.playerSize;
-    }
-    if(this.bots[1][0].x==this.bots[1][1].x&&this.bots[1][0].y==this.bots[1][1].y){
-        this.bots[1][0].x+=this.config.playerSize;
-        this.bots[1][1].x-=this.config.playerSize;
-        this.bots[1][0].y+=this.config.playerSize;
-        this.bots[1][1].y-=this.config.playerSize;
-    }*/
 }
 Simulation.prototype.collectCollectives = function(){
     var botsQuant = this.quantity;
