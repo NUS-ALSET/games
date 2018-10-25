@@ -129,6 +129,7 @@ body{margin: 0}
   padding-right: 10px;
   width: 92px;
   font-size: 12px;
+  white-space: nowrap;
 }
 .cell-player-number {
   border: 2px solid #b3b3b3;

@@ -39,7 +39,7 @@ function App() {
     levelsToWin: Number(getURLParameters('level')) || 3,
     gameTime: Number(getURLParameters('gameTime')) || 10,
     botsQuantities: Number(getURLParameters('botsQuantities')) || 2,
-    gameType: getURLParameters('gameType') || 'gameTournament',
+    gameType: getURLParameters('gameType') || 'game',
     scoreToWin: Number(getURLParameters('scoreToWin')) || 20,
     tournamentScoreToWin: Number(getURLParameters('tournamentScoreToWin')) || 3,
     singleWindowGame: getURLParameters('singleWindowGame') === 'true'
