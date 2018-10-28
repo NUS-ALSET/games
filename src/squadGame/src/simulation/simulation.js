@@ -1,42 +1,43 @@
-function Simulation(config, bot1clb, bot2clb, botsQuantity){
+function Simulation(config, bot1clb, bot2clb, botsQuantity, singleWindow=false){
     this.config = config;
     this.bot1clb = bot1clb;
     this.bot2clb = bot2clb;
     this.quantity = botsQuantity;
-    if(!this.config.width||typeof this.config.width!="number"){
+    this.singleWindow = singleWindow;
+    if(!this.config.width||typeof this.config.width!=="number"){
         this.config.width = 800;
     }
-    if(!this.config.height||typeof this.config.height!="number"){
+    if(!this.config.height||typeof this.config.height!=="number"){
         this.config.height = 800;
     }
-    if(!this.config.minGems||typeof this.config.minGems!="number"){
+    if(!this.config.minGems||typeof this.config.minGems!=="number"){
         this.config.minGems = 10;
     }
-    if(!this.config.maxGems||typeof this.config.maxGems!="number"){
+    if(!this.config.maxGems||typeof this.config.maxGems!=="number"){
         this.config.maxGems = 20;
     }
-    if(!this.config.time||typeof this.config.time!="number"){
+    if(!this.config.time||typeof this.config.time!=="number"){
         this.config.time = 90;
     }
-    if(!this.config.speed||typeof this.config.speed!="number"){
+    if(!this.config.speed||typeof this.config.speed!=="number"){
         this.config.speed = 0.5;
     }
-    if(!this.config.playerSize||typeof this.config.playerSize!="number"){
+    if(!this.config.playerSize||typeof this.config.playerSize!=="number"){
         this.config.playerSize = 30;
     }
-    if(!this.config.collectiveSize||typeof this.config.collectiveSize!="number"){
+    if(!this.config.collectiveSize||typeof this.config.collectiveSize!=="number"){
         this.config.collectiveSize = 30;
     }
-    if(!this.config.player1StartingPoint||typeof this.config.player1StartingPoint!="object"){
+    if(!this.config.player1StartingPoint||typeof this.config.player1StartingPoint!=="object"){
         this.config.player1StartingPoint = {x:10, y:10};
     }
-    if(!this.config.player2StartingPoint||typeof this.config.player2StartingPoint!="object"){
+    if(!this.config.player2StartingPoint||typeof this.config.player2StartingPoint!=="object"){
         this.config.player2StartingPoint = {x:200, y:10};
     }
-    if(!this.config.player2StartingDirection||typeof this.config.player2StartingDirection!="string"){
+    if(!this.config.player2StartingDirection||typeof this.config.player2StartingDirection!=="string"){
         this.config.player2StartingDirection = "right";
     }
-    if(!this.config.player2StartingDirection||typeof this.config.player2StartingDirection!="string"){
+    if(!this.config.player2StartingDirection||typeof this.config.player2StartingDirection!=="string"){
         this.config.player2StartingDirection = "down";
     }
 
@@ -48,7 +49,7 @@ function Simulation(config, bot1clb, bot2clb, botsQuantity){
     var minY = this.config.player1StartingPoint.y<this.config.player2StartingPoint.y?this.config.player1StartingPoint.y:this.config.player2StartingPoint.y;
     var maxY = this.config.player1StartingPoint.y>this.config.player2StartingPoint.y?this.config.player1StartingPoint.y:this.config.player2StartingPoint.y;
     for(var i=0;i<botsQuantity;i++){
-        if(i==0){
+        if(i===0){
             this.bots[0][i] = {
                 x:this.config.player1StartingPoint.x,
                 y:this.config.player1StartingPoint.y
@@ -58,7 +59,7 @@ function Simulation(config, bot1clb, bot2clb, botsQuantity){
                 y:this.config.player1StartingPoint.y
             }
         }
-        else if(i==botsQuantity-1){
+        else if(i===botsQuantity-1){
             this.bots[0][i] = {
                 x:this.config.player2StartingPoint.x,
                 y:this.config.player2StartingPoint.y
@@ -85,7 +86,7 @@ function Simulation(config, bot1clb, bot2clb, botsQuantity){
     this.controlInfo = {keyPressed:["up", "up"], current:[0,0]};
     this.direction = [new Array(botsQuantity), new Array(botsQuantity)];
     this.directionsArr = [{"up":true},{"down":true},{"left":true},{"right":true}];
-    for(var i=0; i<botsQuantity; i++){
+    for(i=0; i<botsQuantity; i++){
         var newDirection = this.directionsArr[Math.floor(Math.random()*this.directionsArr.length)]
         this.direction[0][i] = newDirection;
         this.direction[1][i] = newDirection;
@@ -94,19 +95,19 @@ function Simulation(config, bot1clb, bot2clb, botsQuantity){
     document.addEventListener('keydown', (e) => {
         var gamesQuant = 2;
         for(var gameId = 0; gameId < gamesQuant; gameId++){
-            if(e.key==this.config['player'+(gameId+1)+'Keys'].up){
+            if(e.key===this.config['player'+(gameId+1)+'Keys'].up){
                 this.controlInfo.keyPressed[gameId] = "up";
             }
-            else if(e.key==this.config['player'+(gameId+1)+'Keys'].down){
+            else if(e.key===this.config['player'+(gameId+1)+'Keys'].down){
                 this.controlInfo.keyPressed[gameId] = "down";
             }
-            else if(e.key==this.config['player'+(gameId+1)+'Keys'].left){
+            else if(e.key===this.config['player'+(gameId+1)+'Keys'].left){
                 this.controlInfo.keyPressed[gameId] = "left";
             }
-            else if(e.key==this.config['player'+(gameId+1)+'Keys'].right){
+            else if(e.key===this.config['player'+(gameId+1)+'Keys'].right){
                 this.controlInfo.keyPressed[gameId] = "right";
             }
-            else if(e.key==this.config['player'+(gameId+1)+'Keys'].switch){
+            else if(e.key===this.config['player'+(gameId+1)+'Keys'].switch){
                 this.controlInfo.current[gameId] = this.controlInfo.current[gameId]<this.quantity-1?this.controlInfo.current[gameId]+1:0;
             }
         }
@@ -131,6 +132,9 @@ Simulation.prototype.getDirections       = function(direction){
                     case 'DOWN':
                         direction[gameId][botId] = {down:true};
                         break;
+                    default:
+                        direction[gameId][botId] = {left:true};
+                        break;
                 }
             }
         }
@@ -140,29 +144,30 @@ Simulation.prototype.getDirections       = function(direction){
 Simulation.prototype.simulate = function(){
     var gamesQuant = 2;
     var botsData = [new Array(this.quantity), new Array(this.quantity)];
+    var clb;
     for(var i=0;i<gamesQuant;i++){
         for(var j=0;j<this.quantity;j++){
             botsData[i][j] = {
-                player:this.bots[i][j], collectives:this.collectives[i], direction: this.direction[i][j], index: j, config: this.config, gameId: i,
+                player:this.bots[i][j], collectives:this.collectives[this.singleWindow?0:i], direction: this.direction[i][j], index: j, config: this.config, gameId: i,
                 controlInfo: this.controlInfo, players: this.bots[i]
             }
         }
     }
     for(var gameId = 0; gameId < gamesQuant; gameId++){
-        if(gameId==0)
-            var clb = this.bot1clb;
+        if(gameId===0)
+            clb = this.bot1clb;
         else
-            var clb = this.bot2clb;
+            clb = this.bot2clb;
         for(var botId = 0; botId < this.quantity; botId++){
             this.direction[gameId][botId] = clb(botsData[gameId][botId]);
         }
     }
     this.direction = this.getDirections(this.direction);
     var botsQuant = this.quantity;
-    var gamesQuant = 2;
-    for(var gameId = 0; gameId < gamesQuant; gameId++){
-        for(var botId = 0; botId < botsQuant; botId++){
-            if(this.direction[gameId][botId]==undefined)
+    gamesQuant = 2;
+    for(gameId = 0; gameId < gamesQuant; gameId++){
+        for(botId = 0; botId < botsQuant; botId++){
+            if(this.direction[gameId][botId]===undefined)
                 this.direction[gameId][botId] = this.directionsArr[Math.floor(Math.random()*this.directionsArr.length)];
         }
     }
@@ -180,7 +185,7 @@ function guidGenerator() {
 }
 
 Simulation.prototype.generateCollectives = function(){
-    if(this.collectives[0].length > 0&&this.collectives[1].length > 0)
+    if(this.collectives[0].length > 0&&this.collectives[this.singleWindow?0:1].length > 0)
         return;
     this.collectives[0].forEach((item, index, self)=>{
         self[index].id = 0;
@@ -205,19 +210,20 @@ Simulation.prototype.generateCollectives = function(){
             Math.floor(Math.random() * (gameHeight / playerSize - 0) + 0) * playerSize;
         stoneObj.size = size;
         stoneObj = JSON.stringify(stoneObj);
-        if(this.collectives[0].indexOf(stoneObj)==-1)
+        if(this.collectives[0].indexOf(stoneObj)===-1)
             this.collectives[0].push(stoneObj);
-        if(this.collectives[1].indexOf(stoneObj)==-1)
+        if(this.collectives[1].indexOf(stoneObj)===-1&&!this.singleWindow)
             this.collectives[1].push(stoneObj);
     }
     this.collectives[0].forEach((item, index, self)=>{
         self[index] = JSON.parse(item);
         self[index].id = guidGenerator();
     });
-    this.collectives[1].forEach((item, index, self)=>{
-        self[index] = JSON.parse(item);
-        self[index].id = guidGenerator();
-    });
+    if(!this.singleWindow)
+        this.collectives[1].forEach((item, index, self)=>{
+            self[index] = JSON.parse(item);
+            self[index].id = guidGenerator();
+        });
 }
 Simulation.prototype.moveCharacters = function(){
     var botsQuant = this.quantity;
@@ -255,7 +261,8 @@ Simulation.prototype.collectCollectives = function(){
     for(var gameId = 0; gameId < gamesQuant; gameId++){
         for(var botId = 0; botId < botsQuant; botId++){
             var bot = this.bots[gameId][botId];
-            this.collectives[gameId] = this.collectives[gameId].filter((collective)=>{
+            // eslint-disable-next-line
+            this.collectives[this.singleWindow?0 : gameId] = this.collectives[this.singleWindow?0 : gameId].filter((collective)=>{
                 //this.score[gameId]++;
                 if(
                     (collective.x < bot.x + this.config.playerSize &&

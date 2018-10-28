@@ -63,6 +63,7 @@ export default class Sprite extends Component {
           currentStep: 0
         },
         () => {
+          // eslint-disable-next-line
           const animate = this.animate.bind(this, nextProps);
           //this.loopID = this.context.loop.subscribe(animate);
         }
@@ -127,7 +128,7 @@ export default class Sprite extends Component {
   render() {
     return (
       <div style={{ ...this.getWrapperStyles(), ...this.props.style }}>
-        <img style={this.getImageStyles()} src={this.props.src} />
+        <img style={this.getImageStyles()} src={this.props.src} alt={""}/>
       </div>
     );
   }

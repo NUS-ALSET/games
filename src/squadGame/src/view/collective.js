@@ -19,6 +19,7 @@ export default class Collective extends Component {
   >
       <img
         style={{ 'width': '100%', 'height': '100%' }}
+        alt={""}
         src={img}
       />
     </div>;

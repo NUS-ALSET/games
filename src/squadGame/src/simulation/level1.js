@@ -17,16 +17,17 @@ var level1 =function(world){
 	});*/
 	closestGem = world.collectives[0];
 	if (closestGem) {
+		var direction = {};
 		if (closestGem.x - player.x > 0) {
-			var direction = { left: false, right: true, up: false, down: false };
+			direction = { left: false, right: true, up: false, down: false };
 		} else if (closestGem.x - player.x < 0) {
-			var direction = { left: true, right: false, up: false, down: false };
+			direction = { left: true, right: false, up: false, down: false };
 		} else if (closestGem.y - player.y > 0) {
-			var direction = { left: false, right: false, up: false, down: true };
+			direction = { left: false, right: false, up: false, down: true };
 		} else if (closestGem.y - player.y < 0) {
-			var direction = { left: false, right: false, up: true, down: false };
+			direction = { left: false, right: false, up: true, down: false };
 		} else {
-			var direction = { left: false, right: false, up: true, down: false };
+			direction = { left: false, right: false, up: true, down: false };
 		}
 		
 		return direction;

@@ -11,11 +11,12 @@ export default class App extends Component {
   render() {
     return <Loop>
       <Updater {...this.props}></Updater>
-      <div className="stage">
-        <Stage width={800} height={480}>
+      <div className="stage" style={{ width: this.props.gameData.singleWindowGame ? '100%' : '50%' }}>
+        <Stage width={this.props.gameData.singleWindowGame ? 1600 : 800} height={480}>
           <Tile></Tile>
           <Collectives gameId={0} store={this.props.store}></Collectives>
           <Characters gameId={0} store={this.props.store}></Characters>
+          {this.props.gameData.singleWindowGame && <Characters store={this.props.store} gameId={1}></Characters>}
         </Stage>
       </div>
       {!this.props.gameData.singleWindowGame && <div className="stage">

@@ -166,6 +166,8 @@ class Updater extends Component {
   }
   componentDidMount() {
     this.loopID = this.context.loop.subscribe(this.loop);
+    this.updateStateFromProps(this.props);
+    this.restartGame(PAUSE);
   }
   componentWillUnmount() {
     this.context.loop.unsubscribe(this.loopID);
