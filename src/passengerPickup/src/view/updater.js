@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import Simulation from '../simulation/simulation';
@@ -28,7 +28,8 @@ class Updater extends Component {
       gameOver: {
         status: false,
         message: ''
-      }
+      },
+      gameStopped: true,
     }
     this.pauseResumeGame = this.pauseResumeGame.bind(this);
     this.restartGame = this.restartGame.bind(this);
@@ -131,7 +132,8 @@ class Updater extends Component {
         status: false,
         winner: null,
         message: 'Keep Playing'
-      }
+      },
+      gameStopped: false
     })
     this.props.store.score = [0, 0];
     this.props.store.time = this.props.gameData.gameTime || config.time;
@@ -179,10 +181,21 @@ class Updater extends Component {
     this.context.loop.unsubscribe(this.loopID);
   }
   render() {
-    return (<div>
-      <WinningScreen gameOver={this.state.gameOver} restartGame={this.restartGame} submitSolution={this.submitSolution} />
-      <ScoreDisplay store={this.props.store} intiGame={this.gameTime === this.props.store.time} playAsPlayer2={this.props.playAsPlayer2} restartGame={this.restartGame} pauseResumeGame={this.pauseResumeGame} />
-    </div>)
+    const {store, playAsPlayer2} = this.props;
+    const {gameOver, gameStopped} = this.state;
+    return (<Fragment>
+      <WinningScreen
+        gameOver={gameOver}
+        restartGame={this.restartGame}
+        submitSolution={this.submitSolution}
+      />
+      <ScoreDisplay
+        store={store}
+        initGame={gameStopped}
+        playAsPlayer2={playAsPlayer2}
+        restartGame={this.restartGame}
+        pauseResumeGame={this.pauseResumeGame} />
+    </Fragment>)
   }
 }
 

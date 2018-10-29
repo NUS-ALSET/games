@@ -1,17 +1,17 @@
+import {Button} from '@material-ui/core'
+import React, { Component, Fragment } from 'react';
+import { observer } from 'mobx-react';
 import level1 from './level1';
 import level2 from './level2';
 import level3 from './level3';
 import config from './config.json';
-import React, { Component } from 'react';
 import tableResult from './table-result';
 import App from '../view/App';
-import { observer } from 'mobx-react';
 import Store from '../store';
 
 class Tournament extends Component {
   constructor(props) {
     super(props);
-    console.log(props)
     this.state = {
       presult: "",
       showTable: true,
@@ -19,7 +19,8 @@ class Tournament extends Component {
       firstTimeRunGame: false,
       gameData: props.gameData,
       player1Data: props.player1Data,
-      playAsPlayer2: props.playAsPlayer2
+      playAsPlayer2: props.playAsPlayer2,
+      buttonDisabled: false,
     }
     if (this.state.player1Data.jsCode) {
       Store.func = this.state.player1Data.jsCode;
@@ -63,7 +64,7 @@ class Tournament extends Component {
             // eslint-disable-next-line
             this.state.player1Data.pyCode = Store.editorPyCode;
           Store.showGameSimulation = true;
-          Store.needToRestartGame = true;
+          //Store.needToRestartGame = true;
         }
       };
     }
@@ -125,52 +126,77 @@ class Tournament extends Component {
       this.attachClickEvent();
     }, 1000);
   }
+  resimulate = () => {
+    this.setState(() => ({buttonDisabled: true}))
+    const {gameData} = this.state;
+    if (typeof Store.func === 'string') {
+      // eslint-disable-next-line
+      Store.func = eval(`(${Store.func})`);
+    }
+    Object.defineProperty(Store.func, "name", { value: "You" });
+    const newConfig = {
+      ...config,
+      botsQuantityPerGame: gameData.botsQuantities || config.botsQuantityPerGame,
+      time: gameData.gameTime || config.time,
+      scoreToWin: gameData.scoreToWin || config.scoreToWin
+    }
+    const result = tableResult([Store.func, level1, level2, level3], newConfig);
+    this.setState(() => ({ presult: result.tableHtml, buttonDisabled: false }),
+    () => {
+      Store.tournamentScoreBeaten = result.score > gameData.tournamentScoreToWin ? true : false;
+      this.attachClickEvent();
+    });
+  }
   render() {
+    const {buttonDisabled,
+      gameData,
+      player1Data,
+      playAsPlayer2,
+      presult,
+      editorPyCode,
+      gameTitle}  = this.state;
     return (
-      <div>
-        {!Store.showGameSimulation ? <div><div style={{ background: 'white' }}>
+      <Fragment>
+        {!Store.showGameSimulation ? <div style={{ background: 'white' }}>
           {
-            <p dangerouslySetInnerHTML={{ __html: this.state.presult }} />
-
+            <p dangerouslySetInnerHTML={{ __html: presult }} />
           }
           <div style={{ textAlign: 'right' }}>
-            {Store.tournamentScoreBeaten && <button className="btn-smaller control-btn" onClick={(e) => {
-              this.props.onCommit({ pyCode: this.store.editorPyCode });
-            }}>Commit</button>}
-            <button className="btn-smaller control-btn" onClick={(e) => {
-              e.target.disabled = true;
-              if (typeof Store.func === 'string')
-                // eslint-disable-next-line
-                Store.func = eval("(" + Store.func + ")");
-              Object.defineProperty(Store.func, "name", { value: "You" });
-              var newConfig = {
-                ...config,
-                botsQuantityPerGame: this.state.gameData.botsQuantities || config.botsQuantityPerGame,
-                time: this.state.gameData.gameTime || config.time,
-                scoreToWin: this.state.gameData.scoreToWin || config.scoreToWin
-              }
-              var result = tableResult([Store.func, level1, level2, level3], newConfig);
-              this.setState({ presult: result.tableHtml });
-              Store.tournamentScoreBeaten = result.score > this.state.gameData.tournamentScoreToWin ? true : false;
-              setTimeout(() => {
-                this.attachClickEvent();
-              }, 1000);
-              e.target.disabled = false;
-            }}
-            >RESIMULATE</button>
+            {Store.tournamentScoreBeaten && (
+              <button className="btn-smaller control-btn" onClick={(e) => {
+                this.props.onCommit({ pyCode: editorPyCode });
+              }}>Commit</button>
+            )}
+            <Button
+              disabled={buttonDisabled}
+              color="primary"
+              variant="contained"
+              onClick={this.resimulate}
+            >RESIMULATE
+            </Button>
           </div>
-        </div></div> : <div>
-            <div className="gameHeader"><button
-              onClick={() => {
-                Store.showGameSimulation = false;
-                setTimeout(() => {
-                  this.attachClickEvent();
-                }, 1000);
-              }}
-            >X</button><b>Match: {this.state.gameTitle}</b></div>
-            <App gameData={this.state.gameData} player1Data={this.state.player1Data} playAsPlayer2={this.state.playAsPlayer2} store={Store} />
-          </div>}
-      </div>
+        </div> : <Fragment>
+            <div className="gameHeader">
+              <Button
+                variant="contained"
+                onClick={() => {
+                  Store.showGameSimulation = false;
+                  setTimeout(() => {
+                    this.attachClickEvent();
+                  }, 1000);
+                }}
+              >X
+              </Button>
+              <b>Match: {gameTitle}</b>
+            </div>
+            <App
+              gameData={gameData}
+              player1Data={player1Data}
+              playAsPlayer2={playAsPlayer2}
+              store={Store}
+            />
+          </Fragment>}
+      </Fragment>
     );
   }
 }
