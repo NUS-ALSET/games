@@ -18,9 +18,6 @@ class Bot extends Component {
   static contextTypes = {
     scale: PropTypes.number
   };
-  constructor() {
-    super();
-  }
   render() {
     switch (this.props.type) {
       case 'gnome1':

@@ -26,14 +26,14 @@ class OrangeCar extends Component {
   }
   getWrapperStyles() {
     this.getAnimationState();
-    var targetX = this.props.store.position[this.props.gameId][this.props.charId].x*this.props.scale;
-    var targetY = this.props.store.position[this.props.gameId][this.props.charId].y*this.props.scale;
+    var targetX = this.props.store.position[this.props.gameId][this.props.charId].x * this.props.scale;
+    var targetY = this.props.store.position[this.props.gameId][this.props.charId].y * this.props.scale;
     return {
       position: 'absolute',
       transform: `translate(${targetX}px, ${targetY}px)`,
       transformOrigin: 'left top',
-      width:'20px',
-      height:'20px'
+      width: '20px',
+      height: '20px'
     };
   }
   render() {
@@ -46,9 +46,18 @@ class OrangeCar extends Component {
           src={img}
           ticksPerFrame={4}
           state={this.animState}
-          scale={(this.props.size/100)*this.props.scale}
+          scale={(this.props.size / 100) * this.props.scale}
           steps={[0, 0, 0, 0]}
         />
+        <div style={{
+          position: 'absolute',
+          left: 0,
+          top: (-18 * this.props.scale) + 'px',
+          color: '#97ff9b',
+          fontSize: 18 * this.props.scale,
+          fontWeight: 'bold',
+          zIndex: 1000
+        }}>{this.props.store.position[this.props.gameId][this.props.charId].passenger.id}</div>
       </div>
     );
   }

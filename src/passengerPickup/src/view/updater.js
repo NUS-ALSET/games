@@ -74,9 +74,6 @@ class Updater extends Component {
       }
     }
     if (this.props.store.needToRestartGame) {
-      //if(!this.props.store.player1Func)
-      //this.props.store.player1Func = this.props.store.func;
-      //this.updateStateFromProps(this.props);
       if (this.props.playAsPlayer2 && this.props.gameData.playMode === CUSTOM_CODE) {
         this.props.store.player2Func = this.props.store.func;
       }

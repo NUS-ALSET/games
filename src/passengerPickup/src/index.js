@@ -42,9 +42,9 @@ function App() {
     gameType: getURLParameters('gameType') || 'game',
     scoreToWin: Number(getURLParameters('scoreToWin')) || 20,
     tournamentScoreToWin: Number(getURLParameters('tournamentScoreToWin')) || 3,
-    singleWindowGame: getURLParameters('singleWindowGame')==='true'
+    singleWindowGame: getURLParameters('singleWindowGame') === 'true'
   }
-  const playAsPlayer2 = getURLParameters('playAsPlayer2')==='true';
+  const playAsPlayer2 = getURLParameters('playAsPlayer2') === 'true';
   const playerKeys = config[playAsPlayer2 ? 'player2Keys' : 'player1Keys'];
 
   return <div>

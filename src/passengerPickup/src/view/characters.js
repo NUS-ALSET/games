@@ -16,9 +16,9 @@ class Characters extends Component {
   }
   render() {
     return <div>
-      {this.props.store.position[this.props.gameId].map((pos,index)=>{
-        if(index<this.props.store.botsQuantity)
-          return <div key={index}><Character scale={this.context.scale} store={this.props.store} gameId={this.props.gameId} charId={index} type={this.charactersTypeArr[Math.floor(Math.random()*this.charactersTypeArr.length)]}></Character></div>
+      {this.props.store.position[this.props.gameId].map((pos, index) => {
+        if (index < this.props.store.botsQuantity)
+          return <div key={index}><Character scale={this.context.scale} store={this.props.store} gameId={this.props.gameId} charId={index} type={pos.passenger ? 'orange-car' : 'blue-car'}></Character></div>
         return false;
       })}
     </div>

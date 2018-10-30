@@ -1,4 +1,10 @@
-var level1 =function(world){
+export const defaultPythonCodeFunction=`import random
+def getPlayersCommands(world):
+  foo = ['RIGHT', 'LEFT', 'UP','DOWN']
+  result = random.choice(foo)
+  print(result)
+  return result`;
+  export const defaultJavascriptFunctionCode = `function getPlayersCommands(world) {
 	var player = world.player;
 	var closestGem = false;
 	/*world.collectives.forEach(stone => {
@@ -17,20 +23,18 @@ var level1 =function(world){
 	});*/
 	closestGem = world.collectives[0];
 	if (closestGem) {
-		var direction = {};
 		if (closestGem.x - player.x > 0) {
-			direction = { left: false, right: true, up: false, down: false };
+			var direction = { left: false, right: true, up: false, down: false };
 		} else if (closestGem.x - player.x < 0) {
-			direction = { left: true, right: false, up: false, down: false };
+			var direction = { left: true, right: false, up: false, down: false };
 		} else if (closestGem.y - player.y > 0) {
-			direction = { left: false, right: false, up: false, down: true };
+			var direction = { left: false, right: false, up: false, down: true };
 		} else if (closestGem.y - player.y < 0) {
-			direction = { left: false, right: false, up: true, down: false };
+			var direction = { left: false, right: false, up: true, down: false };
 		} else {
-			direction = { left: false, right: false, up: true, down: false };
+			var direction = { left: false, right: false, up: true, down: false };
 		}
 		
 		return direction;
 	}
-}
-module.exports = level1;
+}`;
