@@ -1,4 +1,4 @@
-import {Button} from '@material-ui/core'
+import {Button} from '@material-ui/core';
 import React, { Component, Fragment } from 'react';
 import { observer } from 'mobx-react';
 import level1 from './level1';
@@ -130,7 +130,6 @@ class Tournament extends Component {
     this.setState(() => ({buttonDisabled: true}))
     const {gameData} = this.state;
     if (typeof Store.func === 'string') {
-      // eslint-disable-next-line
       Store.func = eval(`(${Store.func})`);
     }
     Object.defineProperty(Store.func, "name", { value: "You" });
@@ -141,11 +140,13 @@ class Tournament extends Component {
       scoreToWin: gameData.scoreToWin || config.scoreToWin
     }
     const result = tableResult([Store.func, level1, level2, level3], newConfig);
-    this.setState(() => ({ presult: result.tableHtml, buttonDisabled: false }),
-    () => {
-      Store.tournamentScoreBeaten = result.score > gameData.tournamentScoreToWin ? true : false;
-      this.attachClickEvent();
-    });
+    this.setState(
+      () => ({ presult: result.tableHtml, buttonDisabled: false }),
+      () => {
+        Store.tournamentScoreBeaten = result.score > gameData.tournamentScoreToWin ? true : false;
+        this.attachClickEvent();
+      }
+    );
   }
   render() {
     const {buttonDisabled,
@@ -157,25 +158,32 @@ class Tournament extends Component {
       gameTitle}  = this.state;
     return (
       <Fragment>
-        {!Store.showGameSimulation ? <div style={{ background: 'white' }}>
-          {
-            <p dangerouslySetInnerHTML={{ __html: presult }} />
-          }
-          <div style={{ textAlign: 'right' }}>
-            {Store.tournamentScoreBeaten && (
-              <button className="btn-smaller control-btn" onClick={(e) => {
-                this.props.onCommit({ pyCode: editorPyCode });
-              }}>Commit</button>
-            )}
-            <Button
-              disabled={buttonDisabled}
-              color="primary"
-              variant="contained"
-              onClick={this.resimulate}
-            >RESIMULATE
-            </Button>
-          </div>
-        </div> : <Fragment>
+        {!Store.showGameSimulation ?
+          (<div style={{ background: 'white' }}>
+            {
+              <p dangerouslySetInnerHTML={{ __html: presult }} />
+            }
+            <div style={{ textAlign: 'right' }}>
+              {Store.tournamentScoreBeaten && (
+                <button
+                  className="btn-smaller control-btn"
+                  onClick={e => {this.props.onCommit({ pyCode: editorPyCode })}}
+                >
+                  Commit
+                </button>
+              )}
+              <Button
+                disabled={buttonDisabled}
+                color="primary"
+                variant="contained"
+                onClick={this.resimulate}
+              >
+                RESIMULATE
+              </Button>
+            </div>
+          </div>)
+          :
+          (<Fragment>
             <div className="gameHeader">
               <Button
                 variant="contained"
@@ -185,7 +193,8 @@ class Tournament extends Component {
                     this.attachClickEvent();
                   }, 1000);
                 }}
-              >X
+              >
+                X
               </Button>
               <b>Match: {gameTitle}</b>
             </div>
@@ -195,7 +204,8 @@ class Tournament extends Component {
               playAsPlayer2={playAsPlayer2}
               store={Store}
             />
-          </Fragment>}
+          </Fragment>)
+          }
       </Fragment>
     );
   }

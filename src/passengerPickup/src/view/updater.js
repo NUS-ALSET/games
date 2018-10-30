@@ -183,19 +183,21 @@ class Updater extends Component {
   render() {
     const {store, playAsPlayer2} = this.props;
     const {gameOver, gameStopped} = this.state;
-    return (<Fragment>
-      <WinningScreen
-        gameOver={gameOver}
-        restartGame={this.restartGame}
-        submitSolution={this.submitSolution}
-      />
-      <ScoreDisplay
-        store={store}
-        initGame={gameStopped}
-        playAsPlayer2={playAsPlayer2}
-        restartGame={this.restartGame}
-        pauseResumeGame={this.pauseResumeGame} />
-    </Fragment>)
+    return (
+      <Fragment>
+        <WinningScreen
+          gameOver={gameOver}
+          restartGame={this.restartGame}
+          submitSolution={this.submitSolution}
+        />
+        <ScoreDisplay
+          store={store}
+          initGame={gameStopped}
+          playAsPlayer2={playAsPlayer2}
+          restartGame={this.restartGame}
+          pauseResumeGame={this.pauseResumeGame} />
+      </Fragment>
+    )
   }
 }
 

@@ -11,14 +11,18 @@ const ScoreDisplay = ({ store, restartGame, pauseResumeGame, playAsPlayer2, init
         variant="contained"
         color="primary"
         className="restart"
-        onClick={() => restartGame()}> {initGame ? 'Start Game' : 'Restart'}
+        onClick={() => restartGame()}
+      >
+        {initGame ? 'Start Game' : 'Restart'}
       </Button>
       {!initGame && (
         <Button
           variant="contained"
           color="primary"
           className="pause"
-          onClick={() => pauseResumeGame()}>{store.mode === 'play' ? 'Pause' : 'Resume'}
+          onClick={() => pauseResumeGame()}
+        >
+          {store.mode === 'play' ? 'Pause' : 'Resume'}
         </Button>
       )}
     </div>
