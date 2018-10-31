@@ -1,11 +1,11 @@
-import {Button} from '@material-ui/core';
+import {Button} from '@material-ui/core'
 import React, { Component, Fragment } from 'react';
 import { observer } from 'mobx-react';
 import level1 from './level1';
 import level2 from './level2';
 import level3 from './level3';
 import config from './config.json';
-import tableResult from './table-result';
+import TableResults from './table-result';
 import App from '../view/App';
 import Store from '../store';
 
@@ -13,7 +13,6 @@ class Tournament extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      presult: "",
       showTable: true,
       gameTitle: '',
       firstTimeRunGame: false,
@@ -113,15 +112,13 @@ class Tournament extends Component {
     if (typeof Store.func === 'string')
       // eslint-disable-next-line
       Store.func = eval("(" + Store.func + ")");
-    var newConfig = {
+    const newConfig = {
       ...config,
       botsQuantityPerGame: this.state.gameData.botsQuantities || config.botsQuantityPerGame,
       time: this.state.gameData.gameTime || config.time,
       scoreToWin: this.state.gameData.scoreToWin || config.scoreToWin
     }
-    var result = tableResult([Store.func, level1, level2, level3], newConfig);
-    this.setState({ presult: result.tableHtml });
-    Store.tournamentScoreBeaten = result.score > this.state.gameData.tournamentScoreToWin ? true : false;
+    this.setState({ bots: [Store.func, level1, level2, level3], newConfig });
     setTimeout(() => {
       this.attachClickEvent();
     }, 1000);
@@ -139,48 +136,43 @@ class Tournament extends Component {
       time: gameData.gameTime || config.time,
       scoreToWin: gameData.scoreToWin || config.scoreToWin
     }
-    const result = tableResult([Store.func, level1, level2, level3], newConfig);
-    this.setState(
-      () => ({ presult: result.tableHtml, buttonDisabled: false }),
-      () => {
-        Store.tournamentScoreBeaten = result.score > gameData.tournamentScoreToWin ? true : false;
-        this.attachClickEvent();
-      }
-    );
+    this.setState(() => ({buttonDisabled: false, bots: [Store.func, level1, level2, level3], newConfig }),
+    () => {
+      this.attachClickEvent();
+    });
   }
   render() {
     const {buttonDisabled,
       gameData,
       player1Data,
       playAsPlayer2,
-      presult,
       editorPyCode,
+      bots,
+      newConfig,
       gameTitle}  = this.state;
     return (
       <Fragment>
         {!Store.showGameSimulation ?
           (<div style={{ background: 'white' }}>
-            {
-              <p dangerouslySetInnerHTML={{ __html: presult }} />
-            }
-            <div style={{ textAlign: 'right' }}>
-              {Store.tournamentScoreBeaten && (
-                <button
-                  className="btn-smaller control-btn"
-                  onClick={e => {this.props.onCommit({ pyCode: editorPyCode })}}
-                >
-                  Commit
-                </button>
-              )}
-              <Button
-                disabled={buttonDisabled}
-                color="primary"
-                variant="contained"
-                onClick={this.resimulate}
+          <TableResults botFiles={bots} config={newConfig} Store={Store} scoreToWin={gameData.tournamentScoreToWin} />
+          <div style={{ textAlign: 'right' }}>
+            {Store.tournamentScoreBeaten && (
+              <button
+              className="btn-smaller control-btn"
+              onClick={e => {this.props.onCommit({ pyCode: editorPyCode })}}
+            >
+              Commit
+            </button>
+            )}
+            <Button
+              disabled={buttonDisabled}
+              color="primary"
+              variant="contained"
+              onClick={this.resimulate}
               >
-                RESIMULATE
-              </Button>
-            </div>
+              RESIMULATE
+            </Button>
+          </div>
           </div>)
           :
           (<Fragment>
@@ -204,8 +196,8 @@ class Tournament extends Component {
               playAsPlayer2={playAsPlayer2}
               store={Store}
             />
-          </Fragment>)
-          }
+            </Fragment>)
+            }
       </Fragment>
     );
   }
