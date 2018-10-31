@@ -38,6 +38,15 @@ class Destination extends Component {
                 scale={(config.passengerSize / 102) * this.context.scale}
                 steps={[7]}
               />
+              <div style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                color: '#ff5959',
+                fontSize: 18 * this.context.scale,
+                fontWeight: 'bold',
+                zIndex: 1000
+              }}>{dest.id}</div>
             </div>
           }
           return false;

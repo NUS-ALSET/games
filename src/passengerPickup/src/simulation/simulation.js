@@ -273,7 +273,7 @@ Simulation.prototype.generateCollectives = function(){
         return;
     var passengersQuant = Math.floor(Math.random() * (this.config.maxPassengers - this.config.minPassengers + 1) + this.config.minPassengers);
     for (var i = 0; i < passengersQuant; i++) {
-        var passenger = new Passenger();
+        var passenger = new Passenger(i);
         passenger.setRandomPos(this.map[0], this.config.roadWidth);
         var unique = true;
         // eslint-disable-next-line
@@ -496,11 +496,12 @@ Simulation.prototype.findShortestPath = function(arr, pointA, pointB, charId){
         }
     }
 }
-function Passenger(){
+function Passenger(id){
     this.x = 0;
     this.y = 0;
     this.takeofX = 0;
     this.takeofY = 0;
+    this.id = id;
 }
 Passenger.prototype.setRandomPos = function(arr, width){
     this.x = Math.floor(Math.random()*(arr[0].length-1));

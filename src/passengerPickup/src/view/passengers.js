@@ -21,6 +21,14 @@ class Passengers extends Component {
           width: squadConfig.passengerSize * this.context.scale,
           height: squadConfig.passengerSize * this.context.scale
         }}>
+        <div style={{
+          position: 'absolute',
+          color: 'white',
+          fontSize: 18 * this.context.scale,
+          fontWeight: 'bold',
+          top: (-18 * this.context.scale) + 'px',
+          bottom: 0
+        }}>{passenger.id}</div>
         <img
           alt={""}
           style={{ 'width': '100%', 'height': '100%' }}
