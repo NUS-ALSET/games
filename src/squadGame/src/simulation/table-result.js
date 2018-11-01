@@ -82,13 +82,13 @@ const tableHeading = botFiles => (
     botFiles.map(bot => <td key={bot.name} className='cell-player-name'>{bot.name}</td>)
 )
 
-const makeScoreGrid = (array, name) => (
+const makeScoreGrid = (array, name, handleOpeningGame) => (
     array.map((item, index) => {
         let comp = true;
         let cell = 'number-won'
         switch(item.score) {
         case 1 :
-            break;
+					break;
         case 0.5 :
             cell = 'number-even'
             break;
@@ -103,13 +103,14 @@ const makeScoreGrid = (array, name) => (
         return (
             <td key={index} className={`cell-${cell}`}>
                 {comp
-                    ? <a
-                        className='restartGame'
+                    ? <button
+                        className='restartGame gameScore'
                         data-bot1={name}
-                        data-bot2={item.name}
+												data-bot2={item.name}
+												onClick={() => handleOpeningGame(name, item.name)}
                         >
                           {item.score}
-                    </a>
+                    </button>
                     : ''
                 }
             </td>
@@ -117,7 +118,7 @@ const makeScoreGrid = (array, name) => (
     })
 );
 
-const TableResults = ({botFiles, config, scoreToWin}) => {
+const TableResults = ({botFiles, config, scoreToWin, handleOpeningGame}) => {
     const {scoresGrid} = simulate(botFiles, config, scoreToWin);
 
     return (
@@ -148,7 +149,7 @@ const TableResults = ({botFiles, config, scoreToWin}) => {
             return (
               <tr key={index}>
                 <td>{item.name}</td>
-                {makeScoreGrid(item.score, item.name)}
+                {makeScoreGrid(item.score, item.name, handleOpeningGame)}
                 <td>{item.player1Score}</td>
                 <td>{item.player2Score}</td>
                 <td>{item.total}</td>

@@ -143,6 +143,18 @@ body{margin: 0}
   color:green;
   font-size: 14px;
 }
+td .gameScore {
+  text-decoration: none;
+  color:green;
+  font-size: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+td .gameScore:hover{
+  background: #eee;
+}
 .cell-number-even {
   text-align: right;
 }
