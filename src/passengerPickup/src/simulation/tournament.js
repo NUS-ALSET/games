@@ -147,39 +147,40 @@ class Tournament extends Component {
       editorPyCode,
       bots,
       newConfig,
-      gameTitle}  = this.state;
-    return (
-      <Fragment>
-        {!Store.showGameSimulation ?
-          (<div style={{ background: 'white' }}>
-          <TableResults
-            botFiles={bots}
-            config={newConfig}
-            Store={Store}
-            scoreToWin={gameData.tournamentScoreToWin}
-            handleOpeningGame={this.handleOpeningGame}
+      gameTitle} = this.state;
+    return <Fragment>
+      {!Store.showGameSimulation ?
+        (
+          <div style={{ background: 'white' }}>
+            <TableResults
+              botFiles={bots}
+              config={newConfig}
+              Store={Store}
+              scoreToWin={gameData.tournamentScoreToWin}
+              handleOpeningGame={this.handleOpeningGame}
             />
-          <div style={{ textAlign: 'right' }}>
-            {Store.tournamentScoreBeaten && (
-              <button
-              className="btn-smaller control-btn"
-              onClick={e => {this.props.onCommit({ pyCode: editorPyCode })}}
-            >
-              Commit
-            </button>
-            )}
-            <Button
-              disabled={buttonDisabled}
-              color="primary"
-              variant="contained"
-              onClick={this.resimulate}
+            <div style={{ textAlign: 'right' }}>
+              {Store.tournamentScoreBeaten && (
+                <button
+                  className="btn-smaller control-btn"
+                  onClick={e => {this.props.onCommit({ pyCode: editorPyCode })}}
+                >
+                  Commit
+                </button>
+              )}
+              <Button
+                disabled={buttonDisabled}
+                color="primary"
+                variant="contained"
+                onClick={this.resimulate}
               >
-              RESIMULATE
-            </Button>
+                RESIMULATE
+              </Button>
+            </div>
           </div>
-          </div>)
-          :
-          (<Fragment>
+        ) :
+        (
+          <Fragment>
             <div className="gameHeader">
               <Button
                 variant="contained"
@@ -195,10 +196,10 @@ class Tournament extends Component {
               playAsPlayer2={playAsPlayer2}
               store={Store}
             />
-            </Fragment>)
-            }
-      </Fragment>
-    );
+          </Fragment>
+        )
+      }
+    </Fragment>
   }
 }
 export default observer(Tournament);
