@@ -4,12 +4,12 @@ ALSET Games based on React Game Kit
 <h1>Gem collector game</h1>
 <p><b>Game status:</b> using OLD API</p>
 <p align="center">
-  <a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/oldGames/gemCollector" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/gem-collector-screen.png">
+  <a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/oldGames/gemCollector" target="_blank" rel="noopener noreferrer">
+    <img width="530" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/gem-collector-screen.png">
   </a>
 </p>
 <h3>
-	<a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/oldGames/gemCollector" target="_blank">
+	<a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/oldGames/gemCollector" target="_blank">
 		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
 	</a>
 </h3>
@@ -23,12 +23,12 @@ ALSET Games based on React Game Kit
 <h1>One window one player game</h1>
 <p><b>Game status:</b> done, using NEW API</p>
 <p align="center">
-  <a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/squadSinglePlayerGame" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/single-player-squad-game-screen.jpg">
+  <a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/squadSinglePlayerGame" target="_blank" rel="noopener noreferrer">
+    <img width="530" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/single-player-squad-game-screen.jpg">
   </a>
 </p>
 <h3>
-	<a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/squadSinglePlayerGame" target="_blank">
+	<a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/squadSinglePlayerGame" target="_blank">
 		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
 	</a>
 </h3>
@@ -42,12 +42,12 @@ ALSET Games based on React Game Kit
 <h1>Squad game</h1>
 <p><b>Game status:</b> done, using NEW API</p>
 <p align="center">
-  <a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/squadGame" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/squad-game-screen.jpg">
+  <a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/squadGame" target="_blank" rel="noopener noreferrer">
+    <img width="530" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/squad-game-screen.jpg">
   </a>
 </p>
 <h3>
-	<a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/squadGame" target="_blank">
+	<a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/squadGame" target="_blank">
 		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
 	</a>
 </h3>
@@ -61,12 +61,12 @@ ALSET Games based on React Game Kit
 <h1>Passenger pickup game</h1>
 <p><b>Game status:</b> done, using NEW API</p>
 <p align="center">
-  <a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/passengerPickup" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/car-game-screen.png">
+  <a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/passengerPickup" target="_blank" rel="noopener noreferrer">
+    <img width="530" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/car-game-screen.png">
   </a>
 </p>
 <h3>
-	<a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/passengerPickup" target="_blank">
+	<a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/passengerPickup" target="_blank">
 		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
 	</a>
 </h3>
@@ -81,12 +81,12 @@ ALSET Games based on React Game Kit
 <h1>Plant savior</h1>
 <p><b>Game status:</b> using OLD API</p>
 <p align="center">
-  <a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/oldGames/plantSavior" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/plant-savior-game-screen.png">
+  <a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/oldGames/plantSavior" target="_blank" rel="noopener noreferrer">
+    <img width="530" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/plant-savior-game-screen.png">
   </a>
 </p>
 <h3>
-	<a href="https://codesandbox.io/s/github/MKoth/games/tree/master/src/oldGames/plantSavior" target="_blank">
+	<a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/oldGames/plantSavior" target="_blank">
 		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
 	</a>
 </h3>
@@ -106,7 +106,7 @@ ALSET Games based on React Game Kit
 <p><b>Game status:</b> not yet done</p>
 <p align="center">
   <a href="#" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/pizza-game-screen.png">
+    <img width="530" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/pizza-game-screen.png">
   </a>
 </p>
 <ol>
@@ -121,7 +121,7 @@ ALSET Games based on React Game Kit
 <p><b>Game status:</b> not yet done</p>
 <p align="center">
   <a href="#" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/borders-game-screen.png">
+    <img width="530" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/borders-game-screen.png">
   </a>
 </p>
 <ol>
@@ -138,7 +138,7 @@ ALSET Games based on React Game Kit
 <p><b>Game status:</b> not yet done</p>
 <p align="center">
   <a href="#" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/sky-borders-game-screen.png">
+    <img width="530" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/sky-borders-game-screen.png">
   </a>
 </p>
 <ol>
@@ -157,7 +157,7 @@ ALSET Games based on React Game Kit
 <p><b>Game status:</b> not yet done</p>
 <p align="center">
   <a href="#" target="_blank" rel="noopener noreferrer">
-    <img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/kiosk-game-screen.png">
+    <img width="530" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/kiosk-game-screen.png">
   </a>
 </p>
 <ol>
@@ -239,9 +239,9 @@ ALSET Games based on React Game Kit
 	Sprite shape should be following:<br> from top to bottom (vertically) there is a state (left, right, up,down moving, running, idle, etc.)<br>
 	From left to right (horizontally) should be frames for those states<br>
 	For example:<br>
-	<img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/gnome1.png">
+	<img width="530" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/gnome1.png">
 	Example with just 1 frame (horizontal line) for each state:
-	<img width="200" src="https://raw.githubusercontent.com/MKoth/games/master/screens/drone1.png">
+	<img width="200" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/drone1.png">
 </p>
 <h2 align="center">Steps to insert new sprite into game</h2>
 <ol>
@@ -274,8 +274,8 @@ ALSET Games based on React Game Kit
 <h2 align="center">What tile should look like</h2>
 <p>
 	Tile is any square image that can be repeated all over map, for example:<br>
-	<img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/city-tile.png">
-	<img width="530" src="https://raw.githubusercontent.com/MKoth/games/master/screens/grass.jpg">
+	<img width="530" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/city-tile.png">
+	<img width="530" src="https://raw.githubusercontent.com/NUS-ALSET/games/master/screens/grass.jpg">
 </p>
 <p>
 	To change tile image you just need to save it into ./src/assets/tiles and in ./src/view/tile.js change import img from '../assets/tiles/your_custom_image.png'
