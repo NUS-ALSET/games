@@ -1,76 +1,161 @@
-/* eslint-disable */
+import React from 'react';
 import Store from '../store';
+import Simulation from './simulation.js';
 
-let simulate = function (botFiles, config) {
-  let tableStart = `<table id="game-result-table" border='0' align='center' cellspacing=0 cell><tr><td></td><td></td>`;
-  let tableStart2 = '<tr><td></td><td class="cell-player-number" rowspan=' + (botFiles.length + 1) + '>As Player 1</td><td class="cell-player-number" colspan=' + botFiles.length + '>As Player 2</td><td colspan=3></td></tr>';
-  let tableStartArr = new Array(botFiles.length);
+export const simulate = function(botFiles, config, scoreToWin) {
   let player1Score = new Array(botFiles.length);
   let player2Score = new Array(botFiles.length);
-  const Simulation = require("./simulation.js");
+
   var key1 = 0;
   var key2 = 0;
-  for (var bot1 of botFiles) {
-    tableStart += "<td class='cell-player-name'>" + bot1.name + "</td>";
-    tableStartArr[key1] = "<tr><td class='cell-player-name'>" + bot1.name + "</td>";
-    //if(key1==3) tableStartArr[3]+= "<td rowspan="+botFiles.length+">As Player 1</td>";
+  let scoresGrid = [...Array(botFiles.length)].map(() => ({
+    name: '',
+    score: [...Array(botFiles.length)].map(() => ({})),
+  }));
+  for (let i in botFiles) {
+    const bot1 = botFiles[i];
     player1Score[key1] = 0;
     key2 = 0;
-    for (var bot2 of botFiles) {
-      if (typeof player2Score[key2] !== "number")
-        player2Score[key2] = 0;
+    scoresGrid[i].name = bot1.name;
+    for (let k in botFiles) {
+      const bot2 = botFiles[k];
+      scoresGrid[i].score[k].name = bot2.name;
+      if (typeof player2Score[key2] !== 'number') player2Score[key2] = 0;
       if (key1 !== key2) {
-        var time = config.time * 60;
-        var result;
-        var simulation = new Simulation(config, bot1, bot2, Store.botsQuantity);
+        let time = config.time * 60;
+        let result;
+        const simulation = new Simulation(config, bot1, bot2, Store.botsQuantity);
         while (time > 0) {
           result = simulation.simulate();
           time--;
         }
         if (result.player1 > result.player2) {
-          tableStartArr[key1] += "<td class='cell-number-won'><a class='restartGame' data-bot1='" + bot1.name + "' data-bot2='" + bot2.name + "' href='#'>1.0</a></td>";
           player1Score[key1] += 1;
-        }
-        else if (result.player1 < result.player2) {
-          tableStartArr[key1] += "<td class='cell-number-lose'><a class='restartGame' data-bot1='" + bot1.name + "' data-bot2='" + bot2.name + "' href='#'>0.0</a></td>";
+          scoresGrid[i].score[k].score = 1.0;
+        } else if (result.player1 < result.player2) {
           player2Score[key2] += 1;
-        }
-        else {
-          tableStartArr[key1] += "<td class='cell-number-even'><a class='restartGame' data-bot1='" + bot1.name + "' data-bot2='" + bot2.name + "' href='#'>0.5</a></td>";
+          scoresGrid[i].score[k].score = 0.0;
+        } else {
           player1Score[key1] += 0.5;
           player2Score[key2] += 0.5;
+          scoresGrid[i].score[k].score = 0.5;
         }
-      }
-      else {
-        tableStartArr[key1] += "<td class='cell-empty-cells'></td>";
+      } else {
+        scoresGrid[i].score[k].score = undefined;
       }
       key2++;
     }
 
     key1++;
   }
-  for (var i = 0; i < player1Score.length; i++) {
-    tableStartArr[i] += "<td class='cell-number'>" + player1Score[i].toFixed(1) + "</td>";
-    tableStartArr[i] += "<td class='cell-number'>" + player2Score[i].toFixed(1) + "</td>";
-    tableStartArr[i] += "<td class='cell-number-bold'>" + (player1Score[i] + player2Score[i]).toFixed(1) + "</td></tr>";
+  // add score columns
+  for (let i in player1Score) {
+    scoresGrid[i].player1Score = player1Score[i].toFixed(1);
+    scoresGrid[i].player2Score = player2Score[i].toFixed(1);
+    scoresGrid[i].total = (player1Score[i] + player2Score[i]).toFixed(1);
   }
-  var sum = player1Score.map(function (num, idx) {
-    return { sum: num + player2Score[idx], index: idx };
+  // sort scoresGrid
+  scoresGrid.sort((a, b) => {
+    let result = 0;
+    a.total > b.total
+    ? (result = -1)
+    : a.total < b.total
+      ? (result = 1)
+      : (result = 0);
+    return result;
   });
-  sum.sort((a, b) => {
-    if (a.sum > b.sum)
-      return -1;
-    if (a.sum < b.sum)
-      return 1;
-    return 0;
-  });
-  tableStart += "<td class='cell-player-name'>Won as Player 1</td><td class='cell-player-name'>Won as Player 2</td><td class='cell-player-name'>Overall Total</td></tr>";
-  tableStart += tableStart2;
-  for (i = 0; i < sum.length; i++) {
-    tableStart += tableStartArr[sum[i].index];
-  }
-
-  tableStart += "</table>";
-  return { tableHtml: tableStart, score: player1Score[0] + player2Score[0] };
+  Store.tournamentScoreBeaten = player1Score[0] + player2Score[0] > scoreToWin ? true : false;
+  return {
+    player1Score,
+    player2Score,
+    scoresGrid,
+  };
 };
-export default simulate;
+const tableHeading = botFiles =>
+  botFiles.map(bot => (
+    <td key={bot.name} className="cell-player-name">
+      {bot.name}
+    </td>
+  ));
+
+const makeScoreGrid = (array, name, handleOpeningGame) =>
+  array.map((item, index) => {
+    let comp = true;
+    let cell = 'number-won';
+    switch (item.score) {
+      case 1:
+        break;
+      case 0.5:
+        cell = 'number-even';
+        break;
+      case 0:
+        cell = 'number-lose';
+        break;
+      default:
+        cell = 'empty-cells';
+        comp = false;
+        break;
+    }
+    return (
+      <td key={index} className={`cell-${cell}`}>
+        {comp ? (
+          <button
+            className="restartGame gameScore"
+            onClick={() => handleOpeningGame(name, item.name)}
+          >
+            {item.score}
+          </button>
+        ) : (
+          ''
+        )}
+      </td>
+    );
+  });
+
+const TableResults = ({ botFiles, config, scoreToWin, handleOpeningGame }) => {
+  const { scoresGrid } = simulate(botFiles, config, scoreToWin);
+
+  return (
+    <table
+      id="game-result-table"
+      border="0"
+      align="center"
+      cellSpacing={0}
+    >
+      <thead>
+        <tr>
+          <td />
+          <td />
+          {tableHeading(botFiles)}
+          <td className="cell-player-name">Won as Player 1</td>
+          <td className="cell-player-name">Won as Player 2</td>
+          <td className="cell-player-name">Overall Total</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td />
+          <td className="cell-player-number" rowSpan={botFiles.length + 1}>
+            As Player 1
+          </td>
+          <td className="cell-player-number" colSpan={botFiles.length}>
+            As Player 2
+          </td>
+          <td colSpan={3} />
+        </tr>
+        {scoresGrid.map((item, index) => {
+          return (
+            <tr key={index}>
+              <td>{item.name}</td>
+              {makeScoreGrid(item.score, item.name, handleOpeningGame)}
+              <td>{item.player1Score}</td>
+              <td>{item.player2Score}</td>
+              <td>{item.total}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+};
+export default TableResults;
