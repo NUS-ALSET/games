@@ -1,3 +1,8 @@
+import Button from '@material-ui/core/Button';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 import React from 'react';
 import Store from '../store';
 import Simulation from './simulation.js';
@@ -32,13 +37,9 @@ export const simulate = function(botFiles, config, scoreToWin) {
         if (result.player1 > result.player2) {
           player1Score[key1] += 1;
           scoresGrid[i].score[k].score = 1.0;
-        } else if (result.player1 < result.player2) {
+        } else {
           player2Score[key2] += 1;
           scoresGrid[i].score[k].score = 0.0;
-        } else {
-          player1Score[key1] += 0.5;
-          player2Score[key2] += 0.5;
-          scoresGrid[i].score[k].score = 0.5;
         }
       } else {
         scoresGrid[i].score[k].score = undefined;
@@ -73,9 +74,9 @@ export const simulate = function(botFiles, config, scoreToWin) {
 };
 const tableHeading = botFiles =>
   botFiles.map(bot => (
-    <td key={bot.name} className="cell-player-name">
+    <TableCell width="15" key={bot.name}>
       {bot.name}
-    </td>
+    </TableCell>
   ));
 
 const makeScoreGrid = (array, name, handleOpeningGame) =>
@@ -97,65 +98,60 @@ const makeScoreGrid = (array, name, handleOpeningGame) =>
         break;
     }
     return (
-      <td key={index} className={`cell-${cell}`}>
+      <TableCell key={index} className={`cell-${cell}`}>
         {comp ? (
-          <button
+          <Button
+            variant="container"
             className="restartGame gameScore"
             onClick={() => handleOpeningGame(name, item.name)}
           >
             {item.score}
-          </button>
+          </Button>
         ) : (
           ''
         )}
-      </td>
+      </TableCell>
     );
   });
 
 const TableResults = ({ botFiles, config, scoreToWin, handleOpeningGame }) => {
   const { scoresGrid } = simulate(botFiles, config, scoreToWin);
-
   return (
-    <table
-      id="game-result-table"
-      border="0"
-      align="center"
-      cellSpacing={0}
-    >
+    <Table id="game-result-table" border="0" align="center" cellSpacing={0}>
       <thead>
-        <tr>
-          <td />
-          <td />
+        <TableRow>
+          <TableCell width="5" />
+          <TableCell width="5" />
           {tableHeading(botFiles)}
-          <td className="cell-player-name">Won as Player 1</td>
-          <td className="cell-player-name">Won as Player 2</td>
-          <td className="cell-player-name">Overall Total</td>
-        </tr>
+          <TableCell width="10" className="cell-player-name">Won as Player 1</TableCell>
+          <TableCell width="10" className="cell-player-name">Won as Player 2</TableCell>
+          <TableCell width="10" className="cell-player-name">Overall Total</TableCell>
+        </TableRow>
       </thead>
-      <tbody>
-        <tr>
-          <td />
-          <td className="cell-player-number" rowSpan={botFiles.length + 1}>
+      <TableBody>
+        <TableRow>
+          <TableCell />
+          <TableCell className="cell-player-number" rowSpan={botFiles.length + 1}>
             As Player 1
-          </td>
-          <td className="cell-player-number" colSpan={botFiles.length}>
+          </TableCell>
+          <TableCell className="cell-player-number" colSpan={botFiles.length}>
             As Player 2
-          </td>
-          <td colSpan={3} />
-        </tr>
+          </TableCell>
+          <TableCell colSpan={3} />
+        </TableRow>
         {scoresGrid.map((item, index) => {
           return (
-            <tr key={index}>
-              <td>{item.name}</td>
+            <TableRow key={index}>
+              <TableCell>{item.name}</TableCell>
               {makeScoreGrid(item.score, item.name, handleOpeningGame)}
-              <td>{item.player1Score}</td>
-              <td>{item.player2Score}</td>
-              <td>{item.total}</td>
-            </tr>
+              <TableCell>{item.player1Score}</TableCell>
+              <TableCell>{item.player2Score}</TableCell>
+              <TableCell>{item.total}</TableCell>
+            </TableRow>
           );
         })}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   );
 };
 export default TableResults;

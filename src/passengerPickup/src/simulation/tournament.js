@@ -1,13 +1,13 @@
-import {Button} from '@material-ui/core'
-import React, { Component, Fragment } from 'react';
+import { Button } from '@material-ui/core';
 import { observer } from 'mobx-react';
+import React, { Component, Fragment } from 'react';
+import Store from '../store';
+import App from '../view/App';
+import config from './config.json';
 import level1 from './level1';
 import level2 from './level2';
 import level3 from './level3';
-import config from './config.json';
 import TableResults from './table-result';
-import App from '../view/App';
-import Store from '../store';
 
 class Tournament extends Component {
   constructor(props) {
@@ -64,7 +64,7 @@ class Tournament extends Component {
       oldState => ({
         playAsPlayer2,
         gameTitle,
-        gameData: {...oldState, levelsToWin},
+        gameData: {...oldState.gameData, levelsToWin},
         player1Data,
       })
     )
@@ -119,7 +119,7 @@ class Tournament extends Component {
       time: this.state.gameData.gameTime || config.time,
       scoreToWin: this.state.gameData.scoreToWin || config.scoreToWin
     }
-    this.setState({ bots: [Store.func, level1, level2, level3], newConfig });
+    this.setState({ bots: [level3, level2, level1, Store.func ], newConfig });
   }
   resimulate = () => {
     this.setState(() => ({buttonDisabled: true}))
@@ -136,7 +136,7 @@ class Tournament extends Component {
     }
     this.setState(() => ({
       buttonDisabled: false,
-      bots: [Store.func, level1, level2, level3], newConfig
+      bots: [level3, level2, level1, Store.func ], newConfig
     }));
   }
   render() {

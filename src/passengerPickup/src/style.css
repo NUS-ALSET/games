@@ -138,7 +138,7 @@ body{margin: 0}
 .cell-number-won {
   text-align: right;
 }
-.cell-number-won a {
+.cell-number-won button {
   text-decoration: none;
   color:green;
   font-size: 14px;
@@ -154,7 +154,7 @@ body{margin: 0}
 .cell-number-lose {
   text-align: right;
 }
-.cell-number-lose a {
+.cell-number-lose button {
   text-decoration: none;
   color:red;
   font-size: 14px;
