@@ -56,14 +56,12 @@ export const simulate = function(botFiles, config, scoreToWin) {
     scoresGrid[i].total = (player1Score[i] + player2Score[i]).toFixed(1);
   }
   // sort scoresGrid
-  scoresGrid.sort((a, b) => {
-    let result = 0;
-    a.total > b.total
-    ? (result = -1)
-    : a.total < b.total
-      ? (result = 1)
-      : (result = 0);
-    return result;
+  scoresGrid.sort((a, b) => (a.total > b.total ? -1 : a.total < b.total ? 1: 0));
+  scoresGrid.forEach(i => {
+    i.score = i.score.map(
+      (item, index) => (
+        i.score[i.score.findIndex(item => item.name === scoresGrid[index].name)])
+    );
   });
   Store.tournamentScoreBeaten = player1Score[0] + player2Score[0] > scoreToWin ? true : false;
   return {
@@ -122,7 +120,7 @@ const TableResults = ({ botFiles, config, scoreToWin, handleOpeningGame }) => {
         <TableRow>
           <TableCell width="5" />
           <TableCell width="5" />
-          {tableHeading(botFiles)}
+          {tableHeading(scoresGrid)}
           <TableCell width="10" className="cell-player-name">Won as Player 1</TableCell>
           <TableCell width="10" className="cell-player-name">Won as Player 2</TableCell>
           <TableCell width="10" className="cell-player-name">Overall Total</TableCell>
