@@ -43,33 +43,35 @@ class Updater extends React.Component {
   }
   // update player position
   updatePosition = () => {
-    let {x, y} = this.props.store.position[0];
     const playerSize = (((config.playerSize / 30) * this.context.scale) * 100);
     const gameWidth = Math.ceil(config.width * this.context.scale);
     const gameHeight = Math.ceil(config.height * this.context.scale);
-    switch (this.props.store.direction) {
-      case 'right' :
-        x += config.speed;
-        if(x+playerSize > gameWidth)
-          x = gameWidth - playerSize
-        break;
-      case 'down' :
-        y += config.speed;
-        if(y+playerSize > gameHeight)
-          y = gameHeight - playerSize
-        break;
-      case 'left' :
-      x -= config.speed;
-        if (x < 0)
-          x = 0
-        break;
-      default :
-        y -= config.speed;
-        if (y < 0)
-          y = 0
-        break;
-    }
-    this.props.store.updatePosition(0, {x, y}, 1);
+    this.props.gameData.players.forEach( (player) => {
+      let {x, y} = this.props.store.position[player.id];
+      switch (this.props.store.direction[player.id]) {
+        case 'right' :
+          x += config.speed;
+          if(x+playerSize > gameWidth)
+            x = gameWidth - playerSize
+          break;
+        case 'down' :
+          y += config.speed;
+          if(y+playerSize > gameHeight)
+            y = gameHeight - playerSize
+          break;
+        case 'left' :
+        x -= config.speed;
+          if (x < 0)
+            x = 0
+          break;
+        default :
+          y -= config.speed;
+          if (y < 0)
+            y = 0
+          break;
+      }
+      this.props.store.updatePosition(player.id, {x, y}, 1);
+    })
   }
 
   reset = () => {
@@ -88,20 +90,13 @@ class Updater extends React.Component {
       if (this.props.store.mode !== PLAY) {
         return
       }
-      let direction = 'left';
-      if(e.key==='w'){
-          direction = "up";
-      }
-      else if(e.key==='s'){
-          direction = "down";
-      }
-      else if(e.key==='a'){
-          direction = "left";
-      }
-      else if(e.key==='d'){
-          direction = "right";
-      }
-      this.props.store.updateDirection(direction);
+      this.props.gameData.players.forEach(player => {
+        Object.keys(config.playerKeys[player.id]).forEach(item => {
+          if (config.playerKeys[player.id][item] === e.key) {
+            this.props.store.updateDirection(player.id, item);
+          }
+        })
+      })
   }
   render() {
     return (
@@ -110,4 +105,7 @@ class Updater extends React.Component {
   }
 }
 
+Updater.propTypes = {
+  gameData: PropTypes.object.isRequired
+}
 export default observer(Updater);

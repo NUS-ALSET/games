@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Sprite} from 'react-game-kit';
 import { observer } from 'mobx-react';
-import img from '../../assets/sprites/blue-car-sprite.png';
+import img from '../../assets/sprites/white-car-sprite.png';
 
 class BlueCar extends Component {
   getAnimationState() {

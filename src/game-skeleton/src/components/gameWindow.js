@@ -12,7 +12,14 @@ const GameWindow = (props) => (
         <Stage width={config.width} height={config.height}>
             <Updater {...props}></Updater>
             <Tile></Tile>
-            <Characters store={props.store} gameId={0}></Characters>
+            {props.gameData.players.map(player => (
+                <Characters
+                    key={player.id}
+                    store={props.store}
+                    gameId={0}
+                    player={player}
+                />
+            ))}
         </Stage>
     </div>
 );

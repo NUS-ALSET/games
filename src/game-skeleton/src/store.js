@@ -4,27 +4,25 @@ import { NOT_STARTED} from './constants'
 
 class passengerStore {
   constructor() {
-    let position = [config.player1StartingPoint];
+    let position = config.playersStartingPoint;
     extendObservable(this, {
       time: config.time,
       prevTime: Date.now(),
       position: position,
-      direction: 'up',
+      direction: config.defaultDirections,
       score: [0, 0],
       mode: NOT_STARTED,
     });
   }
-  updatePosition(gameId, newPosition, offset) {
-    if (Math.abs(this.position[gameId].x - newPosition.x) >= offset || Math.abs(this.position[gameId].y - newPosition.y) >= offset) {
-      this.position[gameId] = newPosition;
-    }
+  updatePosition(playerId, newPosition, offset) {
+    this.position[playerId] = newPosition;
   }
   resetGame() {
-    this.updatePosition(0,{x:0,y:0}, 0);
-    this.direction = [['right', 'down'], ['right', 'down']];
+    this.position = config.playersStartingPoint;
+    this.direction = config.defaultDirections
   }
-  updateDirection(newDirection) {
-    this.direction = newDirection;
+  updateDirection(playerId, newDirection) {
+    this.direction[playerId] = newDirection;
   }
   updateScore(gameId, score) {
     if (this.score[gameId] !== score) {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {Sprite} from 'react-game-kit';
 import { observer } from 'mobx-react';
-import img from '../../assets/sprites/blue-car-sprite.png';
+import img from '../../assets/sprites/green-car-sprite.png';
 
-class BlueCar extends Component {
+class GreenCar extends Component {
   getAnimationState() {
     switch (this.props.store.direction[this.props.charId]) {
       case 'down':
@@ -49,4 +49,4 @@ class BlueCar extends Component {
     );
   }
 }
-export default observer(BlueCar);
+export default observer(GreenCar);
