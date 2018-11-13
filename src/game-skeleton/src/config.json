@@ -35,5 +35,8 @@
     "left": "j",
     "right": "l",
     "switch": "o"
-  }
+  },
+  "maxCoins" : 20,
+  "minCoins" : 2,
+  "coinSize" : 50
 }

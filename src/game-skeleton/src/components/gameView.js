@@ -50,7 +50,7 @@ export default class App extends Component {
   render() {
     const {gameState, gameOver} = this.state;
     const {store} = this.props;
-    console.log('game state', gameState);
+    
     return (
       <Fragment>
         <Grid container spacing={16}>

@@ -54,6 +54,11 @@ const ScoreDisplay = ({
         </Fragment>
       }
     </Grid>
+    <Grid item xs={4}>
+      <Typography variant="subheading">
+        Score: {store.scores[0]}
+      </Typography>
+    </Grid>
   </Grid>
 )
 

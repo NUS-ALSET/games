@@ -30,7 +30,6 @@ class Updater extends React.Component {
       if(this.props.store.time <= 0) {
         this.props.updateGameState(GAME_OVER);
         this.props.store.updateMode(GAME_OVER);
-        console.log('ho gya', this.props.store.mode);
         return;
       }
       // update game time
@@ -38,7 +37,8 @@ class Updater extends React.Component {
         this.props.store.time--;
         this.props.store.prevTime = Date.now();
       }
-      this.updatePosition()
+      this.createNewCoins();
+      this.updatePosition();
     }
   }
   // update player position
@@ -69,9 +69,19 @@ class Updater extends React.Component {
           y = 0
         break;
     }
+    const hittedCoinPos = this.checkCollision(x,y);
+    if(hittedCoinPos){
+      this.removeCoin(hittedCoinPos);
+      this.updateScore();
+    }
     this.props.store.updatePosition(0, {x, y}, 1);
   }
-
+  updateScore(playerIndex=0){
+    this.props.store.scores[playerIndex] = this.props.store.scores[playerIndex] + 1;
+  }
+  removeCoin(coinPos){
+    this.props.store.coins = this.props.store.coins.filter(coin=>!(coin.x===coinPos.x && coin.y===coinPos.y)) 
+  }
   reset = () => {
       this.props.store.mode = NOT_STARTED;
       this.gameTime = this.props.gameData.gameTime || config.time;
@@ -102,6 +112,22 @@ class Updater extends React.Component {
           direction = "right";
       }
       this.props.store.updateDirection(direction);
+  }
+  createNewCoins() {
+    const gameWidth = Math.ceil(config.width * this.context.scale);
+    const gameHeight = Math.ceil(config.height * this.context.scale);
+    const coinSize = config.coinSize * this.context.scale;
+    this.props.store.createNewCoins(gameWidth, gameHeight, coinSize);
+  }
+
+  checkCollision(x,y){
+    const coinSize = config.coinSize * this.context.scale;
+    const maxDisToCollide = coinSize/2;
+      return this.props.store.coins.find(coin=>
+        coin.x >= (x - maxDisToCollide ) &&
+        coin.x <= (x + maxDisToCollide) &&
+        coin.y >= (y - maxDisToCollide) &&
+        coin.y <= (y + maxDisToCollide) )
   }
   render() {
     return (

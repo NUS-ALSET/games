@@ -1,9 +1,11 @@
 import React from 'react';
+import {observer} from 'mobx-react'
 import { Stage } from 'react-game-kit';
 import config from '../config';
 import Characters from './characters';
 import Tile from './tile';
 import Updater from './updater.js';
+import Coin from './Gems/Coin'
 
 
 
@@ -13,8 +15,11 @@ const GameWindow = (props) => (
             <Updater {...props}></Updater>
             <Tile></Tile>
             <Characters store={props.store} gameId={0}></Characters>
+            {props.store.coins.map((coinPosition,index) => {
+                return <Coin key={index} coinPosition={coinPosition} />
+            })}
         </Stage>
     </div>
 );
 
-export default GameWindow;
+export default observer(GameWindow);
