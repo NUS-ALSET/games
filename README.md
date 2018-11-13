@@ -5,12 +5,12 @@ ALSET Games based on React Game Kit
   <a href="<h1>Gem collector game</h1>
 <p><b>Game status:</b> using OLD API</p>
 <p align="center">
-  <a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/oldGames/gemCollector" target="_blank" rel="noopener noreferrer">
+  <a href="https://codesandbox.io/s/github/walkwel/games/tree/master/src/game-skeleton" target="_blank" rel="noopener noreferrer">
     <img width="530" src="https://raw.githubusercontent.com/walkwel/games/master/src/game-skeleton/screenshot.png">
   </a>
 </p>
 <h3>
-	<a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/oldGames/gemCollector" target="_blank">
+	<a href="https://codesandbox.io/s/github/walkwel/games/tree/master/src/game-skeleton" target="_blank">
 		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
 	</a>
 </h3>
