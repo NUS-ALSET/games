@@ -11,8 +11,7 @@ const ScoreDisplay = ({
   endGame,
   pauseResumeGame,
   gameState,
-  startGame,
-  time }) => (
+  startGame }) => (
   <Grid
     container
     justify="center"
@@ -21,7 +20,7 @@ const ScoreDisplay = ({
   >
     <Grid item xs={4}>
       <Typography variant="subheading">
-        Time Left: {time} sec
+        Time Left: {store.time} sec
       </Typography>
     </Grid>
     <Grid item xs={4}>
@@ -63,8 +62,7 @@ ScoreDisplay.propTypes = {
   endGame: PropTypes.func.isRequired,
   pauseResumeGame: PropTypes.func.isRequired,
   gameState: PropTypes.string.isRequired,
-  startGame: PropTypes.func.isRequired,
-  time: PropTypes.string.isRequired
+  startGame: PropTypes.func.isRequired
 }
 
 export default observer(ScoreDisplay);

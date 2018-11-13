@@ -49,7 +49,7 @@ export default class App extends Component {
 
   render() {
     const {gameState, gameOver} = this.state;
-    const {store, gameData} = this.props;
+    const {store} = this.props;
     console.log('game state', gameState);
     return (
       <Fragment>
@@ -57,7 +57,6 @@ export default class App extends Component {
           <Grid item xs={12}>
             <ScoreDisplay
               store={store}
-              time={gameData.gameTime}
               gameState={gameState}
               endGame={this.endGame}
               startGame={this.startGame}
