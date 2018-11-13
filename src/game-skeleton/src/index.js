@@ -22,11 +22,6 @@ const App = () => {
       name: 'player 2',
       score: 0,
       character: 'WhiteCar'
-    }, {
-      id: 2,
-      name: 'player 3',
-      score: 0,
-      character: ''
     }]
   }
 
