@@ -1,5 +1,25 @@
 # Games
 ALSET Games based on React Game Kit
+<h1>Game Skeleton</h1>
+<p align="center">
+  <a href="<h1>Gem collector game</h1>
+<p><b>Game status:</b> using OLD API</p>
+<p align="center">
+  <a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/oldGames/gemCollector" target="_blank" rel="noopener noreferrer">
+    <img width="530" src="https://raw.githubusercontent.com/walkwel/games/master/src/game-skeleton/screenshot.png">
+  </a>
+</p>
+<h3>
+	<a href="https://codesandbox.io/s/github/NUS-ALSET/games/tree/master/src/oldGames/gemCollector" target="_blank">
+		<img src="https://codesandbox.io/static/img/play-codesandbox.svg">
+	</a>
+</h3>
+<ol>
+	<li>Single player on one screen moving with controls W S A D</li>
+	<li>Time Limit</li>
+	<li>Pause/Resume</li>
+	<li>Start and End controls</li>
+</ol>
 
 <h1>Gem collector game</h1>
 <p><b>Game status:</b> using OLD API</p>
