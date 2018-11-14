@@ -41,34 +41,70 @@ class Updater extends React.Component {
       this.updatePosition();
     }
   }
+  playerColliding = (players, id, size, playerX, playerY, direction) => {
+    let collide = false;
+    players.forEach(player => {
+      if(player.id === id)
+        return;
+      const competitor = this.props.store.position[player.id];
+      let x1 = competitor.x - size;
+      let x2 = competitor.x + size;
+      let y1 = competitor.y;
+      let y2 = competitor.y + size;
+      if (direction === 'left' || direction === 'right') {
+        x1 = competitor.x;
+        y1 = competitor.y - size;
+      }
+      if(
+        playerX <= x2 &&
+        playerX >= x1 &&
+        playerY >= y1 &&
+        playerY <= y2
+      ) {
+        collide = true
+      }
+  })
+      return collide;
+  }
   // update player position
   updatePosition = () => {
-    const playerSize = (((config.playerSize / 30) * this.context.scale) * 100);
+    const size = Math.floor((((config.size / 30) * this.context.scale) * 100));
     const gameWidth = Math.ceil(config.width * this.context.scale);
     const gameHeight = Math.ceil(config.height * this.context.scale);
-
-    this.props.gameData.players.forEach( (player) => {
-      let {x, y} = this.props.store.position[player.id];
-      switch (this.props.store.direction[player.id]) {
+    const players = this.props.gameData.players;
+    players.forEach( (player) => {
+      let {x, y} = positions;
+      const {id} = player;
+      const positions = this.props.store.position[id];
+      const direction = this.props.store.direction[id];
+      switch (direction) {
         case 'right' :
-          x += config.speed;
-          if(x+playerSize > gameWidth)
-            x = gameWidth - playerSize
+          if(!this.playerColliding(players, id, size, x+size, y, direction)) {
+            x += config.speed;
+            if(x+size > gameWidth)
+              x = gameWidth - size
+          }
           break;
         case 'down' :
+        if(!this.playerColliding(players, id, size, x, y+size, direction)) {
           y += config.speed;
-          if(y+playerSize > gameHeight)
-            y = gameHeight - playerSize
+          if(y+size > gameHeight)
+            y = gameHeight - size
+        }
           break;
         case 'left' :
+        if(!this.playerColliding(players, id, size, x, y, direction)) {
         x -= config.speed;
           if (x < 0)
             x = 0
+        }
           break;
         default :
+        if(!this.playerColliding(players, id, size, x, y, direction)) {
           y -= config.speed;
           if (y < 0)
             y = 0
+        }
           break;
       }
       const hittedCoinPos = this.checkCollision(x,y);
