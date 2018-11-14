@@ -68,14 +68,14 @@ class Updater extends React.Component {
   }
   // update player position
   updatePosition = () => {
-    const size = Math.floor((((config.size / 30) * this.context.scale) * 100));
+    const size = Math.floor((((config.playerSize / 30) * this.context.scale) * 100));
     const gameWidth = Math.ceil(config.width * this.context.scale);
     const gameHeight = Math.ceil(config.height * this.context.scale);
     const players = this.props.gameData.players;
     players.forEach( (player) => {
-      let {x, y} = positions;
       const {id} = player;
       const positions = this.props.store.position[id];
+      let {x, y} = positions;
       const direction = this.props.store.direction[id];
       switch (direction) {
         case 'right' :
