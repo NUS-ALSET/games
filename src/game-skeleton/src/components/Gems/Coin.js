@@ -9,10 +9,10 @@ class Coin extends Component {
   static contextTypes = {
     scale: PropTypes.number,
   };
-  
+
   render() {
-    const scale = this.context.scale;
-    const coinPosition = this.props.coinPosition;
+    const {scale} = this.context;
+    const {coinPosition} = this.props;
     return (
       <div
         style={{

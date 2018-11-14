@@ -11,7 +11,8 @@ const ScoreDisplay = ({
   endGame,
   pauseResumeGame,
   gameState,
-  startGame }) => (
+  startGame,
+  players }) => (
   <Grid
     container
     justify="center"
@@ -24,40 +25,53 @@ const ScoreDisplay = ({
       </Typography>
     </Grid>
     <Grid item xs={4}>
-      {gameState === NOT_STARTED ?
-        <Button
-          variant="contained"
-          color="primary"
-          className="start"
-          onClick={() => startGame(PLAY)}
-        >
-          Start Game
-        </Button> :
-        <Fragment>
+      <Grid container justify="center">
+        {gameState === NOT_STARTED ?
           <Button
             variant="contained"
             color="primary"
-            className="restart"
-            style={{marginRight: '10px'}}
-            onClick={() => endGame(NOT_STARTED)}
+            className="start"
+            onClick={() => startGame(PLAY)}
           >
-            End Game
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            className="restart"
-            onClick={pauseResumeGame}
-          >
-            {gameState === PAUSED ? 'Resume' : 'Pause'}
-          </Button>
-        </Fragment>
-      }
+            Start Game
+          </Button> :
+          <Fragment>
+            <Button
+              variant="contained"
+              color="primary"
+              className="restart"
+              style={{marginRight: '10px'}}
+              onClick={() => endGame(NOT_STARTED)}
+            >
+              End Game
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className="restart"
+              onClick={pauseResumeGame}
+            >
+              {gameState === PAUSED ? 'Resume' : 'Pause'}
+            </Button>
+          </Fragment>
+        }
+      </Grid>
     </Grid>
-    <Grid item xs={4}>
-      <Typography variant="subheading">
-        Score: {store.scores[0]}
-      </Typography>
+    <Grid item xs={4} >
+      <Grid container direction="row" spacing={16} alignItems="center">
+        <Grid item>
+          <Typography variant="subheading">
+            Score:
+          </Typography>
+        </Grid>
+        <Grid item>
+          {players.map(player => (
+              <Typography variant="body1">
+                {player.name}: {store.scores[player.id]}
+              </Typography>
+          ))}
+        </Grid>
+      </Grid>
     </Grid>
   </Grid>
 )
@@ -67,7 +81,8 @@ ScoreDisplay.propTypes = {
   endGame: PropTypes.func.isRequired,
   pauseResumeGame: PropTypes.func.isRequired,
   gameState: PropTypes.string.isRequired,
-  startGame: PropTypes.func.isRequired
+  startGame: PropTypes.func.isRequired,
+  players: PropTypes.array.isRequired
 }
 
 export default observer(ScoreDisplay);

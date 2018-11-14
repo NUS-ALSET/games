@@ -12,30 +12,41 @@
   "roadWidth": 40,
   "passengerSize": 20,
   "editorMode": "python",
-  "player1StartingPoint": {
-    "x": 30,
+  "playersStartingPoint": [{
+    "x": 50,
     "y": 0
   },
-  "player2StartingPoint": {
-    "x": 0,
+  {
+    "x": 100,
     "y": 0
   },
-  "player1StartingDirection": "right",
-  "player2StartingDirection": "down",
-  "player1Keys": {
+  {
+    "x": 200,
+    "y": 0
+  }],
+  "defaultDirections": ["up", "up"],
+  "defaultScore": [0,0,0],
+  "playerKeys": [{
     "up": "w",
     "down": "s",
     "left": "a",
     "right": "d",
     "switch": "e"
   },
-  "player2Keys": {
+  {
     "up": "i",
     "down": "k",
     "left": "j",
     "right": "l",
     "switch": "o"
   },
+  {
+    "up": "g",
+    "down": "b",
+    "left": "v",
+    "right": "n",
+    "switch": "o"
+  }],
   "maxCoins" : 20,
   "minCoins" : 2,
   "coinSize" : 50

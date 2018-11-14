@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import BlueCar from './Characters/CarBlue';
+import Character from './Characters/';
 import config from '../config';
 
 class Characters extends Component {
@@ -12,13 +12,14 @@ class Characters extends Component {
 
   render() {
     return (
-      <BlueCar
+      <Character
         key={0}
+        character={this.props.player.character}
         store={this.props.store}
         scale={this.context.scale}
         size={config.playerSize}
         gameId={this.props.gameId}
-        charId={0}
+        charId={this.props.player.id}
       />
     )}
 }

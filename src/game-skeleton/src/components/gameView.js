@@ -61,6 +61,7 @@ export default class App extends Component {
               endGame={this.endGame}
               startGame={this.startGame}
               pauseResumeGame={this.pauseResumeGame}
+              players={this.props.gameData.players}
             />
           </Grid>
           {gameState === NOT_STARTED ? (

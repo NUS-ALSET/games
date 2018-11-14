@@ -11,7 +11,18 @@ const App = () => {
     gameType: 'game',
     scoreToWin: 20,
     tournamentScoreToWin:  3,
-    singleWindowGame: true
+    singleWindowGame: true,
+    players: [{
+      id:0,
+      name: 'Sarab',
+      score: 0,
+      character: 'GreenCar'
+    }, {
+      id: 1,
+      name: 'Easy Bot',
+      score: 0,
+      character: 'WhiteCar'
+    }]
   }
 
   return (
