@@ -49,7 +49,8 @@ class passengerStore {
       for (let i = 0; i < numOfNewCoins; i++) {
         const coinPosition = {
           x: Math.floor(Math.random() * (gameWidth - coinSize) + coinSize),
-          y: Math.floor(Math.random() * (gameHeight - coinSize) + coinSize)
+          y: Math.floor(Math.random() * (gameHeight - coinSize) + coinSize),
+          id: i
         };
         if(isOverlap(coinPosition)){
           i--;

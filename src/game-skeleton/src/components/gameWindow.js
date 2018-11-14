@@ -14,6 +14,9 @@ const GameWindow = (props) => (
         <Stage width={config.width} height={config.height}>
             <Updater {...props}></Updater>
             <Tile></Tile>
+            {props.store.coins.map(coin => (
+                <Coin key={coin.id} coinPosition={coin} />
+            ))}
             {props.gameData.players.map(player => (
                 <Characters
                     key={player.id}
@@ -21,9 +24,6 @@ const GameWindow = (props) => (
                     gameId={0}
                     player={player}
                 />
-            ))}
-            {props.store.coins.map((coinPosition,index) => (
-                <Coin key={index} coinPosition={coinPosition} />
             ))}
         </Stage>
     </div>
